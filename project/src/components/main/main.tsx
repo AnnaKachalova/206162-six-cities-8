@@ -5,10 +5,8 @@ type MainProps = {
 }
 
 function Main({rentCount}: MainProps): JSX.Element {
-  const cards = [];
-  for (let i = 0; i< 5; i++) {
-    cards.push(<Card />);
-  }
+  const cards = Array.from({length: 5}).map((element, i)=> <Card key={i.toString()}/>);
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
