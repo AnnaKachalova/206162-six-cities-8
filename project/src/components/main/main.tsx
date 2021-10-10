@@ -1,6 +1,10 @@
 import Card from '../card/card';
 
-function Main(): JSX.Element {
+type MainProps = {
+    rentCount: number;
+}
+
+function Main({rentCount}: MainProps): JSX.Element {
   const cards = [];
   for (let i = 0; i< 5; i++) {
     cards.push(<Card />);
@@ -48,7 +52,7 @@ function Main(): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">{rentCount} places to stay in Amsterdam</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>

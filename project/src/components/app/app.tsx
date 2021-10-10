@@ -1,8 +1,12 @@
 import Main from '../main/main';
 
-function App(): JSX.Element {
+type AppProps = {
+  rentCount: number;
+}
+
+function App({rentCount}:AppProps): JSX.Element {
   return (
-    <Main />
+    <Main rentCount={rentCount}/>
   );
 }
 
