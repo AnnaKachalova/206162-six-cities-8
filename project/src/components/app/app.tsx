@@ -2,6 +2,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
+import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
@@ -20,11 +21,14 @@ function App({ rentCount }: AppProps): JSX.Element {
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
+        <Route exact path={AppRoute.Room}>
+          <Room />
+        </Route>
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
           render={() => <Favorites />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route>
