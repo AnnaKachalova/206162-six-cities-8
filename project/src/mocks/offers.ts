@@ -1,7 +1,7 @@
-import {Questions} from '../types/question';
+import {Offers} from '../types/offer';
 
 
-export const questions: Questions = [
+export const offers: Offers = [
   {
     id: '123456a',
     title: '2-к. квартира, 59,3 м², 2/21 эт',
