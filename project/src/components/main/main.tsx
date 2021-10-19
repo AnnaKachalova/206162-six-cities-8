@@ -1,4 +1,4 @@
-import Card from '../card/card';
+import CardList from '../card-list/card-list';
 import Header from '../header/header';
 import{Offers} from '../../types/offer';
 
@@ -82,9 +82,7 @@ function Main({ rentCount, offers }: MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className='cities__places-list places__list tabs__content'>
-                {Array.from({ length: 5 }).map((element, i) => (<Card key={i.toString()} />))}
-              </div>
+              <CardList offers={offers}/>
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'></section>
