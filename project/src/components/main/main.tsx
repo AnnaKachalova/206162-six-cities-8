@@ -1,14 +1,17 @@
 import Card from '../card/card';
 import Header from '../header/header';
+import{Offers} from '../../types/offer';
 
 type MainProps = {
   rentCount: number;
+  offers: Offers;
 };
 
-function Main({ rentCount }: MainProps): JSX.Element {
+function Main({ rentCount, offers }: MainProps): JSX.Element {
   return (
     <div className='page page--gray page--main'>
       <Header />
+      {offers}
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
         <div className='tabs'>
