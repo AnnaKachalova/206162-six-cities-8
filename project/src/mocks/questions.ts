@@ -1,6 +1,7 @@
-import { Offers } from '../types/offer';
+import {Questions} from '../types/question';
 
-export const offers: Offers[] = [
+
+export const questions: Questions = [
   {
     id: '123456a',
     title: '2-к. квартира, 59,3 м², 2/21 эт',
@@ -17,7 +18,7 @@ export const offers: Offers[] = [
     type: 'apartment',
     rating: 4.5,
     description: `Продается просторная квартира в жк комфорт класса.
-        Отделка предчистовая. Сдача 4 квартал 2022'`,
+      Отделка предчистовая. Сдача 4 квартал 2022'`,
     numberOfBedrooms: '4 Bedrooms',
     maximumNumberOfGuests: 'Max 4 adults',
   },
