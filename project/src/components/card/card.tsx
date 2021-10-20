@@ -1,11 +1,15 @@
+import React from 'react';
 import{Offer} from '../../types/offer';
+import {Link} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 type CardProps = {
     offer: Offer;
 };
 
 function Card({offer}:CardProps): JSX.Element {
-  const{title, price, type, isPremium, previewImage} = offer;
+  const{ id, title, price, type, isPremium, previewImage } = offer;
+  const history = useHistory();
   return (
     <article className="cities__place-card place-card">
       {isPremium ?
@@ -44,7 +48,9 @@ function Card({offer}:CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`} onClick={() => history.push(`/offer/${id}`)}>
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
