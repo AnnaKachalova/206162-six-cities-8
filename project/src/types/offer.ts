@@ -1,14 +1,20 @@
 export type Offer = {
-  id:string;
+  id:number;
   title:string;
-  premium:boolean;
-  photos:string[];
+  previewImage: string;
+  images:string[];
   price:number;
   type: string;
   rating:number;
   description:string;
-  numberOfBedrooms:string;
-  maximumNumberOfGuests:string;
+  bedrooms:number;
+  maxAdults:number;
+  city: {
+    name: string;
+  }
+  goods:string[];
+  isPremium: boolean,
+  isFavorite: boolean,
 };
 
 
