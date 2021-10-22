@@ -10,13 +10,13 @@ type RoomProps = {
   reviews: Reviews;
 };
 
-interface PostParams {
+type PostParams = {
   id: string;
 }
 
 function Room({ offers, reviews }: RoomProps): JSX.Element {
   const { id } = useParams<PostParams>();
-  const currentId: number = parseInt(id, 10);
+  const currentId: number = +id;
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
   if (currentOffer !== undefined) {
     const { title, type, bedrooms, maxAdults, price, rating, goods } = currentOffer;

@@ -1,12 +1,27 @@
 import { Reviews } from '../../types/reviews';
+import React, { useState } from 'react';
 
 type CommentSendFormProps = {
   reviews: Reviews;
 };
 
 function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
+  const [userReview, setUserReview] = useState('');
+  const [rating, setRating] = useState(0);
+
   return (
-    <form className='reviews__form form' action='#' method='post'>
+    <form
+      onSubmit={(evt) => {
+        evt.preventDefault();
+        if (rating > 0 && userReview.length > 0) {
+          setRating(0);
+          setUserReview('');
+        }
+      }}
+      className='reviews__form form'
+      action='#'
+      method='post'
+    >
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
@@ -17,6 +32,7 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           value='5'
           id='5-stars'
           type='radio'
+          onChange={() => setRating(5)}
         />
         <label
           htmlFor='5-stars'
@@ -34,6 +50,7 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           value='4'
           id='4-stars'
           type='radio'
+          onChange={() => setRating(4)}
         />
         <label
           htmlFor='4-stars'
@@ -51,6 +68,7 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           value='3'
           id='3-stars'
           type='radio'
+          onChange={() => setRating(3)}
         />
         <label
           htmlFor='3-stars'
@@ -68,6 +86,7 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           value='2'
           id='2-stars'
           type='radio'
+          onChange={() => setRating(2)}
         />
         <label
           htmlFor='2-stars'
@@ -85,6 +104,7 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           value='1'
           id='1-star'
           type='radio'
+          onChange={() => setRating(1)}
         />
         <label
           htmlFor='1-star'
@@ -101,6 +121,8 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
         id='review'
         name='review'
         placeholder='Tell how was your stay, what you like and what can be improved'
+        value={userReview}
+        onChange={(el) => setUserReview(el.target.value)}
       >
       </textarea>
       <div className='reviews__button-wrapper'>
@@ -112,7 +134,6 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled
         >
           Submit
         </button>

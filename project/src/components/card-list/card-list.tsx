@@ -8,7 +8,7 @@ type CardListProps = {
 function CardList({offers}:CardListProps): JSX.Element {
   return (
     <div className='cities__places-list places__list tabs__content'>
-      {offers.map((element, i) => (
+      {offers.map((element) => (
         <Card key={element.id} offer={element}/>
       ))}
     </div>
