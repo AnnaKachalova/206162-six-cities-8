@@ -1,6 +1,7 @@
 import Header from '../header/header';
 import { Offers, Offer } from '../../types/offer';
-import CommentSendForm from '../comment/comment-send-form';
+import CommentSendForm from '../comment-send-form/comment-send-form';
+import Comment from '../comment/comment';
 import { Reviews } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 
@@ -18,7 +19,8 @@ function Room({ offers, reviews }: RoomProps): JSX.Element {
   const currentId: number = parseInt(id, 10);
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
   if (currentOffer !== undefined) {
-    const {title, type, bedrooms, maxAdults, price, rating} = currentOffer;
+    const { title, type, bedrooms, maxAdults, price, rating, goods } = currentOffer;
+    const currentReviews = reviews.filter((review) => review.id === currentId);
     return (
       <div className='page'>
         <Header />
@@ -76,9 +78,7 @@ function Room({ offers, reviews }: RoomProps): JSX.Element {
                   <span>Premium</span>
                 </div>
                 <div className='property__name-wrapper'>
-                  <h1 className='property__name'>
-                    {title}
-                  </h1>
+                  <h1 className='property__name'>{title}</h1>
                   <button
                     className='property__bookmark-button button'
                     type='button'
@@ -120,16 +120,11 @@ function Room({ offers, reviews }: RoomProps): JSX.Element {
                 <div className='property__inside'>
                   <h2 className='property__inside-title'>What&apos;s inside</h2>
                   <ul className='property__inside-list'>
-                    <li className='property__inside-item'>Wi-Fi</li>
-                    <li className='property__inside-item'>Washing machine</li>
-                    <li className='property__inside-item'>Towels</li>
-                    <li className='property__inside-item'>Heating</li>
-                    <li className='property__inside-item'>Coffee machine</li>
-                    <li className='property__inside-item'>Baby seat</li>
-                    <li className='property__inside-item'>Kitchen</li>
-                    <li className='property__inside-item'>Dishwasher</li>
-                    <li className='property__inside-item'>Cabel TV</li>
-                    <li className='property__inside-item'>Fridge</li>
+                    {goods.map((good) => (
+                      <li className='property__inside-item' key={`${good}good`}>
+                        {good}
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className='property__host'>
@@ -163,39 +158,10 @@ function Room({ offers, reviews }: RoomProps): JSX.Element {
                 </div>
                 <section className='property__reviews reviews'>
                   <h2 className='reviews__title'>
-                    Reviews &middot; <span className='reviews__amount'>1</span>
+                    Reviews &middot; <span className='reviews__amount'>{currentReviews.length}</span>
                   </h2>
                   <ul className='reviews__list'>
-                    <li className='reviews__item'>
-                      <div className='reviews__user user'>
-                        <div className='reviews__avatar-wrapper user__avatar-wrapper'>
-                          <img
-                            className='reviews__avatar user__avatar'
-                            src='img/avatar-max.jpg'
-                            width='54'
-                            height='54'
-                            alt='Reviews avatar'
-                          />
-                        </div>
-                        <span className='reviews__user-name'>Max</span>
-                      </div>
-                      <div className='reviews__info'>
-                        <div className='reviews__rating rating'>
-                          <div className='reviews__stars rating__stars'>
-                            <span style={{ width: '80%' }}></span>
-                            <span className='visually-hidden'>Rating</span>
-                          </div>
-                        </div>
-                        <p className='reviews__text'>
-                          A quiet cozy and picturesque that hides behind a a
-                          river by the unique lightness of Amsterdam. The
-                          building is green and from 18th century.
-                        </p>
-                        <time className='reviews__time' dateTime='2019-04-24'>
-                          April 2019
-                        </time>
-                      </div>
-                    </li>
+                    {currentReviews.map((review)=> (<Comment review={review} key={review.comment}/>))}
                   </ul>
                   <CommentSendForm reviews={reviews} />
                 </section>
