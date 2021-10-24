@@ -6,28 +6,32 @@ import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
+import { Offers } from '../../types/offer';
+import { Reviews } from '../../types/reviews';
 
 type AppProps = {
   rentCount: number;
+  offers: Offers;
+  reviews: Reviews;
 };
 
-function App({ rentCount }: AppProps): JSX.Element {
+function App({ rentCount, offers, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <Main rentCount={rentCount} />
+          <Main rentCount={rentCount} offers={offers} />
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
         <Route exact path={AppRoute.Room}>
-          <Room />
+          <Room offers={offers} reviews={reviews} />
         </Route>
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <Favorites />}
+          render={() => <Favorites offers={offers} />}
           authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
