@@ -1,5 +1,5 @@
 import { Reviews } from '../../types/reviews';
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 type CommentSendFormProps = {
   reviews: Reviews;
@@ -9,15 +9,16 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
   const [userReview, setUserReview] = useState('');
   const [rating, setRating] = useState(0);
 
+  const onSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (rating && userReview) {
+      setRating(0);
+      setUserReview('');
+    }
+  };
   return (
     <form
-      onSubmit={(evt) => {
-        evt.preventDefault();
-        if (rating > 0 && userReview.length > 0) {
-          setRating(0);
-          setUserReview('');
-        }
-      }}
+      onSubmit={onSubmitForm}
       className='reviews__form form'
       action='#'
       method='post'
@@ -131,10 +132,7 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           <span className='reviews__star'>rating</span> and describe your stay
           with at least <b className='reviews__text-amount'>50 characters</b>.
         </p>
-        <button
-          className='reviews__submit form__submit button'
-          type='submit'
-        >
+        <button className='reviews__submit form__submit button' type='submit'>
           Submit
         </button>
       </div>
