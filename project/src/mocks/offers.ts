@@ -23,6 +23,11 @@ export const offers: Offers = [
     maxAdults: 4,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
+        zoom: 10,
+      },
     },
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     isPremium: true,
@@ -48,7 +53,12 @@ export const offers: Offers = [
     bedrooms: 3,
     maxAdults: 4,
     city: {
-      name: 'Brussels',
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
+        zoom: 10,
+      },
     },
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     isPremium: true,
@@ -75,6 +85,11 @@ export const offers: Offers = [
     maxAdults: 4,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.369553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
     },
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     isPremium: false,
@@ -100,7 +115,12 @@ export const offers: Offers = [
     bedrooms: 4,
     maxAdults: 4,
     city: {
-      name: 'Brussels',
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
     },
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     isPremium: true,

@@ -1,14 +1,14 @@
 import CardList from '../card-list/card-list';
 import Header from '../header/header';
+import Map from '../map/map';
 import{Offers} from '../../types/offer';
 
 type MainProps = {
-  rentCount: number;
   offers: Offers;
 };
 
 
-function Main({ rentCount, offers }: MainProps): JSX.Element {
+function Main({offers}: MainProps): JSX.Element {
   return (
     <div className='page page--gray page--main'>
       <Header />
@@ -83,9 +83,7 @@ function Main({ rentCount, offers }: MainProps): JSX.Element {
               </form>
               <CardList offers={offers}/>
             </section>
-            <div className='cities__right-section'>
-              <section className='cities__map map'></section>
-            </div>
+            <Map />
           </div>
         </div>
       </main>
