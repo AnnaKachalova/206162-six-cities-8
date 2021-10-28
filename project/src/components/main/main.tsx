@@ -2,13 +2,15 @@ import CardList from '../card-list/card-list';
 import Header from '../header/header';
 import Map from '../map/map';
 import{Offers} from '../../types/offer';
+import {City} from '../../types/map';
 
 type MainProps = {
   offers: Offers;
+  city: City;
 };
 
 
-function Main({offers}: MainProps): JSX.Element {
+function Main({offers, city}: MainProps): JSX.Element {
   return (
     <div className='page page--gray page--main'>
       <Header />
@@ -83,7 +85,7 @@ function Main({offers}: MainProps): JSX.Element {
               </form>
               <CardList offers={offers}/>
             </section>
-            <Map />
+            <Map city={city} offers={offers}/>
           </div>
         </div>
       </main>
