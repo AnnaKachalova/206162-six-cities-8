@@ -12,7 +12,7 @@ function Card({offer, onListItemHover}:CardProps): JSX.Element {
   const{ id, title, price, type, isPremium, previewImage } = offer;
   const history = useHistory();
   const listItemHoverHandler = (evt:MouseEvent<HTMLLIElement>)=>{
-    onListItemHover(123456);
+    onListItemHover(id);
   };
   return (
     <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
