@@ -1,17 +1,21 @@
-import React from 'react';
+import React, {MouseEvent}  from 'react';
 import{Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 type CardProps = {
     offer: Offer;
+    onListItemHover: (listItemId: number) => void;
 };
 
-function Card({offer}:CardProps): JSX.Element {
+function Card({offer, onListItemHover}:CardProps): JSX.Element {
   const{ id, title, price, type, isPremium, previewImage } = offer;
   const history = useHistory();
+  const listItemHoverHandler = (evt:MouseEvent<HTMLLIElement>)=>{
+    onListItemHover(1);
+  };
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>

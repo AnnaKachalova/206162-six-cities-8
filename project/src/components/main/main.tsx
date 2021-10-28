@@ -1,7 +1,8 @@
+import React, {useState} from 'react';
 import CardList from '../card-list/card-list';
 import Header from '../header/header';
 import Map from '../map/map';
-import{Offers} from '../../types/offer';
+import{Offers, Offer} from '../../types/offer';
 import {City} from '../../types/map';
 
 type MainProps = {
@@ -11,6 +12,12 @@ type MainProps = {
 
 
 function Main({offers, city}: MainProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+  const onListItemHover = (listItemId: number) => {
+    const currentPoint = offers.find((offer) => offer.id === listItemId);
+    setSelectedPoint(currentPoint);
+  };
+
   return (
     <div className='page page--gray page--main'>
       <Header />
@@ -83,9 +90,9 @@ function Main({offers, city}: MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <CardList offers={offers}/>
+              <CardList offers={offers} onListItemHover={onListItemHover}/>
             </section>
-            <Map city={city} offers={offers}/>
+            <Map city={city} offers={offers} selectedPoint={selectedPoint}/>
           </div>
         </div>
       </main>
