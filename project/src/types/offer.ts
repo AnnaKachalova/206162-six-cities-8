@@ -1,3 +1,12 @@
+export type City ={
+  name: string;
+  location: {
+    latitude:number;
+    longitude:number;
+    zoom:number;
+  },
+}
+
 export type Offer = {
   id:number;
   title:string;
@@ -9,13 +18,11 @@ export type Offer = {
   description:string;
   bedrooms:number;
   maxAdults:number;
-  city: {
-    name: string;
-  }
+  city: City
   goods:string[];
   isPremium: boolean,
   isFavorite: boolean,
 };
 
-
 export type Offers = Offer[];
+export type Cities = City[];

@@ -8,19 +8,20 @@ import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import { Offers } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
+import {City} from '../../types/map';
 
 type AppProps = {
-  rentCount: number;
   offers: Offers;
   reviews: Reviews;
+  city:City;
 };
 
-function App({ rentCount, offers, reviews }: AppProps): JSX.Element {
+function App({ offers, reviews, city }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <Main rentCount={rentCount} offers={offers} />
+          <Main offers={offers} city={city}/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <Login />

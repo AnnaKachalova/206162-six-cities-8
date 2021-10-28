@@ -9,3 +9,10 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export enum MapIcon {
+  Default = 'img/pin.svg',
+  Active = 'img/pin-active.svg',
+}
