@@ -9,10 +9,11 @@ import { Icon, Marker } from 'leaflet';
 type MapProps = {
   city: City;
   offers: Offers;
-  selectedPoint: Offer | undefined;
+  selectedPoint?: Offer | undefined;
+  className:string;
 };
 
-function Map({ city, offers, selectedPoint }: MapProps): JSX.Element {
+function Map({ city, offers, selectedPoint, className }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const defaultIcon = new Icon({
@@ -44,9 +45,8 @@ function Map({ city, offers, selectedPoint }: MapProps): JSX.Element {
   }, [map, offers, selectedPoint]);
 
   return (
-    <div className='cities__right-section' ref={mapRef}>
-      <section className='cities__map map'></section>
-    </div>
+    <section className={`${className}__map map`} ref={mapRef}>
+    </section>
   );
 }
 

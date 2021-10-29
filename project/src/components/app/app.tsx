@@ -27,7 +27,7 @@ function App({ offers, reviews, city }: AppProps): JSX.Element {
           <Login />
         </Route>
         <Route exact path={AppRoute.Room}>
-          <Room offers={offers} reviews={reviews} />
+          <Room offers={offers} reviews={reviews} city={city}/>
         </Route>
         <PrivateRoute
           exact

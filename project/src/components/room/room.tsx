@@ -5,17 +5,20 @@ import Comment from '../comment/comment';
 import { Reviews } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import CardList from '../card-list/card-list';
+import Map from '../map/map';
+import {City} from '../../types/map';
 
 type RoomProps = {
   offers: Offers;
   reviews: Reviews;
+  city: City;
 };
 
 type PostParams = {
   id: string;
 }
 
-function Room({ offers, reviews }: RoomProps): JSX.Element {
+function Room({ offers, reviews, city }: RoomProps): JSX.Element {
   const { id } = useParams<PostParams>();
   const currentId: number = +id;
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
@@ -169,7 +172,7 @@ function Room({ offers, reviews }: RoomProps): JSX.Element {
                 </section>
               </div>
             </div>
-            <section className='property__map map'></section>
+            <Map city={city} offers={neighboringOffers} className={'property'}/>
           </section>
           <div className='container'>
             <section className='near-places places'>
