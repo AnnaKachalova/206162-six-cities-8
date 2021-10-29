@@ -5,22 +5,27 @@ import { useHistory } from 'react-router-dom';
 
 type CardProps = {
     offer: Offer;
-    onListItemHover: (listItemId: number) => void;
+    onListItemHover?: (listItemId: number) => void;
+    className: string;
 };
 
-function Card({offer, onListItemHover}:CardProps): JSX.Element {
-  const{ id, title, price, type, isPremium, previewImage } = offer;
+function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
+  const{ id, title, price, type, isPremium, previewImage, isFavorite } = offer;
   const history = useHistory();
   const listItemHoverHandler = (evt:MouseEvent<HTMLLIElement>)=>{
-    onListItemHover(id);
+    if (onListItemHover) {
+      onListItemHover(id);
+    }
   };
+  const isMainCard = className  === 'cities';
+  const width = isMainCard ? 80:100;
   return (
-    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
+    <article className={`${isMainCard? 'cities__place-' : 'near-places__'}card place-card`} onMouseEnter={listItemHoverHandler}>
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${isMainCard? 'cities__' : 'near-places__'}-image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
@@ -37,7 +42,7 @@ function Card({offer, onListItemHover}:CardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={`${isFavorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -46,7 +51,7 @@ function Card({offer, onListItemHover}:CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: width }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
