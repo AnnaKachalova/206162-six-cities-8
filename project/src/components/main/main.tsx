@@ -90,9 +90,11 @@ function Main({offers, city}: MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <CardList offers={offers} onListItemHover={onListItemHover}/>
+              <CardList offers={offers} onListItemHover={onListItemHover} className={'cities'}/>
             </section>
-            <Map city={city} offers={offers} selectedPoint={selectedPoint}/>
+            <div className='cities__right-section'>
+              <Map city={city} offers={offers} selectedPoint={selectedPoint} className={'cities'}/>
+            </div>
           </div>
         </div>
       </main>

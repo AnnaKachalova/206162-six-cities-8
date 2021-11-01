@@ -3,14 +3,16 @@ import{Offers} from '../../types/offer';
 
 type CardListProps = {
     offers: Offers;
-    onListItemHover: (listItemId: number) => void;
+    onListItemHover?: (listItemId: number) => void;
+    className: string;
 };
 
-function CardList({offers, onListItemHover}:CardListProps): JSX.Element {
+function CardList({offers, onListItemHover, className}:CardListProps): JSX.Element {
+  const isMainCard = className  === 'cities';
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <div className={`${className}__places-list places__list ${isMainCard ? 'tabs__content':''}`}>
       {offers.map((element) => (
-        <Card key={element.id} offer={element} onListItemHover={onListItemHover}/>
+        <Card key={element.id} offer={element} onListItemHover={onListItemHover} className={className}/>
       ))}
     </div>
   );
