@@ -3,7 +3,7 @@ import CardList from '../card-list/card-list';
 import Header from '../header/header';
 import Map from '../map/map';
 import{Offers, Offer} from '../../types/offer';
-import {City} from '../../types/map';
+//import {City} from '../../types/map';
 
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
@@ -13,7 +13,7 @@ import {changeCity} from '../../store/action';
 
 type MainProps = {
   offers: Offers;
-  city: City;
+  //city: City;
 };
 
 
@@ -23,20 +23,20 @@ const mapStateToProps = ({city}: State) => ({
 
 // Без использования bindActionCreators
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onUserAnswer() {
+  onChangeCity() {
     dispatch(changeCity(city));
   },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-//type PropsFromRedux = ConnectedProps<typeof connector>;
-//type ConnectedComponentProps = PropsFromRedux & GameScreenProps;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
-function Main({offers, city}: MainProps): JSX.Element {
-  const {questions, step, onUserAnswer} = props;
-  
+function Main(props: ConnectedComponentProps): JSX.Element {
+  const {offers, city, onChangeCity} = props;
+
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
@@ -52,32 +52,32 @@ function Main({offers, city}: MainProps): JSX.Element {
           <section className='locations container'>
             <ul className='locations__list tabs__list'>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#' onClick={onChangeCity}>
                   <span>Paris</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#' onClick={onChangeCity}>
                   <span>Cologne</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#' onClick={onChangeCity}>
                   <span>Brussels</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item tabs__item--active'>
+                <a className='locations__item-link tabs__item tabs__item--active' onClick={onChangeCity}>
                   <span>Amsterdam</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#' onClick ={onChangeCity}>
                   <span>Hamburg</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#' onClick ={onChangeCity}>
                   <span>Dusseldorf</span>
                 </a>
               </li>
@@ -127,4 +127,5 @@ function Main({offers, city}: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export {Main};
+export default connector(Main);
