@@ -5,13 +5,38 @@ import Map from '../map/map';
 import{Offers, Offer} from '../../types/offer';
 import {City} from '../../types/map';
 
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/state';
+import {Actions} from '../../types/action';
+import {changeCity} from '../../store/action';
+
 type MainProps = {
   offers: Offers;
   city: City;
 };
 
 
+const mapStateToProps = ({city}: State) => ({
+  city,
+});
+
+// Без использования bindActionCreators
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onUserAnswer() {
+    dispatch(changeCity(city));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+//type PropsFromRedux = ConnectedProps<typeof connector>;
+//type ConnectedComponentProps = PropsFromRedux & GameScreenProps;
+
+
 function Main({offers, city}: MainProps): JSX.Element {
+  const {questions, step, onUserAnswer} = props;
+  
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
