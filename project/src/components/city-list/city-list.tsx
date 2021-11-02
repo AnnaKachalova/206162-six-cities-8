@@ -14,9 +14,9 @@ function CityList({ onChangeCity, activeCity, offers }: CityListProps): JSX.Elem
       <section className='locations container'>
         <ul className='locations__list tabs__list'>
           {CITIES.map((cityName) => (
-            <li className={`${activeCity.name === cityName ? 'tabs__item--active' : ''}locations__item`} key={cityName}>
+            <li className='locations__item' key={cityName}>
               <Link
-                className='locations__item-link tabs__item'
+                className={`${activeCity.name === cityName ? 'tabs__item--active' : ''} locations__item-link tabs__item`}
                 to='#'
                 onClick={() => onChangeCity(cityName, offers)}
               >
