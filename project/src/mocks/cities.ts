@@ -1,6 +1,6 @@
 import { City } from '../types/map';
 
-export const city: City = {
+export const defaultCity: City = {
   name: 'Amsterdam',
   location: {
     latitude: 52.3909553943508,

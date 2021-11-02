@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import CardList from '../card-list/card-list';
 import Header from '../header/header';
 import Map from '../map/map';
 import{Offers, Offer} from '../../types/offer';
-//import {City} from '../../types/map';
+import {City} from '../../types/map';
 
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 import {Actions} from '../../types/action';
-import {changeCity} from '../../store/action';
+import {changeCity, fillCityList} from '../../store/action';
+import CityList from '../city-list/city-list';
 
 type MainProps = {
   offers: Offers;
-  //city: City;
+  defaultCity: City;
 };
 
 
@@ -23,8 +24,9 @@ const mapStateToProps = ({city}: State) => ({
 
 // Без использования bindActionCreators
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCity() {
-    dispatch(changeCity(city));
+  onChangeCity(nameCity:string, offers:Offers) {
+    dispatch(changeCity(nameCity));
+    dispatch(fillCityList(offers, nameCity));
   },
 });
 
@@ -35,7 +37,8 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
 function Main(props: ConnectedComponentProps): JSX.Element {
-  const {offers, city, onChangeCity} = props;
+  const {offers, city,defaultCity, onChangeCity} = props;
+  const [activeCity, setActiveCity] =  useState<City>(defaultCity);
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemId: number) => {
@@ -43,47 +46,19 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     setSelectedPoint(currentPoint);
   };
 
+  useEffect(()=>{
+    const currentCity = offers.find((offer)=>offer.city.name ===city);
+    if(currentCity){
+      setActiveCity(currentCity.city);
+    }
+  }, [city, offers]);
+
   return (
     <div className='page page--gray page--main'>
       <Header />
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
-        <div className='tabs'>
-          <section className='locations container'>
-            <ul className='locations__list tabs__list'>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#' onClick={onChangeCity}>
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#' onClick={onChangeCity}>
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#' onClick={onChangeCity}>
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item tabs__item--active' onClick={onChangeCity}>
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#' onClick ={onChangeCity}>
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#' onClick ={onChangeCity}>
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CityList onChangeCity={onChangeCity} activeCity={activeCity} offers={offers}></CityList>
         <div className='cities'>
           <div className='cities__places-container container'>
             <section className='cities__places places'>
@@ -118,7 +93,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
               <CardList offers={offers} onListItemHover={onListItemHover} className={'cities'}/>
             </section>
             <div className='cities__right-section'>
-              <Map city={city} offers={offers} selectedPoint={selectedPoint} className={'cities'}/>
+              <Map city={activeCity} offers={offers} selectedPoint={selectedPoint} className={'cities'}/>
             </div>
           </div>
         </div>
@@ -129,3 +104,4 @@ function Main(props: ConnectedComponentProps): JSX.Element {
 
 export {Main};
 export default connector(Main);
+

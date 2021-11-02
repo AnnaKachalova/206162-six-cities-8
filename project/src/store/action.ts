@@ -6,7 +6,7 @@ export const changeCity = (city: string): ChangeCityAction => ({
   payload: city,
 });
 
-export const fillCityList = (offers : Offers): FillCityListAction => ({
+export const fillCityList = (offers : Offers, city: string): FillCityListAction => ({
   type: ActionType.FillCityList,
-  payload: offers,
+  payload: offers.filter((offer)=> offer.city.name === city),
 });

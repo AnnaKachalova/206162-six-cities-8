@@ -13,27 +13,27 @@ import {City} from '../../types/map';
 type AppProps = {
   offers: Offers;
   reviews: Reviews;
-  city:City;
+  defaultCity:City;
 };
 
-function App({ offers, reviews, city }: AppProps): JSX.Element {
+function App({ offers, reviews, defaultCity }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <Main offers={offers}/>
+          <Main offers={offers} defaultCity={defaultCity}/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
         <Route exact path={AppRoute.Room}>
-          <Room offers={offers} reviews={reviews} city={city}/>
+          <Room offers={offers} reviews={reviews} defaultCity={defaultCity}/>
         </Route>
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
           render={() => <Favorites offers={offers} />}
-          authorizationStatus={AuthorizationStatus.Auth}
+          authorizationStatus={AuthorizationStatus.NoAuth}
         >
         </PrivateRoute>
         <Route>
