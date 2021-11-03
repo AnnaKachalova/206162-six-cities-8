@@ -5,7 +5,7 @@ import { ActionType, Actions } from '../types/action';
 
 const initialState = {
   city: FIRST_CITY,
-  offers: offers,
+  filteredOffers: offers,
 };
 
 
@@ -14,7 +14,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.ChangeCity:
       return { ...state, city: action.payload };
     case ActionType.FillCityList:
-      return { ...state, offers: action.payload };
+      return { ...state, filteredOffers: action.payload };
     default:
       return state;
   }

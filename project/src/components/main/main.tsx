@@ -19,8 +19,9 @@ type MainProps = {
   defaultCity: City;
 };
 
-const mapStateToProps = ({city}: State) => ({
+const mapStateToProps = ({city, filteredOffers}: State) => ({
   city,
+  filteredOffers,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -37,7 +38,7 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
 function Main(props: ConnectedComponentProps): JSX.Element {
-  const {offers, city, defaultCity, onChangeCity} = props;
+  const {offers, city, defaultCity, onChangeCity, filteredOffers} = props;
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
@@ -63,7 +64,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{offers.length} places to stay in Amsterdam</b>
+              <b className='places__found'>{filteredOffers.length} places to stay in {activeCity.name}</b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
@@ -90,10 +91,10 @@ function Main(props: ConnectedComponentProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <CardList onListItemHover={onListItemHover} className={'cities'}/>
+              <CardList offers={filteredOffers} onListItemHover={onListItemHover} className={'cities'}/>
             </section>
             <div className='cities__right-section'>
-              <Map city={activeCity} offers={offers} selectedPoint={selectedPoint} className={'cities'}/>
+              <Map city={activeCity} offers={filteredOffers} selectedPoint={selectedPoint} className={'cities'}/>
             </div>
           </div>
         </div>

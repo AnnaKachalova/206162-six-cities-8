@@ -179,7 +179,7 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
               <h2 className='near-places__title'>
                 Other places in the neighbourhood
               </h2>
-              <CardList className={'near'}/>
+              <CardList offers={neighboringOffers} className={'near'}/>
             </section>
           </div>
         </main>

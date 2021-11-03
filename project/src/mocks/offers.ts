@@ -148,7 +148,7 @@ export const offers: Offers = [
     city: {
       name: 'Paris',
       location: {
-        latitude: 52.3909553943508,
+        latitude: 52.3209553943508,
         longitude: 4.85309666406198,
         zoom: 10,
       },
@@ -179,8 +179,8 @@ export const offers: Offers = [
     city: {
       name: 'Paris',
       location: {
-        latitude: 52.3909553943508,
-        longitude: 4.85309666406198,
+        latitude: 52.3309553942222,
+        longitude: 4.85309666407777,
         zoom: 10,
       },
     },

@@ -15,7 +15,7 @@ type MapProps = {
 
 function Map({ city, offers, selectedPoint, className }: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, city, offers);
   const defaultIcon = new Icon({
     iconUrl: MapIcon.Default,
     iconSize: [27, 39],
