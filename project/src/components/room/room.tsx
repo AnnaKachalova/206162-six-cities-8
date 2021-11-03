@@ -6,7 +6,7 @@ import { Reviews } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
-import {City} from '../../types/map';
+import {City} from '../../types/offer';
 
 type RoomProps = {
   offers: Offers;

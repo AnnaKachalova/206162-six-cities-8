@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 
 import {Actions} from '../../types/action';
-import {changeCity, fillCityList} from '../../store/action';
+import {changeCity} from '../../store/action';
 
 import CardList from '../card-list/card-list';
 import CityList from '../city-list/city-list';
@@ -12,22 +12,20 @@ import Header from '../header/header';
 import Map from '../map/map';
 
 import{Offers, Offer} from '../../types/offer';
-import {City} from '../../types/map';
+import {City} from '../../types/offer';
 
 type MainProps = {
   offers: Offers;
   defaultCity: City;
 };
 
-const mapStateToProps = ({city, filteredOffers}: State) => ({
+const mapStateToProps = ({city}: State) => ({
   city,
-  filteredOffers,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCity(nameCity:string, offers:Offers) {
+  onChangeCity(nameCity:string) {
     dispatch(changeCity(nameCity));
-    dispatch(fillCityList(offers, nameCity));
   },
 });
 
@@ -38,20 +36,21 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
 function Main(props: ConnectedComponentProps): JSX.Element {
-  const {offers, city, defaultCity, onChangeCity, filteredOffers} = props;
+  const {offers, city, defaultCity, onChangeCity} = props;
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedPoint(currentPoint);
   };
+  const filteredOffers = offers.filter((offer)=> offer.city.name === city);
 
   useEffect(()=>{
     const currentCity = offers.find((offer)=>offer.city.name ===city);
     if(currentCity){
       setActiveCity(currentCity.city);
     }
-  }, [city, offers]);
+  }, [city]);
 
   return (
     <div className='page page--gray page--main'>
