@@ -40,7 +40,6 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 function Main(props: ConnectedComponentProps): JSX.Element {
   const {offers, city, defaultCity, onChangeCity, filteredOffers} = props;
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
-
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
