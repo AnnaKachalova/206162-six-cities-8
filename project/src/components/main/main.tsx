@@ -1,28 +1,28 @@
 import React, {useState, useEffect} from 'react';
-import CardList from '../card-list/card-list';
-import Header from '../header/header';
-import Map from '../map/map';
-import{Offers, Offer} from '../../types/offer';
-import {City} from '../../types/map';
-
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
+
 import {Actions} from '../../types/action';
 import {changeCity, fillCityList} from '../../store/action';
+
+import CardList from '../card-list/card-list';
 import CityList from '../city-list/city-list';
+import Header from '../header/header';
+import Map from '../map/map';
+
+import{Offers, Offer} from '../../types/offer';
+import {City} from '../../types/map';
 
 type MainProps = {
   offers: Offers;
   defaultCity: City;
 };
 
-
 const mapStateToProps = ({city}: State) => ({
   city,
 });
 
-// Без использования bindActionCreators
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onChangeCity(nameCity:string, offers:Offers) {
     dispatch(changeCity(nameCity));
@@ -37,7 +37,7 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
 function Main(props: ConnectedComponentProps): JSX.Element {
-  const {offers, city,defaultCity, onChangeCity} = props;
+  const {offers, city, defaultCity, onChangeCity} = props;
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
 
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
@@ -63,7 +63,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>312 places to stay in Amsterdam</b>
+              <b className='places__found'>{offers.length} places to stay in Amsterdam</b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
@@ -90,7 +90,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <CardList offers={offers} onListItemHover={onListItemHover} className={'cities'}/>
+              <CardList onListItemHover={onListItemHover} className={'cities'}/>
             </section>
             <div className='cities__right-section'>
               <Map city={activeCity} offers={offers} selectedPoint={selectedPoint} className={'cities'}/>

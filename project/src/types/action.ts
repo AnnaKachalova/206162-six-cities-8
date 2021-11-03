@@ -1,8 +1,8 @@
 import { Offers } from '../types/offer';
 
 export enum ActionType {
-    ChangeCity = 'game/incrementMistake',
-    FillCityList = 'game/incrementStep',
+    ChangeCity = 'changeCity',
+    FillCityList = 'fillCityList',
 }
 
 export type ChangeCityAction = {
