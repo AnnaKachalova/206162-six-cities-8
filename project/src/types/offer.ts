@@ -7,6 +7,14 @@ export type City = {
   };
 };
 
+type Host = {
+  avatarUrl: string;
+  id: number;
+  isPro: boolean;
+  name: string;
+};
+
+
 export type Offer = {
   id: number;
   title: string;
@@ -20,6 +28,7 @@ export type Offer = {
   maxAdults: number;
   city: City;
   goods: string[];
+  host: Host;
   isPremium: boolean;
   isFavorite: boolean;
 };

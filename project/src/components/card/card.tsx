@@ -46,7 +46,7 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`${isFavorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}type="button">
+          <button className={`${isFavorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
