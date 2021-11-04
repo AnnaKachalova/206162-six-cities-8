@@ -1,13 +1,21 @@
+/*import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+
+import {State} from '../../types/state';
+import {Actions} from '../../types/action';
+
+import {changeCity, fillCityList} from '../../store/action';*/
+
 import Card from '../card/card';
 import{Offers} from '../../types/offer';
 
 type CardListProps = {
-    offers: Offers;
-    onListItemHover?: (listItemId: number) => void;
-    className: string;
+  offers:Offers;
+  onListItemHover?: (listItemId: number) => void;
+  className: string;
 };
 
-function CardList({offers, onListItemHover, className}:CardListProps): JSX.Element {
+function CardList({offers, onListItemHover, className}: CardListProps): JSX.Element {
   const isMainCard = className  === 'cities';
   return (
     <div className={`${className}__places-list places__list ${isMainCard ? 'tabs__content':''}`}>
@@ -17,4 +25,5 @@ function CardList({offers, onListItemHover, className}:CardListProps): JSX.Eleme
     </div>
   );
 }
+
 export default CardList;

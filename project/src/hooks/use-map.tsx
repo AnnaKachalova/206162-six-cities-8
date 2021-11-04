@@ -2,17 +2,18 @@ import { useEffect, useState, MutableRefObject } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/offer';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City) {
+function useMap(mapRef: MutableRefObject<HTMLElement>, city: City) {
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && map === null) {
+    if (map === null) {
+      const{zoom, latitude, longitude} = city.location;
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.location.latitude,
-          lng: city.location.longitude,
+          lat: latitude,
+          lng: longitude,
         },
-        zoom: city.location.zoom,
+        zoom: zoom,
       });
 
       const layer = new TileLayer(
@@ -26,6 +27,9 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City) {
       instance.addLayer(layer);
 
       setMap(instance);
+    }else {
+      const{zoom, latitude, longitude} = city.location;
+      map.flyTo([latitude, longitude], zoom);
     }
   }, [mapRef, map, city]);
 

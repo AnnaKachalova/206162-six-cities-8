@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
-import { City } from '../../types/map';
+import { City } from '../../types/offer';
 import { Offers, Offer } from '../../types/offer';
 import { MapIcon } from '../../const';
 import { Icon, Marker } from 'leaflet';
@@ -14,7 +14,7 @@ type MapProps = {
 };
 
 function Map({ city, offers, selectedPoint, className }: MapProps): JSX.Element {
-  const mapRef = useRef(null);
+  const mapRef = useRef(document.createElement('div'));
   const map = useMap(mapRef, city);
   const defaultIcon = new Icon({
     iconUrl: MapIcon.Default,
@@ -42,7 +42,7 @@ function Map({ city, offers, selectedPoint, className }: MapProps): JSX.Element 
           .addTo(map);
       });
     }
-  }, [map, offers, selectedPoint]);
+  }, [map, selectedPoint, city]);
 
   return (
     <section className={`${className}__map map`} ref={mapRef}>

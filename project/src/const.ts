@@ -16,3 +16,5 @@ export enum MapIcon {
   Default = 'img/pin.svg',
   Active = 'img/pin-active.svg',
 }
+
+export const FIRST_CITY = CITIES[0];

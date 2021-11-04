@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
-import {city} from './mocks/cities';
+import {defaultCity} from './mocks/cities';
+import {reducer} from './store/reducer';
+
+const store = createStore(
+  reducer,
+  composeWithDevTools(),
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App  offers={offers} reviews={reviews} city={city}/>
+    <Provider store={store}>
+      <App  offers={offers} reviews={reviews} defaultCity={defaultCity}/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
