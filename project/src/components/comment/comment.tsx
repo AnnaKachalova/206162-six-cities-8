@@ -1,12 +1,14 @@
 import { Review } from '../../types/reviews';
 import dayjs from 'dayjs';
+import {countRating} from '../../types/utils';
 
 type CommentProps = {
   review: Review;
 };
 
 function Comment({ review }: CommentProps): JSX.Element {
-  const { comment, user } = review;
+  const { comment, user, rating } = review;
+  const percentageRating = countRating(rating);
   return (
     <li className='reviews__item'>
       <div className='reviews__user user'>
@@ -24,7 +26,7 @@ function Comment({ review }: CommentProps): JSX.Element {
       <div className='reviews__info'>
         <div className='reviews__rating rating'>
           <div className='reviews__stars rating__stars'>
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${percentageRating}%` }}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>

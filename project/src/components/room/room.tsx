@@ -6,7 +6,9 @@ import { Reviews } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import CardList from '../card-list/card-list';
 import Map from '../map/map';
-import {City} from '../../types/offer';
+import { City } from '../../types/offer';
+
+import { sortDate, countRating } from '../../types/utils';
 
 type RoomProps = {
   offers: Offers;
@@ -16,16 +18,33 @@ type RoomProps = {
 
 type PostParams = {
   id: string;
-}
+};
 
 function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
   const { id } = useParams<PostParams>();
   const currentId: number = +id;
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
-  const neighboringOffers = offers.slice(0,3);
+  const neighboringOffers = offers.slice(0, 3);
   if (currentOffer !== undefined) {
-    const { title, type, bedrooms, maxAdults, price, rating, goods } = currentOffer;
+    const {
+      title,
+      type,
+      bedrooms,
+      maxAdults,
+      description,
+      price,
+      rating,
+      goods,
+      host,
+      isPremium,
+      isFavorite,
+      images,
+    } = currentOffer;
+    const percentageRating = countRating(rating);
+
     const currentReviews = reviews.filter((review) => review.id === currentId);
+    const sortedReviews: Reviews = sortDate(currentReviews).splice(0, 9);
+
     return (
       <div className='page'>
         <Header />
@@ -33,59 +52,28 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                <div className='property__image-wrapper'>
-                  <img
-                    className='property__image'
-                    src='img/room.jpg'
-                    alt='Photo studio'
-                  />
-                </div>
-                <div className='property__image-wrapper'>
-                  <img
-                    className='property__image'
-                    src='img/apartment-01.jpg'
-                    alt='Photo studio'
-                  />
-                </div>
-                <div className='property__image-wrapper'>
-                  <img
-                    className='property__image'
-                    src='img/apartment-02.jpg'
-                    alt='Photo studio'
-                  />
-                </div>
-                <div className='property__image-wrapper'>
-                  <img
-                    className='property__image'
-                    src='img/apartment-03.jpg'
-                    alt='Photo studio'
-                  />
-                </div>
-                <div className='property__image-wrapper'>
-                  <img
-                    className='property__image'
-                    src='img/studio-01.jpg'
-                    alt='Photo studio'
-                  />
-                </div>
-                <div className='property__image-wrapper'>
-                  <img
-                    className='property__image'
-                    src='img/apartment-01.jpg'
-                    alt='Photo studio'
-                  />
-                </div>
+                {images.map((image) => (
+                  <div className='property__image-wrapper' key={image}>
+                    <img
+                      className='property__image'
+                      src={image}
+                      alt='Photo studio'
+                    />
+                  </div>
+                ))}
               </div>
             </div>
             <div className='property__container container'>
               <div className='property__wrapper'>
-                <div className='property__mark'>
-                  <span>Premium</span>
-                </div>
+                {isPremium && (
+                  <div className='property__mark'>
+                    <span>Premium</span>
+                  </div>
+                )}
                 <div className='property__name-wrapper'>
                   <h1 className='property__name'>{title}</h1>
                   <button
-                    className='property__bookmark-button button'
+                    className={`${isFavorite && 'property__bookmark-button--active'} property__bookmark-button button`}
                     type='button'
                   >
                     <svg
@@ -100,7 +88,7 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
                 </div>
                 <div className='property__rating rating'>
                   <div className='property__stars rating__stars'>
-                    <span style={{ width: '80%' }}></span>
+                    <span style={{ width: `${percentageRating}%` }}></span>
                     <span className='visually-hidden'>Rating</span>
                   </div>
                   <span className='property__rating-value rating__value'>
@@ -135,51 +123,52 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
                 <div className='property__host'>
                   <h2 className='property__host-title'>Meet the host</h2>
                   <div className='property__host-user user'>
-                    <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
+                    <div className={`${host.isPro && 'property__avatar-wrapper--pro'} property__avatar-wrapper  user__avatar-wrapper`}>
                       <img
                         className='property__avatar user__avatar'
-                        src='img/avatar-angelina.jpg'
+                        src={host.avatarUrl}
                         width='74'
                         height='74'
                         alt='Host avatar'
                       />
                     </div>
-                    <span className='property__user-name'>Angelina</span>
-                    <span className='property__user-status'>Pro</span>
+                    <span className='property__user-name'>{host.name}</span>
+                    {host.isPro && <span className='property__user-status'>Pro</span>}
                   </div>
                   <div className='property__description'>
                     <p className='property__text'>
-                      A quiet cozy and picturesque that hides behind a a river
-                      by the unique lightness of Amsterdam. The building is
-                      green and from 18th century.
-                    </p>
-                    <p className='property__text'>
-                      An independent House, strategically located between
-                      Rembrand Square and National Opera, but where the bustle
-                      of the city comes to rest in this alley flowery and
-                      colorful.
+                      {description}
                     </p>
                   </div>
                 </div>
                 <section className='property__reviews reviews'>
                   <h2 className='reviews__title'>
-                    Reviews &middot; <span className='reviews__amount'>{currentReviews.length}</span>
+                    Reviews &middot;{' '}
+                    <span className='reviews__amount'>
+                      {sortedReviews.length}
+                    </span>
                   </h2>
                   <ul className='reviews__list'>
-                    {currentReviews.map((review)=> (<Comment review={review} key={review.comment}/>))}
+                    {sortedReviews.map((review) => (
+                      <Comment review={review} key={review.comment} />
+                    ))}
                   </ul>
                   <CommentSendForm reviews={reviews} />
                 </section>
               </div>
             </div>
-            <Map city={defaultCity} offers={neighboringOffers} className={'property'}/>
+            <Map
+              city={defaultCity}
+              offers={neighboringOffers}
+              className={'property'}
+            />
           </section>
           <div className='container'>
             <section className='near-places places'>
               <h2 className='near-places__title'>
                 Other places in the neighbourhood
               </h2>
-              <CardList offers={neighboringOffers} className={'near'}/>
+              <CardList offers={neighboringOffers} className={'near'} />
             </section>
           </div>
         </main>
