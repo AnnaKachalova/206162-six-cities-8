@@ -8,6 +8,8 @@ import CardList from '../card-list/card-list';
 import Map from '../map/map';
 import {City} from '../../types/offer';
 
+import {sortDate, countRating} from '../../types/utils';
+
 type RoomProps = {
   offers: Offers;
   reviews: Reviews;
@@ -25,7 +27,11 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
   const neighboringOffers = offers.slice(0,3);
   if (currentOffer !== undefined) {
     const { title, type, bedrooms, maxAdults, price, rating, goods } = currentOffer;
+    const percentageRating = countRating(rating);
+
     const currentReviews = reviews.filter((review) => review.id === currentId);
+    const sortedReviews:Reviews = sortDate(currentReviews).splice(0,9);
+
     return (
       <div className='page'>
         <Header />
@@ -100,7 +106,7 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
                 </div>
                 <div className='property__rating rating'>
                   <div className='property__stars rating__stars'>
-                    <span style={{ width: '80%' }}></span>
+                    <span style={{ width: `${percentageRating}%` }}></span>
                     <span className='visually-hidden'>Rating</span>
                   </div>
                   <span className='property__rating-value rating__value'>
@@ -163,10 +169,10 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
                 </div>
                 <section className='property__reviews reviews'>
                   <h2 className='reviews__title'>
-                    Reviews &middot; <span className='reviews__amount'>{currentReviews.length}</span>
+                    Reviews &middot; <span className='reviews__amount'>{sortedReviews.length}</span>
                   </h2>
                   <ul className='reviews__list'>
-                    {currentReviews.map((review)=> (<Comment review={review} key={review.comment}/>))}
+                    {sortedReviews.map((review)=> (<Comment review={review} key={review.comment}/>))}
                   </ul>
                   <CommentSendForm reviews={reviews} />
                 </section>

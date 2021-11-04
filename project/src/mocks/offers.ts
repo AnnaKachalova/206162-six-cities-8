@@ -16,7 +16,7 @@ export const offers: Offers = [
     ],
     price: 2500,
     type: 'apartment',
-    rating: 4.5,
+    rating: 4,
     description: `Продается просторная квартира в жк комфорт класса.
       Отделка предчистовая. Сдача 4 квартал 2022'`,
     bedrooms: 1,
@@ -78,7 +78,7 @@ export const offers: Offers = [
     ],
     price: 2500,
     type: 'apartment',
-    rating: 4.5,
+    rating: 3,
     description: `Продается просторная квартира в жк комфорт класса.
       Отделка предчистовая. Сдача 4 квартал 2022'`,
     bedrooms: 2,

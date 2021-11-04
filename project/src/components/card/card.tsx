@@ -3,6 +3,8 @@ import{Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
+import {countRating} from '../../types/utils';
+
 type CardProps = {
     offer: Offer;
     onListItemHover?: (listItemId: number) => void;
@@ -10,7 +12,9 @@ type CardProps = {
 };
 
 function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
-  const{ id, title, price, type, isPremium, previewImage, isFavorite } = offer;
+  const{ id, title, price, type, isPremium, previewImage, isFavorite, rating } = offer;
+  const percentageRating = countRating(rating);
+
   const history = useHistory();
   const listItemHoverHandler = (evt:MouseEvent<HTMLLIElement>)=>{
     if (onListItemHover) {
@@ -18,7 +22,7 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
     }
   };
   const isMainCard = className  === 'cities';
-  const width = isMainCard ? 80:100;
+
   return (
     <article className={`${isMainCard? 'cities__place-' : 'near-places__'}card place-card`} onMouseEnter={listItemHoverHandler}>
       {isPremium &&
@@ -51,7 +55,7 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: width }}></span>
+            <span style={{ width: `${percentageRating}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
