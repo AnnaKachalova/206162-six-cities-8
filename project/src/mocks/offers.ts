@@ -59,7 +59,7 @@ export const offers: Offers = [
       'https://housechief.ru/wp-content/uploads/2017/07/1-15.jpg',
       'https://www.dizainvfoto.ru/wp-content/uploads/2018/06/sovremennaya-gostinaya.jpg',
     ],
-    price: 2500,
+    price: 1000,
     type: 'apartment',
     rating: 4.5,
     description: `Продается просторная квартира в жк комфорт класса.
@@ -104,7 +104,7 @@ export const offers: Offers = [
       'https://housechief.ru/wp-content/uploads/2017/07/1-15.jpg',
       'https://www.dizainvfoto.ru/wp-content/uploads/2018/06/sovremennaya-gostinaya.jpg',
     ],
-    price: 2500,
+    price: 1200,
     type: 'apartment',
     rating: 3,
     description: `Продается просторная квартира в жк комфорт класса.
@@ -149,7 +149,7 @@ export const offers: Offers = [
       'https://housechief.ru/wp-content/uploads/2017/07/1-15.jpg',
       'https://www.dizainvfoto.ru/wp-content/uploads/2018/06/sovremennaya-gostinaya.jpg',
     ],
-    price: 2500,
+    price: 2000,
     type: 'apartment',
     rating: 4.5,
     description: `Продается просторная квартира в жк комфорт класса.
@@ -194,7 +194,7 @@ export const offers: Offers = [
       'https://housechief.ru/wp-content/uploads/2017/07/1-15.jpg',
       'https://www.dizainvfoto.ru/wp-content/uploads/2018/06/sovremennaya-gostinaya.jpg',
     ],
-    price: 2500,
+    price: 1500,
     type: 'apartment',
     rating: 4.5,
     description: `Продается просторная квартира в жк комфорт класса.
@@ -239,7 +239,7 @@ export const offers: Offers = [
       'https://housechief.ru/wp-content/uploads/2017/07/1-15.jpg',
       'https://www.dizainvfoto.ru/wp-content/uploads/2018/06/sovremennaya-gostinaya.jpg',
     ],
-    price: 2500,
+    price: 1800,
     type: 'apartment',
     rating: 4.5,
     description: `Продается просторная квартира в жк комфорт класса.

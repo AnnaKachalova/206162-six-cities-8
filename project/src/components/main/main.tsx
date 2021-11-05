@@ -4,28 +4,34 @@ import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 
 import {Actions} from '../../types/action';
-import {changeCity} from '../../store/action';
+import {changeCity,changeSort} from '../../store/action';
 
 import CardList from '../card-list/card-list';
 import CityList from '../city-list/city-list';
+import SortList from '../sort-list/sort-list';
 import Header from '../header/header';
 import Map from '../map/map';
 
-import{Offers, Offer} from '../../types/offer';
-import {City} from '../../types/offer';
+import{ Offers, Offer, City } from '../../types/offer';
+import { FIRST_SORT } from '../../const';
+import { sortingOffers } from '../../types/utils';
 
 type MainProps = {
   offers: Offers;
   defaultCity: City;
 };
 
-const mapStateToProps = ({city}: State) => ({
+const mapStateToProps = ({city, keyOfSort}: State) => ({
   city,
+  keyOfSort,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onChangeCity(nameCity:string) {
     dispatch(changeCity(nameCity));
+  },
+  onChangeSort(keyOfSort: string){
+    dispatch(changeSort(keyOfSort));
   },
 });
 
@@ -36,15 +42,17 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
 function Main(props: ConnectedComponentProps): JSX.Element {
-  const {offers, city, defaultCity, onChangeCity} = props;
+  const {offers, city, keyOfSort, defaultCity, onChangeCity, onChangeSort} = props;
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
+  const [activeSort, setActiveSort] =  useState<string>(FIRST_SORT);
+
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedPoint(currentPoint);
   };
   const filteredOffers = offers.filter((offer)=> offer.city.name === city);
-
+  let sortedOffers = filteredOffers;
   useEffect(()=>{
     const currentCity = offers.find((offer)=>offer.city.name ===city);
     if(currentCity){
@@ -52,44 +60,33 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     }
   }, [city]);
 
+  useEffect(()=>{
+    setActiveSort(keyOfSort);
+    sortedOffers = sortingOffers(filteredOffers, keyOfSort);
+  }, [activeSort, keyOfSort]);
+
   return (
     <div className='page page--gray page--main'>
       <Header />
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
-        <CityList onChangeCity={onChangeCity} activeCity={activeCity} offers={offers}></CityList>
+        <CityList onChangeCity={onChangeCity} activeCity={activeCity}></CityList>
         <div className='cities'>
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>{filteredOffers.length} places to stay in {activeCity.name}</b>
+              <b className='places__found'>{sortedOffers.length} places to stay in {activeCity.name}</b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
-                  Popular
+                  {activeSort}
                   <svg className='places__sorting-arrow' width='7' height='4'>
                     <use xlinkHref='#icon-arrow-select'></use>
                   </svg>
                 </span>
-                <ul className='places__options places__options--custom places__options--opened'>
-                  <li
-                    className='places__option places__option--active'
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
+                <SortList onChangeSort={onChangeSort} activeSort={activeSort}></SortList>
               </form>
-              <CardList offers={filteredOffers} onListItemHover={onListItemHover} className={'cities'}/>
+              <CardList offers={sortedOffers} onListItemHover={onListItemHover} className={'cities'}/>
             </section>
             <div className='cities__right-section'>
               <Map city={activeCity} offers={filteredOffers} selectedPoint={selectedPoint} className={'cities'}/>

@@ -1,5 +1,31 @@
 import { Reviews, Review } from '../types/reviews';
+import { Offers } from '../types/offer';
+import { SORT_TYPES } from '../const';
 
 export const sortDate = (reviews: Reviews) => reviews.sort((b: Review, a: Review) => +new Date(a.date) - +new Date(b.date));
 
-export const countRating = (rating:number) => rating * 100 / 5;
+export const countRating = (rating: number) => (rating * 100) / 5;
+
+/*export const getPriceLowToHigh = (offers: Offers) => offers.sort((a, b) => a.price > b.price ? 1 : -1);
+
+export const getPriceHighToLow = (offers: Offers) => offers.sort((b, a) => a.price > b.price ? 1 : -1);
+
+export const getTopRatedFirst = (offers: Offers) => offers.sort((b, a) => a.rating > b.rating ? 1 : -1);
+*/
+export const sortingOffers = (offers: Offers, sortingType: string) => {
+  let sorted:Offers = [];
+  switch (sortingType) {
+    case SORT_TYPES.POPULAR:
+      break;
+    case SORT_TYPES.PRICE_LOW_TO_HIGHT:
+      sorted = offers.sort((a, b) => a.price > b.price ? 1 : -1);
+      break;
+    case SORT_TYPES.PRICE_HIGHT_TO_LOW:
+      sorted = offers.sort((b, a) => a.price > b.price ? 1 : -1);
+      break;
+    case SORT_TYPES.TOP_RATED_FIRST:
+      sorted = offers.sort((b, a) => a.rating > b.rating ? 1 : -1);
+      break;
+  }
+  return sorted;
+};

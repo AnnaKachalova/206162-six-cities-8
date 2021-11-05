@@ -35,3 +35,7 @@ export type Offer = {
 
 export type Offers = Offer[];
 export type Cities = City[];
+
+export type LooseObject = {
+  [key: string]: string;
+};
