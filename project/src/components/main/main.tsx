@@ -63,7 +63,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
   useEffect(()=>{
     setActiveSort(keyOfSort);
     sortedOffers = sortingOffers(filteredOffers, keyOfSort);
-  }, [activeSort, keyOfSort]);
+  }, [keyOfSort]);
 
   return (
     <div className='page page--gray page--main'>
