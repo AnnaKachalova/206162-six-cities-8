@@ -1,4 +1,4 @@
-import {ActionType, ChangeCityAction, ChangeSortAction, FillCityListAction} from '../types/action';
+import { ActionType, ChangeCityAction, ChangeSortAction, FillCityListAction } from '../types/action';
 import { Offers } from '../types/offer';
 
 export const changeCity = (city: string): ChangeCityAction => ({

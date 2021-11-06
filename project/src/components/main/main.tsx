@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
+import React, { useState, useEffect } from 'react';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { State} from '../../types/state';
 
-import {Actions} from '../../types/action';
-import {changeCity,changeSort} from '../../store/action';
+import { Actions } from '../../types/action';
+import { changeCity,changeSort } from '../../store/action';
 
 import CardList from '../card-list/card-list';
 import CityList from '../city-list/city-list';

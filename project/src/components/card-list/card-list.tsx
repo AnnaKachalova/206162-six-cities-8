@@ -1,13 +1,5 @@
-/*import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-
-import {State} from '../../types/state';
-import {Actions} from '../../types/action';
-
-import {changeCity, fillCityList} from '../../store/action';*/
-
 import Card from '../card/card';
-import{Offers} from '../../types/offer';
+import{ Offers } from '../../types/offer';
 
 type CardListProps = {
   offers:Offers;

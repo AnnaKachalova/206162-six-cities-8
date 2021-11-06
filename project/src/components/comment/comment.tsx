@@ -1,6 +1,6 @@
-import { Review } from '../../types/reviews';
 import dayjs from 'dayjs';
-import {countRating} from '../../types/utils';
+import { Review } from '../../types/reviews';
+import { countRating } from '../../types/utils';
 
 type CommentProps = {
   review: Review;

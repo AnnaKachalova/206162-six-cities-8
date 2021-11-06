@@ -1,5 +1,5 @@
-import { Reviews } from '../../types/reviews';
 import React, { useState, FormEvent } from 'react';
+import { Reviews } from '../../types/reviews';
 
 type CommentSendFormProps = {
   reviews: Reviews;
