@@ -6,9 +6,9 @@ import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import { Offers } from '../../types/offer';
+import { Offers, City } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
-import {City} from '../../types/offer';
+
 
 type AppProps = {
   offers: Offers;

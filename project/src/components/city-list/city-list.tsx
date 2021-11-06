@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
 import { CITIES } from '../../const';
-import {City, Offers} from '../../types/offer';
+import { City } from '../../types/offer';
 
 type CityListProps = {
-  onChangeCity: (cityName: string, offers: Offers) => void;
+  onChangeCity: (cityName: string) => void;
   activeCity: City;
-  offers: Offers;
 };
 
-function CityList({ onChangeCity, activeCity, offers }: CityListProps): JSX.Element {
+function CityList({ onChangeCity, activeCity }: CityListProps): JSX.Element {
   return (
     <div className='tabs'>
       <section className='locations container'>
@@ -16,9 +15,9 @@ function CityList({ onChangeCity, activeCity, offers }: CityListProps): JSX.Elem
           {CITIES.map((cityName) => (
             <li className='locations__item' key={cityName}>
               <Link
-                className={`${activeCity.name === cityName ? 'tabs__item--active' : ''} locations__item-link tabs__item`}
+                className={`${activeCity.name === cityName && 'tabs__item--active'} locations__item-link tabs__item`}
                 to='#'
-                onClick={() => onChangeCity(cityName, offers)}
+                onClick={() => onChangeCity(cityName)}
               >
                 <span>{cityName}</span>
               </Link>
