@@ -58,12 +58,13 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     if(currentCity){
       setActiveCity(currentCity.city);
     }
-  }, [city]);
+  }, [city, offers]);
 
   useEffect(()=>{
     setActiveSort(keyOfSort);
-    sortedOffers = sortingOffers(filteredOffers, keyOfSort);
   }, [keyOfSort]);
+
+  sortedOffers = sortingOffers(filteredOffers, keyOfSort);
 
   return (
     <div className='page page--gray page--main'>

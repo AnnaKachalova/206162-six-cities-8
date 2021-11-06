@@ -57,7 +57,7 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
                     <img
                       className='property__image'
                       src={image}
-                      alt='Photo studio'
+                      alt='Photo_studio'
                     />
                   </div>
                 ))}

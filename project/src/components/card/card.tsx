@@ -28,15 +28,15 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className={`${isMainCard? 'cities__' : 'near-places__'}-image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <Link to="#">
           <img
             className="place-card__image"
             src={previewImage}
             width="260"
             height="200"
-            alt="Place image"
+            alt="Place"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

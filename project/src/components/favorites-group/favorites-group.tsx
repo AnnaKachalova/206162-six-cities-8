@@ -1,4 +1,5 @@
 import { Offers } from '../../types/offer';
+import { Link } from 'react-router-dom';
 
 type FavoritesGroupProps = {
   offers: Offers;
@@ -13,9 +14,9 @@ function FavoritesGroup({
     <li className='favorites__locations-items'>
       <div className='favorites__locations locations locations--current'>
         <div className='locations__item'>
-          <a className='locations__item-link' href='#'>
+          <Link className='locations__item-link' to='#'>
             <span>{cityName}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className='favorites__places'>
@@ -24,15 +25,15 @@ function FavoritesGroup({
           return (
             <article className='favorites__card place-card' key={`${id}456`}>
               <div className='favorites__image-wrapper place-card__image-wrapper'>
-                <a href='#'>
+                <Link to='#'>
                   <img
                     className='place-card__image'
                     src={previewImage}
                     width='150'
                     height='110'
-                    alt='Place image'
+                    alt='Place'
                   />
-                </a>
+                </Link>
               </div>
               <div className='favorites__card-info place-card__info'>
                 <div className='place-card__price-wrapper'>
@@ -63,7 +64,7 @@ function FavoritesGroup({
                   </div>
                 </div>
                 <h2 className='place-card__name'>
-                  <a href='#'>{title}</a>
+                  <Link to='#'>{title}</Link>
                 </h2>
                 <p className='place-card__type'>{type}</p>
               </div>

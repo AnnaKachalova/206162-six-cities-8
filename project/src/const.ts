@@ -19,7 +19,7 @@ export const SORT_TYPES = {
   PRICE_HIGHT_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
 };
-export const FIRST_SORT = 'POPULAR';
+export const FIRST_SORT = 'Popular';
 
 export enum MapIcon {
   Default = 'img/pin.svg',

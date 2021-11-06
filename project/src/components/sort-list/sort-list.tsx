@@ -18,7 +18,7 @@ function SortList({ onChangeSort, activeSort }: SortListProps): JSX.Element {
       </span>
 
       <ul className='places__options places__options--custom places__options--opened'>
-        {Object.keys(SORT_TYPES).map((keyOfSort) => (
+        {Object.values(SORT_TYPES).map((keyOfSort) => (
           <Link to='#' onClick={() => onChangeSort(keyOfSort)} key={keyOfSort}>
             <li
               className={`${
