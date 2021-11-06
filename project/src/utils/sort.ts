@@ -1,10 +1,5 @@
-import { Reviews, Review } from '../types/reviews';
 import { Offers } from '../types/offer';
 import { SORT_TYPES } from '../const';
-
-export const sortDate = (reviews: Reviews): Reviews => reviews.sort((b: Review, a: Review) => +new Date(a.date) - +new Date(b.date));
-
-export const countRating = (rating: number): number => (rating * 100) / 5;
 
 export const getPriceLowToHigh = (offers: Offers):Offers => offers.sort((a, b) => a['price'] - b['price']);
 export const getPriceHighToLow = (offers: Offers):Offers => offers.sort((a, b) => b['price'] - a['price']);

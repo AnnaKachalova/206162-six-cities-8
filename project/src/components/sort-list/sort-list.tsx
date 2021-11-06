@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { SORT_TYPES } from '../../const';
 
 type SortListProps = {
@@ -19,16 +18,14 @@ function SortList({ onChangeSort, activeSort }: SortListProps): JSX.Element {
 
       <ul className='places__options places__options--custom places__options--opened'>
         {Object.values(SORT_TYPES).map((keyOfSort) => (
-          <Link to='#' onClick={() => onChangeSort(keyOfSort)} key={keyOfSort}>
-            <li
-              className={`${
-                activeSort === keyOfSort && 'places__option--active'
-              } places__option`}
-              tabIndex={0}
-            >
-              {keyOfSort}
-            </li>
-          </Link>
+          <li onClick={() => onChangeSort(keyOfSort)} key={keyOfSort}
+            className={`${
+              activeSort === keyOfSort && 'places__option--active'
+            } places__option`}
+            tabIndex={0}
+          >
+            {keyOfSort}
+          </li>
         ))}
       </ul>
     </form>

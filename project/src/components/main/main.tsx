@@ -14,7 +14,7 @@ import Map from '../map/map';
 
 import{ Offers, Offer, City } from '../../types/offer';
 import { FIRST_SORT } from '../../const';
-import { sortingOffers } from '../../types/utils';
+import { sortingOffers } from '../../utils/sort';
 
 type MainProps = {
   offers: Offers;
@@ -43,16 +43,18 @@ type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 function Main(props: ConnectedComponentProps): JSX.Element {
   const {offers, city, keyOfSort, defaultCity, onChangeCity, onChangeSort} = props;
+
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
   const [activeSort, setActiveSort] =  useState<string>(FIRST_SORT);
-
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+
   const onListItemHover = (listItemId: number) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedPoint(currentPoint);
   };
   const filteredOffers = offers.filter((offer)=> offer.city.name === city);
   let sortedOffers = filteredOffers;
+
   useEffect(()=>{
     const currentCity = offers.find((offer)=>offer.city.name ===city);
     if(currentCity){

@@ -8,7 +8,8 @@ import CardList from '../card-list/card-list';
 import Map from '../map/map';
 import { City } from '../../types/offer';
 
-import { sortDate, countRating } from '../../types/utils';
+import { countRating } from '../../utils/common';
+import { sortDate } from '../../utils/review';
 
 type RoomProps = {
   offers: Offers;
