@@ -2,7 +2,7 @@ export enum AppRoute {
   Root = '/',
   SignIn = '/login',
   Favorites = '/favorites',
-  Room = '/offer/:id'
+  Room = '/offer/:id',
 }
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -10,7 +10,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
 export const FIRST_CITY = CITIES[0];
 
 export const SORT_TYPES = {
@@ -26,4 +33,8 @@ export enum MapIcon {
   Active = 'img/pin-active.svg',
 }
 
-
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}

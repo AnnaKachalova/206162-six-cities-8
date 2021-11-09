@@ -1,41 +1,40 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute /*AuthorizationStatus*/ } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
-import Room from '../room/room';
-import Favorites from '../favorites/favorites';
+//import Room from '../room/room';
+//import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
-import PrivateRoute from '../private-route/private-route';
-import { Offers, City } from '../../types/offer';
-import { Reviews } from '../../types/reviews';
+//import PrivateRoute from '../private-route/private-route';
+/*import { Offers, City } from '../../types/offer';
+import { Reviews } from '../../types/reviews';*/
 
+//import LoadingScreen from '../loading-screen/loading-screen';
+import { State } from '../../types/state';
+const mapStateToProps = ({ authorizationStatus, isDataLoaded }: State) => ({
+  authorizationStatus,
+  isDataLoaded,
+});
 
-type AppProps = {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+/*type AppProps = {
   offers: Offers;
   reviews: Reviews;
-  defaultCity:City;
-};
-
-function App({ offers, reviews, defaultCity }: AppProps): JSX.Element {
+  defaultCity: City;
+};*/
+function App(props: PropsFromRedux): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <Main offers={offers} defaultCity={defaultCity}/>
+          <Main />
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
-        <Route exact path={AppRoute.Room}>
-          <Room offers={offers} reviews={reviews} defaultCity={defaultCity}/>
-        </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.Favorites}
-          render={() => <Favorites offers={offers} />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
-        >
-        </PrivateRoute>
         <Route>
           <NotFound />
         </Route>
@@ -44,4 +43,15 @@ function App({ offers, reviews, defaultCity }: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export { App };
+export default connector(App);
+/*<Route exact path={AppRoute.Room}>
+          <Room />
+        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.Favorites}
+          render={() => <Favorites />}
+          authorizationStatus={AuthorizationStatus.NoAuth}
+        >
+        </PrivateRoute> */

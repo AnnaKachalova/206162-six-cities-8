@@ -12,18 +12,15 @@ import SortList from '../sort-list/sort-list';
 import Header from '../header/header';
 import Map from '../map/map';
 
-import{ Offers, Offer, City } from '../../types/offer';
+import{ Offer, City } from '../../types/offer';
 import { FIRST_SORT } from '../../const';
 import { sortingOffers } from '../../utils/sort';
+import { defaultCity } from '../../mocks/cities';
 
-type MainProps = {
-  offers: Offers;
-  defaultCity: City;
-};
-
-const mapStateToProps = ({city, keyOfSort}: State) => ({
+const mapStateToProps = ({city, offers, keyOfSort}: State) => ({
   city,
   keyOfSort,
+  offers,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -38,11 +35,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainProps;
+//type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 
-function Main(props: ConnectedComponentProps): JSX.Element {
-  const {offers, city, keyOfSort, defaultCity, onChangeCity, onChangeSort} = props;
+function Main(props: PropsFromRedux): JSX.Element {
+  const {offers, city, keyOfSort, onChangeCity, onChangeSort} = props;
 
   const [activeCity, setActiveCity] =  useState<City>(defaultCity);
   const [activeSort, setActiveSort] =  useState<string>(FIRST_SORT);
