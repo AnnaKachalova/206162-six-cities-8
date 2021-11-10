@@ -18,6 +18,7 @@ export const CITIES = [
   'Hamburg',
   'Dusseldorf',
 ];
+
 export const FIRST_CITY = CITIES[0];
 
 export const SORT_TYPES = {
@@ -34,7 +35,7 @@ export enum MapIcon {
 }
 
 export enum APIRoute {
-  Offers = '/offers',
+  Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
 }

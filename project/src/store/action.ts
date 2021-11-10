@@ -22,7 +22,9 @@ export const fillCityList = (offers: Offers) => ({
 export const loadOffers = (offers: Offers) =>
   ({
     type: ActionType.LoadOffers,
-    payload: offers,
+    payload: {
+      offers,
+    },
   } as const);
 
 export const requireAuthorization = (authStatus: AuthorizationStatus) =>
