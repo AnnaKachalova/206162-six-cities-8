@@ -1,5 +1,6 @@
 import { ActionType } from '../types/action';
 import { Offers } from '../types/offer';
+import { Reviews } from '../types/reviews';
 import { AuthorizationStatus } from '../const';
 
 export const changeCity = (city: string) =>
@@ -25,6 +26,14 @@ export const loadOffers = (offers: Offers) =>
     type: ActionType.LoadOffers,
     payload: {
       offers,
+    },
+  } as const);
+
+export const loadReviews = (reviews: Reviews) =>
+  ({
+    type: ActionType.LoadReviews,
+    payload: {
+      reviews,
     },
   } as const);
 

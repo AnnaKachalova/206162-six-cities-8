@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { State } from '../types/state';
 import {
   loadOffers,
+  loadReviews,
   changeCity,
   changeSort,
   fillCityList,
@@ -15,12 +16,14 @@ export enum ActionType {
   FillCityList = 'render/fillCityList',
   ChangeSort = 'render/changeSort',
   LoadOffers = 'data/loadOffers',
+  LoadReviews = 'data/loadReviews',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
 }
 
 export type Actions =
   | ReturnType<typeof loadOffers>
+  | ReturnType<typeof loadReviews>
   | ReturnType<typeof changeCity>
   | ReturnType<typeof changeSort>
   | ReturnType<typeof fillCityList>

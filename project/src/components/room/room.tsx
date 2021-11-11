@@ -19,17 +19,15 @@ import { changeCity } from '../../store/action';
 import { Offer } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
 
-import{ reviews} from '../../mocks/reviews';
-
-
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, keyOfSort }: State) => ({
+const mapStateToProps = ({ city, offers, reviews, keyOfSort  }: State) => ({
   city,
-  keyOfSort,
   offers,
+  reviews,
+  keyOfSort,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -43,7 +41,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { offers } = props;
+  const { offers, reviews } = props;
   const { id } = useParams<PostParams>();
   const currentId: number = +id;
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
@@ -65,8 +63,8 @@ function Room(props: PropsFromRedux): JSX.Element {
     } = currentOffer;
     const percentageRating = countRating(rating);
 
-    const currentReviews = reviews.filter((review) => review.id === currentId);
-    const sortedReviews: Reviews = sortDate(currentReviews).splice(0, 9);
+    //const currentReviews = reviews.filter((review) => review.id === currentId);
+    const sortedReviews: Reviews = sortDate(reviews).splice(0, 9);
 
     return (
       <div className='page'>
@@ -75,7 +73,7 @@ function Room(props: PropsFromRedux): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                {images.map((image) => (
+                {images.splice(0, 6).map((image) => (
                   <div className='property__image-wrapper' key={image}>
                     <img
                       className='property__image'

@@ -9,7 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducer } from './store/reducer';
 import { requireAuthorization } from './store/action';
-import { fetchOffersAction, checkAuthAction } from './store/api-actions';
+import { fetchOffersAction, fetchReviewsAction, checkAuthAction } from './store/api-actions';
 import { ThunkAppDispatch } from './types/action';
 import { AuthorizationStatus } from './const';
 
@@ -23,6 +23,7 @@ const store = createStore(
 );
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchOffersAction());
+(store.dispatch as ThunkAppDispatch)(fetchReviewsAction());
 
 ReactDOM.render(
   <React.StrictMode>

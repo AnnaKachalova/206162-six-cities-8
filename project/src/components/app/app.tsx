@@ -36,11 +36,11 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
-        <Route>
-          <NotFound />
-        </Route>
         <Route exact path={AppRoute.Room}>
           <Room />
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
     </BrowserRouter>
