@@ -1,6 +1,7 @@
-import { Offer } from '../src/types/offer';
+import { Offers } from '../src/types/offer';
+import { Reviews } from '../src/types/reviews';
 
-export const adaptOffers = (offers: any[]): Offer[] =>
+export const adaptOffers = (offers: any[]): Offers =>
   offers.map((item) => {
     const obj = {
       id: item.id,
@@ -35,6 +36,24 @@ export const adaptOffers = (offers: any[]): Offer[] =>
         latitude: item.location.latitude,
         longitude: item.location.longitude,
         zoom: item.location.zoom,
+      },
+    };
+
+    return obj;
+  });
+
+export const adaptReviews = (reviews: any[]): Reviews =>
+  reviews.map((item) => {
+    const obj = {
+      comment: item.comment || '',
+      date: item.date || '',
+      id: item.id,
+      rating: item.rating,
+      user: {
+        avatarUrl: item.user.avatar_url || '',
+        id: item.user.id,
+        isPro: item.user.is_pro || false,
+        name: item.user.name || '',
       },
     };
 
