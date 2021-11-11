@@ -11,6 +11,7 @@ import { City } from '../../types/offer';
 import { countRating } from '../../utils/common';
 import { sortDate } from '../../utils/review';
 
+
 type RoomProps = {
   offers: Offers;
   reviews: Reviews;

@@ -21,6 +21,15 @@ export const CITIES = [
 
 export const FIRST_CITY = CITIES[0];
 
+export const defaultCity = {
+  name: 'Paris',
+  location: {
+    latitude: 48.8534,
+    longitude: 2.3488,
+    zoom: 10,
+  },
+};
+
 export const SORT_TYPES = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGHT: 'Price: low to high',

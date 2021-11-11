@@ -31,6 +31,11 @@ export type Offer = {
   host: Host;
   isPremium: boolean;
   isFavorite: boolean;
+  location: {
+    latitude: number,
+    longitude: number,
+    zoom: number
+  },
 };
 
 export type Offers = Offer[];

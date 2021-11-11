@@ -14,10 +14,11 @@ export const changeSort = (keyOfSort: string) =>
     payload: keyOfSort,
   } as const);
 
-export const fillCityList = (offers: Offers) => ({
-  type: ActionType.FillCityList,
-  payload: offers,
-});
+export const fillCityList = (offers: Offers) =>
+  ({
+    type: ActionType.FillCityList,
+    payload: offers,
+  } as const);
 
 export const loadOffers = (offers: Offers) =>
   ({

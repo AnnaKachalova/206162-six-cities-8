@@ -1,6 +1,7 @@
 import { FIRST_CITY, FIRST_SORT, AuthorizationStatus } from '../const';
 import { State } from '../types/state';
 import { ActionType, Actions } from '../types/action';
+import { adaptOffers } from '../adapter';
 
 const initialState = {
   city: FIRST_CITY,
@@ -19,7 +20,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.FillCityList:
       return { ...state, offers: action.payload };
     case ActionType.LoadOffers: {
-      const { offers } = action.payload;
+      const offers = adaptOffers(action.payload.offers);
       return { ...state, offers };
     }
     case ActionType.RequireAuthorization:

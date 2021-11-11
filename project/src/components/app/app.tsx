@@ -7,10 +7,9 @@ import Login from '../login/login';
 //import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 //import PrivateRoute from '../private-route/private-route';
-/*import { Offers, City } from '../../types/offer';
-import { Reviews } from '../../types/reviews';*/
 
-//import LoadingScreen from '../loading-screen/loading-screen';
+
+import LoadingScreen from '../loading-screen/loading-screen';
 import { State } from '../../types/state';
 const mapStateToProps = ({ authorizationStatus, isDataLoaded }: State) => ({
   authorizationStatus,
@@ -20,12 +19,14 @@ const mapStateToProps = ({ authorizationStatus, isDataLoaded }: State) => ({
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-/*type AppProps = {
-  offers: Offers;
-  reviews: Reviews;
-  defaultCity: City;
-};*/
+
 function App(props: PropsFromRedux): JSX.Element {
+  const {isDataLoaded} = props;
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Switch>
