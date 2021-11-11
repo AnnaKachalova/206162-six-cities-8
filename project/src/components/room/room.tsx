@@ -1,28 +1,49 @@
-import Header from '../header/header';
-import { Offers, Offer } from '../../types/offer';
+import React,{ useParams } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
+
 import CommentSendForm from '../comment-send-form/comment-send-form';
-import Comment from '../comment/comment';
-import { Reviews } from '../../types/reviews';
-import { useParams } from 'react-router-dom';
 import CardList from '../card-list/card-list';
+import Comment from '../comment/comment';
+import Header from '../header/header';
 import Map from '../map/map';
-import { City } from '../../types/offer';
 
 import { countRating } from '../../utils/common';
 import { sortDate } from '../../utils/review';
+import { defaultCity } from '../../const';
 
+import { Actions } from '../../types/action';
+import { changeCity } from '../../store/action';
 
-type RoomProps = {
-  offers: Offers;
-  reviews: Reviews;
-  defaultCity: City;
-};
+import { Offer } from '../../types/offer';
+import { Reviews } from '../../types/reviews';
+
+import{ reviews} from '../../mocks/reviews';
+
 
 type PostParams = {
   id: string;
 };
 
-function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
+const mapStateToProps = ({ city, offers, keyOfSort }: State) => ({
+  city,
+  keyOfSort,
+  offers,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onChangeCity(nameCity: string) {
+    dispatch(changeCity(nameCity));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Room(props: PropsFromRedux): JSX.Element {
+  const { offers } = props;
   const { id } = useParams<PostParams>();
   const currentId: number = +id;
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
@@ -180,4 +201,6 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
     return <div>Карта не найдена</div>;
   }
 }
-export default Room;
+
+export { Room };
+export default connector(Room);
