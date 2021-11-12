@@ -1,3 +1,5 @@
+import { useHistory } from 'react-router-dom';
+
 import { Offers } from '../../types/offer';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +12,7 @@ function FavoritesGroup({
   offers,
   cityName,
 }: FavoritesGroupProps): JSX.Element {
+  const history = useHistory();
   return (
     <li className='favorites__locations-items'>
       <div className='favorites__locations locations locations--current'>
@@ -64,7 +67,9 @@ function FavoritesGroup({
                   </div>
                 </div>
                 <h2 className='place-card__name'>
-                  <Link to='#'>{title}</Link>
+                  <Link to={`/offer/${id}`} onClick={() => history.push(`/offer/${id}`)}>
+                    {title}
+                  </Link>
                 </h2>
                 <p className='place-card__type'>{type}</p>
               </div>

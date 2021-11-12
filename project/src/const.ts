@@ -2,7 +2,7 @@ export enum AppRoute {
   Root = '/',
   SignIn = '/login',
   Favorites = '/favorites',
-  Room = '/offer/:id'
+  Room = '/offer/:id',
 }
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -10,8 +10,25 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 export const FIRST_CITY = CITIES[0];
+
+export const defaultCity = {
+  name: 'Paris',
+  location: {
+    latitude: 48.8534,
+    longitude: 2.3488,
+    zoom: 10,
+  },
+};
 
 export const SORT_TYPES = {
   POPULAR: 'Popular',
@@ -26,4 +43,9 @@ export enum MapIcon {
   Active = 'img/pin-active.svg',
 }
 
-
+export enum APIRoute {
+  Offers = '/hotels',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}

@@ -1,39 +1,45 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
 import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import { Offers, City } from '../../types/offer';
-import { Reviews } from '../../types/reviews';
 
+import LoadingScreen from '../loading-screen/loading-screen';
+import { State } from '../../types/state';
+const mapStateToProps = ({ authorizationStatus, isDataLoaded }: State) => ({
+  authorizationStatus,
+  isDataLoaded,
+});
 
-type AppProps = {
-  offers: Offers;
-  reviews: Reviews;
-  defaultCity:City;
-};
+const connector = connect(mapStateToProps);
 
-function App({ offers, reviews, defaultCity }: AppProps): JSX.Element {
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function App(props: PropsFromRedux): JSX.Element {
+  const { isDataLoaded } = props;
+  if (!isDataLoaded) {
+    return <LoadingScreen />;
+  }
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <Main offers={offers} defaultCity={defaultCity}/>
+          <Main />
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
         <Route exact path={AppRoute.Room}>
-          <Room offers={offers} reviews={reviews} defaultCity={defaultCity}/>
+          <Room />
         </Route>
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <Favorites offers={offers} />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          render={() => <Favorites />}
         >
         </PrivateRoute>
         <Route>
@@ -44,4 +50,5 @@ function App({ offers, reviews, defaultCity }: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export { App };
+export default connector(App);

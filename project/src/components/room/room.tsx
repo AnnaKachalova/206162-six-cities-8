@@ -1,27 +1,47 @@
-import Header from '../header/header';
-import { Offers, Offer } from '../../types/offer';
+import React,{ useParams } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
+
 import CommentSendForm from '../comment-send-form/comment-send-form';
-import Comment from '../comment/comment';
-import { Reviews } from '../../types/reviews';
-import { useParams } from 'react-router-dom';
 import CardList from '../card-list/card-list';
+import Comment from '../comment/comment';
+import Header from '../header/header';
 import Map from '../map/map';
-import { City } from '../../types/offer';
 
 import { countRating } from '../../utils/common';
 import { sortDate } from '../../utils/review';
+import { defaultCity } from '../../const';
 
-type RoomProps = {
-  offers: Offers;
-  reviews: Reviews;
-  defaultCity: City;
-};
+import { Actions } from '../../types/action';
+import { changeCity } from '../../store/action';
+
+import { Offer } from '../../types/offer';
+import { Reviews } from '../../types/reviews';
 
 type PostParams = {
   id: string;
 };
 
-function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
+const mapStateToProps = ({ city, offers, reviews, keyOfSort  }: State) => ({
+  city,
+  offers,
+  reviews,
+  keyOfSort,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onChangeCity(nameCity: string) {
+    dispatch(changeCity(nameCity));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Room(props: PropsFromRedux): JSX.Element {
+  const { offers, reviews } = props;
   const { id } = useParams<PostParams>();
   const currentId: number = +id;
   const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
@@ -43,8 +63,8 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
     } = currentOffer;
     const percentageRating = countRating(rating);
 
-    const currentReviews = reviews.filter((review) => review.id === currentId);
-    const sortedReviews: Reviews = sortDate(currentReviews).splice(0, 9);
+    //const currentReviews = reviews.filter((review) => review.id === currentId);
+    const sortedReviews: Reviews = sortDate(reviews).splice(0, 9);
 
     return (
       <div className='page'>
@@ -53,7 +73,7 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                {images.map((image) => (
+                {images.splice(0, 6).map((image) => (
                   <div className='property__image-wrapper' key={image}>
                     <img
                       className='property__image'
@@ -179,4 +199,6 @@ function Room({ offers, reviews, defaultCity }: RoomProps): JSX.Element {
     return <div>Карта не найдена</div>;
   }
 }
-export default Room;
+
+export { Room };
+export default connector(Room);
