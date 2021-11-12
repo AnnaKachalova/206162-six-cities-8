@@ -29,7 +29,6 @@ function Login(props: PropsFromRedux): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
     if (loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
         login: loginRef.current.value,
