@@ -1,10 +1,13 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, loadReviews, requireAuthorization, requireLogout } from './action';
+import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offer';
 import { Review } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
+
+import {toast} from 'react-toastify';
+const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
 export const fetchOffersAction =
   (): ThunkActionResult =>
@@ -22,9 +25,13 @@ export const fetchReviewsAction =
 
 export const checkAuthAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login).then(() => {
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    });
+    await api.get(APIRoute.Login)
+      .then((response): void => {
+        dispatch(changeUser(response.data.email));
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      }).catch(() => {
+        toast.info(AUTH_FAIL_MESSAGE);
+      });
   };
 
 export const loginAction =
@@ -35,6 +42,7 @@ export const loginAction =
       } = await api.post<{ token: Token }>(APIRoute.Login, { email, password });
       saveToken(token);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(changeUser(email));
     };
 
 export const logoutAction =

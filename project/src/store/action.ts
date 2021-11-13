@@ -47,3 +47,9 @@ export const requireLogout = () =>
   ({
     type: ActionType.RequireLogout,
   } as const);
+
+export const changeUser = (currentUserEmail: string)  =>
+  ({
+    type: ActionType.ChangeUser,
+    payload: currentUserEmail,
+  } as const);

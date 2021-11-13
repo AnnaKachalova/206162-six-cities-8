@@ -1,5 +1,3 @@
-//import React, { useState, useEffect } from 'react';
-
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 
@@ -10,8 +8,9 @@ import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 
-const mapStateToProps = ({ authorizationStatus }: State) => ({
+const mapStateToProps = ({ authorizationStatus, currentUserEmail }: State) => ({
   authorizationStatus,
+  currentUserEmail,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -25,7 +24,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Header(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus, onClick } = props;
+  const { authorizationStatus, currentUserEmail, onClick } = props;
 
   const handleClick = () => onClick();
   const isAuth = authorizationStatus === 'AUTH';
@@ -47,7 +46,7 @@ function Header(props: PropsFromRedux): JSX.Element {
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
+                      {currentUserEmail}
                     </span>
                   </Link>
                 </li>

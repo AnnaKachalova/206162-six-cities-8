@@ -8,7 +8,8 @@ import {
   changeSort,
   fillCityList,
   requireAuthorization,
-  requireLogout
+  requireLogout,
+  changeUser
 } from '../store/action';
 
 export enum ActionType {
@@ -19,6 +20,7 @@ export enum ActionType {
   LoadReviews = 'data/loadReviews',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  ChangeUser = 'data/changeUser',
 }
 
 export type Actions =
@@ -28,6 +30,7 @@ export type Actions =
   | ReturnType<typeof changeSort>
   | ReturnType<typeof fillCityList>
   | ReturnType<typeof requireAuthorization>
+  | ReturnType<typeof changeUser>
   | ReturnType<typeof requireLogout>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<
