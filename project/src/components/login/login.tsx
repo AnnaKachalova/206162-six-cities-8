@@ -1,14 +1,18 @@
 import { useRef, FormEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect, Link } from 'react-router-dom';
 
 import Logo from '../logo/logo';
-import { Link } from 'react-router-dom';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../const';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
+import { State } from '../../types/state';
+
+const mapStateToProps = ({ authorizationStatus }: State) => ({
+  authorizationStatus,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -16,16 +20,22 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Login(props: PropsFromRedux): JSX.Element {
-  const { onSubmit } = props;
+  const { onSubmit, authorizationStatus } = props;
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const history = useHistory();
+
+  if (authorizationStatus === 'AUTH') {
+    return (
+      <Redirect to={AppRoute.Root} />
+    );
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -34,6 +44,7 @@ function Login(props: PropsFromRedux): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      history.push(AppRoute.Root);
     }
   };
 
@@ -84,7 +95,6 @@ function Login(props: PropsFromRedux): JSX.Element {
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                onClick={() => history.push(AppRoute.Root)}
               >
                 Sign in
               </button>

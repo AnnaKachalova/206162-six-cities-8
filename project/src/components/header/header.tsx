@@ -1,5 +1,3 @@
-//import React, { useState, useEffect } from 'react';
-
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 

@@ -6,6 +6,9 @@ import { Offer } from '../types/offer';
 import { Review } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
 
+import {toast} from 'react-toastify';
+const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+
 export const fetchOffersAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
@@ -22,9 +25,12 @@ export const fetchReviewsAction =
 
 export const checkAuthAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login).then(() => {
+    try {
+      await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    });
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
   };
 
 export const loginAction =
