@@ -10,6 +10,7 @@ const initialState = {
   keyOfSort: FIRST_SORT,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  currentUserEmail: 'anna',
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -36,6 +37,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       };
     case ActionType.RequireLogout:
       return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
+    case ActionType.ChangeUser:
+      return { ...state, currentUserEmail: action.payload };
     default:
       return state;
   }
