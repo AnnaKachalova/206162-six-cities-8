@@ -10,6 +10,7 @@ import PrivateRoute from '../private-route/private-route';
 
 import LoadingScreen from '../loading-screen/loading-screen';
 import { State } from '../../types/state';
+
 const mapStateToProps = ({ authorizationStatus, isDataLoaded }: State) => ({
   authorizationStatus,
   isDataLoaded,

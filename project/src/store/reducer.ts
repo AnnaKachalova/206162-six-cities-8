@@ -6,8 +6,8 @@ import { adaptOffers } from '../adapter';
 const initialState = {
   city: FIRST_CITY,
   offers: [],
-  reviews: [],
   offerById: OFFER,
+  reviews: [],
   keyOfSort: FIRST_SORT,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
@@ -26,13 +26,13 @@ const reducer = (state: State = initialState, action: Actions): State => {
       const offers = adaptOffers(action.payload.offers);
       return { ...state, offers };
     }
-    case ActionType.LoadReviews: {
-      const {reviews} = action.payload;
-      return { ...state, reviews };
-    }
     case ActionType.LoadOfferById: {
       const offerById = adaptOffers([action.payload.offerById])[0];
       return { ...state, offerById };
+    }
+    case ActionType.LoadReviews: {
+      const { reviews } = action.payload;
+      return { ...state, reviews };
     }
     case ActionType.RequireAuthorization:
       return {

@@ -5,8 +5,8 @@ import { AuthorizationStatus } from '../const';
 export type State = {
   city: string;
   offers: Offers;
-  reviews: Reviews;
   offerById: Offer;
+  reviews: Reviews;
   keyOfSort: string;
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean;

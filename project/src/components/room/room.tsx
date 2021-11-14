@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import React,{ useParams } from 'react-router-dom';
-//import { Dispatch } from 'redux';
+
 import { connect, ConnectedProps } from 'react-redux';
 //import { loginAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
@@ -17,30 +17,31 @@ import { sortDate } from '../../utils/review';
 //import { defaultCity } from '../../const';
 
 //import { Actions } from '../../types/action';
-import { changeCity } from '../../store/action';
+//import { changeCity } from '../../store/action';
 
 //import { Offer } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
-import { fetchOfferByIdAction } from '../../store/api-actions';
+import { fetchOfferByIdAction, fetchReviewsAction } from '../../store/api-actions';
 
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, reviews, keyOfSort, offerById  }: State) => ({
+const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort  }: State) => ({
   city,
   offers,
+  offerById,
   reviews,
   keyOfSort,
-  offerById,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onChangeCity(nameCity: string) {
+  /*onChangeCity(nameCity: string) {
     dispatch(changeCity(nameCity));
-  },
+  },*/
   onLoadOffer(id: string){
     dispatch(fetchOfferByIdAction(id));
+    dispatch(fetchReviewsAction(id));
   },
 });
 
@@ -48,18 +49,15 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { offerById, reviews, onLoadOffer } = props;
+  const { onLoadOffer } = props;
 
   const { id } = useParams<PostParams>();
-  //const currentId: number = +id;
-
   useEffect(() => {
     onLoadOffer(id);
   }, [ id ]);
-  //fetchOfferByIdAction(id);
-  //dispatch(loadOfferById(id));
-  //const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
-  //const neighboringOffers = offers.slice(0, 3);
+
+  const { offerById, reviews } = props;
+
   if (offerById !== undefined) {
     const {
       title,
@@ -75,11 +73,11 @@ function Room(props: PropsFromRedux): JSX.Element {
       isFavorite,
       images,
     } = offerById;
-    const percentageRating = countRating(rating);
 
-    //const currentReviews = reviews.filter((review) => review.id === currentId);
+    const percentageRating = countRating(rating);
     const MAX_REVIEWS = 9;
     const MAX_IMAGES = 6;
+
     const sortedReviews: Reviews = sortDate(reviews).splice(0, MAX_REVIEWS);
 
     return (

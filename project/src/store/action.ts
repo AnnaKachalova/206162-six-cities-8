@@ -29,19 +29,19 @@ export const loadOffers = (offers: Offers) =>
     },
   } as const);
 
-export const loadOfferById = (offerById: Offer)  =>
-  ({
-    type: ActionType.LoadOfferById,
-    payload: {
-      offerById,
-    },
-  } as const);
-
 export const loadReviews = (reviews: Reviews) =>
   ({
     type: ActionType.LoadReviews,
     payload: {
       reviews,
+    },
+  } as const);
+
+export const loadOfferById = (offerById: Offer)  =>
+  ({
+    type: ActionType.LoadOfferById,
+    payload: {
+      offerById,
     },
   } as const);
 

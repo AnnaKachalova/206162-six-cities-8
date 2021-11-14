@@ -24,9 +24,9 @@ export const fetchOfferByIdAction =
     };
 
 export const fetchReviewsAction =
-  (): ThunkActionResult =>
+  (offerId: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data } = await api.get<Review[]>(APIRoute.Reviews);
+      const { data } = await api.get<Review[]>(`${ APIRoute.Reviews }/${ offerId }`);
       dispatch(loadReviews(data));
     };
 
