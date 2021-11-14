@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser } from './action';
+import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser, loadOfferById } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offer';
@@ -14,6 +14,13 @@ export const fetchOffersAction =
     async (dispatch, _getState, api): Promise<void> => {
       const { data } = await api.get<Offer[]>(APIRoute.Offers);
       dispatch(loadOffers(data));
+    };
+
+export const fetchOfferByIdAction =
+  (offerId: string): ThunkActionResult =>
+    async (dispatch, _getState, api): Promise<void> => {
+      const { data } = await api.get(`${ APIRoute.Offers }/${ offerId }`);
+      dispatch(loadOfferById(data));
     };
 
 export const fetchReviewsAction =

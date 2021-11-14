@@ -1,5 +1,5 @@
 import { ActionType } from '../types/action';
-import { Offers } from '../types/offer';
+import { Offers, Offer } from '../types/offer';
 import { Reviews } from '../types/reviews';
 import { AuthorizationStatus } from '../const';
 
@@ -26,6 +26,14 @@ export const loadOffers = (offers: Offers) =>
     type: ActionType.LoadOffers,
     payload: {
       offers,
+    },
+  } as const);
+
+export const loadOfferById = (offerById: Offer)  =>
+  ({
+    type: ActionType.LoadOfferById,
+    payload: {
+      offerById,
     },
   } as const);
 

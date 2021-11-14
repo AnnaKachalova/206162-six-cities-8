@@ -49,3 +49,38 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export const OFFER = {
+  id: 0,
+  title: '',
+  previewImage: '',
+  images: [],
+  price: 0,
+  type: '',
+  rating: 0,
+  description: '',
+  bedrooms: 0,
+  maxAdults: 0,
+  city: {
+    name: '',
+    location: {
+      latitude: 0,
+      longitude: 0,
+      zoom: 0,
+    },
+  },
+  goods: [],
+  host: {
+    avatarUrl: '',
+    id: 0,
+    isPro: false,
+    name: '',
+  },
+  isPremium: false,
+  isFavorite: false,
+  location: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
+  },
+};

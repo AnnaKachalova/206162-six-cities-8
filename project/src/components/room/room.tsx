@@ -1,52 +1,66 @@
+import { useEffect } from 'react';
 import React,{ useParams } from 'react-router-dom';
-import { Dispatch } from 'redux';
+//import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
+//import { loginAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 
 import CommentSendForm from '../comment-send-form/comment-send-form';
-import CardList from '../card-list/card-list';
+//import CardList from '../card-list/card-list';
 import Comment from '../comment/comment';
 import Header from '../header/header';
-import Map from '../map/map';
+//import Map from '../map/map';
 
 import { countRating } from '../../utils/common';
 import { sortDate } from '../../utils/review';
-import { defaultCity } from '../../const';
+//import { defaultCity } from '../../const';
 
-import { Actions } from '../../types/action';
+//import { Actions } from '../../types/action';
 import { changeCity } from '../../store/action';
 
-import { Offer } from '../../types/offer';
+//import { Offer } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
+import { fetchOfferByIdAction } from '../../store/api-actions';
 
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, reviews, keyOfSort  }: State) => ({
+const mapStateToProps = ({ city, offers, reviews, keyOfSort, offerById  }: State) => ({
   city,
   offers,
   reviews,
   keyOfSort,
+  offerById,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onChangeCity(nameCity: string) {
     dispatch(changeCity(nameCity));
+  },
+  onLoadOffer(id: string){
+    dispatch(fetchOfferByIdAction(id));
   },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { offers, reviews } = props;
+  const { offerById, reviews, onLoadOffer } = props;
+
   const { id } = useParams<PostParams>();
-  const currentId: number = +id;
-  const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
-  const neighboringOffers = offers.slice(0, 3);
-  if (currentOffer !== undefined) {
+  //const currentId: number = +id;
+
+  useEffect(() => {
+    onLoadOffer(id);
+  }, [ id ]);
+  //fetchOfferByIdAction(id);
+  //dispatch(loadOfferById(id));
+  //const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
+  //const neighboringOffers = offers.slice(0, 3);
+  if (offerById !== undefined) {
     const {
       title,
       type,
@@ -60,11 +74,13 @@ function Room(props: PropsFromRedux): JSX.Element {
       isPremium,
       isFavorite,
       images,
-    } = currentOffer;
+    } = offerById;
     const percentageRating = countRating(rating);
 
     //const currentReviews = reviews.filter((review) => review.id === currentId);
-    const sortedReviews: Reviews = sortDate(reviews).splice(0, 9);
+    const MAX_REVIEWS = 9;
+    const MAX_IMAGES = 6;
+    const sortedReviews: Reviews = sortDate(reviews).splice(0, MAX_REVIEWS);
 
     return (
       <div className='page'>
@@ -73,7 +89,7 @@ function Room(props: PropsFromRedux): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                {images.splice(0, 6).map((image) => (
+                {images.splice(0, MAX_IMAGES).map((image) => (
                   <div className='property__image-wrapper' key={image}>
                     <img
                       className='property__image'
@@ -178,18 +194,12 @@ function Room(props: PropsFromRedux): JSX.Element {
                 </section>
               </div>
             </div>
-            <Map
-              city={defaultCity}
-              offers={neighboringOffers}
-              className={'property'}
-            />
           </section>
           <div className='container'>
             <section className='near-places places'>
               <h2 className='near-places__title'>
                 Other places in the neighbourhood
               </h2>
-              <CardList offers={neighboringOffers} className={'near'} />
             </section>
           </div>
         </main>
@@ -202,3 +212,9 @@ function Room(props: PropsFromRedux): JSX.Element {
 
 export { Room };
 export default connector(Room);
+/* <Map
+              city={defaultCity}
+              offers={neighboringOffers}
+              className={'property'}
+            />
+          <CardList offers={neighboringOffers} className={'near'} />  */
