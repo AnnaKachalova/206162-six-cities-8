@@ -11,9 +11,9 @@ import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { State } from '../../types/state';
 
-const mapStateToProps = ({ authorizationStatus, isDataLoaded }: State) => ({
+const mapStateToProps = ({ authorizationStatus, isDataOffersLoaded }: State) => ({
   authorizationStatus,
-  isDataLoaded,
+  isDataOffersLoaded,
 });
 
 const connector = connect(mapStateToProps);
@@ -21,8 +21,8 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App(props: PropsFromRedux): JSX.Element {
-  const { isDataLoaded } = props;
-  if (!isDataLoaded) {
+  const { isDataOffersLoaded } = props;
+  if (!isDataOffersLoaded) {
     return <LoadingScreen />;
   }
   return (

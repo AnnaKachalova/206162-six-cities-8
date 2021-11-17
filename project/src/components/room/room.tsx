@@ -11,24 +11,26 @@ import CardList from '../card-list/card-list';
 import Comment from '../comment/comment';
 import Header from '../header/header';
 import Map from '../map/map';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 import { countRating } from '../../utils/common';
-import { sortDate } from '../../utils/review';
+//import { sortDate } from '../../utils/review';
 
-import { Reviews } from '../../types/reviews';
+//import { Reviews } from '../../types/reviews';
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort, nearbyOffers  }: State) => ({
+const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort, nearbyOffers, isDataOfferByIdLoaded  }: State) => ({
   city,
   offers,
   offerById,
   reviews,
   keyOfSort,
   nearbyOffers,
+  isDataOfferByIdLoaded,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -43,7 +45,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { onLoadOffer } = props;
+  const { onLoadOffer, isDataOfferByIdLoaded } = props;
 
   const { id } = useParams<PostParams>();
   useEffect(() => {
@@ -69,10 +71,14 @@ function Room(props: PropsFromRedux): JSX.Element {
     } = offerById;
 
     const percentageRating = countRating(rating);
-    const MAX_REVIEWS = 9;
+    //const MAX_REVIEWS = 9;
     const MAX_IMAGES = 6;
 
-    const sortedReviews: Reviews = sortDate(reviews).splice(0, MAX_REVIEWS);
+    //const sortedReviews: Reviews = sortDate(reviews).splice(0, MAX_REVIEWS);
+
+    if (!isDataOfferByIdLoaded) {
+      return <LoadingScreen />;
+    }
 
     return (
       <div className='page'>
@@ -174,11 +180,11 @@ function Room(props: PropsFromRedux): JSX.Element {
                   <h2 className='reviews__title'>
                     Reviews &middot;{' '}
                     <span className='reviews__amount'>
-                      {sortedReviews.length}
+                      {reviews.length}
                     </span>
                   </h2>
                   <ul className='reviews__list'>
-                    {sortedReviews.map((review) => (
+                    {reviews.map((review) => (
                       <Comment review={review} key={review.comment} />
                     ))}
                   </ul>

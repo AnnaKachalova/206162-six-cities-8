@@ -9,7 +9,8 @@ export type State = {
   reviews: Reviews;
   keyOfSort: string;
   authorizationStatus: AuthorizationStatus;
-  isDataLoaded: boolean;
+  isDataOffersLoaded: boolean;
+  isDataOfferByIdLoaded: boolean;
   currentUserEmail: string;
   nearbyOffers: Offers;
 };

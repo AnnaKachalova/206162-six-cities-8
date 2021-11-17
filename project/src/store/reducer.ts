@@ -10,7 +10,8 @@ const initialState = {
   reviews: [],
   keyOfSort: FIRST_SORT,
   authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
+  isDataOffersLoaded: false,
+  isDataOfferByIdLoaded: false,
   currentUserEmail: '',
   nearbyOffers: [],
 };
@@ -29,7 +30,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
     }
     case ActionType.LoadOfferById: {
       const offerById = adaptOffers([action.payload.offerById])[0];
-      return { ...state, offerById };
+      return { ...state, offerById, isDataOfferByIdLoaded: true };
     }
     case ActionType.LoadReviews: {
       const reviews  = adaptReviews(action.payload.reviews);
@@ -43,7 +44,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {
         ...state,
         authorizationStatus: action.payload,
-        isDataLoaded: true,
+        isDataOffersLoaded: true,
       };
     case ActionType.RequireLogout:
       return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
