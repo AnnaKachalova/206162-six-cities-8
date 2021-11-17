@@ -14,9 +14,6 @@ import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 import { countRating } from '../../utils/common';
-//import { sortDate } from '../../utils/review';
-
-//import { Reviews } from '../../types/reviews';
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
 type PostParams = {
@@ -45,14 +42,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { onLoadOffer, isDataOfferByIdLoaded } = props;
+  const { onLoadOffer, isDataOfferByIdLoaded, nearbyOffers } = props;
 
   const { id } = useParams<PostParams>();
   useEffect(() => {
     onLoadOffer(id);
   }, [ id ]);
 
-  const { offerById, reviews, nearbyOffers } = props;
+  const { offerById, reviews } = props;
 
   if (offerById !== undefined) {
     const {
@@ -71,10 +68,7 @@ function Room(props: PropsFromRedux): JSX.Element {
     } = offerById;
 
     const percentageRating = countRating(rating);
-    //const MAX_REVIEWS = 9;
     const MAX_IMAGES = 6;
-
-    //const sortedReviews: Reviews = sortDate(reviews).splice(0, MAX_REVIEWS);
 
     if (!isDataOfferByIdLoaded) {
       return <LoadingScreen />;

@@ -6,6 +6,7 @@ import { State } from '../../types/state';
 import { Actions } from '../../types/action';
 import { changeCity, changeSort } from '../../store/action';
 
+import LoadingScreen from '../loading-screen/loading-screen';
 import CardList from '../card-list/card-list';
 import CityList from '../city-list/city-list';
 import SortList from '../sort-list/sort-list';
@@ -17,10 +18,11 @@ import { FIRST_SORT } from '../../const';
 import { sortingOffers } from '../../utils/sort';
 import { defaultCity } from '../../const';
 
-const mapStateToProps = ({ city, offers, keyOfSort }: State) => ({
+const mapStateToProps = ({ city, offers, keyOfSort, isDataOffersLoaded }: State) => ({
   city,
   keyOfSort,
   offers,
+  isDataOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -63,6 +65,11 @@ function Main(props: PropsFromRedux): JSX.Element {
   }, [keyOfSort]);
 
   sortedOffers = sortingOffers(filteredOffers, keyOfSort);
+
+  const { isDataOffersLoaded } = props;
+  if (!isDataOffersLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="page page--gray page--main">

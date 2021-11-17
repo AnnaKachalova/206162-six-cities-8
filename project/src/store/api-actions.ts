@@ -1,8 +1,8 @@
 import { ThunkActionResult } from '../types/action';
 import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser, loadOfferById, loadNearbyOffers } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
-import { APIRoute, AuthorizationStatus } from '../const';
-import { Offer } from '../types/offer';
+import { APIRoute, AuthorizationStatus/*, AppRoute*/ } from '../const';
+import { Offer/*, Offers*/ } from '../types/offer';
 import { Review } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
 
@@ -20,9 +20,21 @@ export const fetchOffersAction =
 
 export const fetchOfferByIdAction =
   (offerId: string): ThunkActionResult =>
-    async (dispatch, _getState, api): Promise<void> => {
+  /*async (dispatch, _getState, api): Promise<void> => {
       const { data } = await api.get(`${ APIRoute.Offers }/${ offerId }`);
       dispatch(loadOfferById(data));
+    };*/
+
+    async (dispatch, _getState, api): Promise<void> => {
+      await api
+        .get<Offer>(`${ APIRoute.Offers }/${ offerId }`)
+        .then(({ data }) => {
+          /*if (!data) {
+            dispatch(redirectToRoute(AppRoute.NotFoundOffer));
+            return;
+          }*/
+          dispatch(loadOfferById(data));
+        });
     };
 
 export const fetchReviewsAction =
