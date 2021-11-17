@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import React,{ useParams } from 'react-router-dom';
 
 import { connect, ConnectedProps } from 'react-redux';
-//import { loginAction } from '../../store/api-actions';
+
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 
@@ -14,12 +14,7 @@ import Map from '../map/map';
 
 import { countRating } from '../../utils/common';
 import { sortDate } from '../../utils/review';
-//import { defaultCity } from '../../const';
 
-//import { Actions } from '../../types/action';
-//import { changeCity } from '../../store/action';
-
-//import { Offer } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
@@ -37,9 +32,6 @@ const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort, nearbyOf
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  /*onChangeCity(nameCity: string) {
-    dispatch(changeCity(nameCity));
-  },*/
   onLoadOffer(id: string){
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchReviewsAction(id));
