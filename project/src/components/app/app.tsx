@@ -1,5 +1,5 @@
 import { connect, ConnectedProps } from 'react-redux';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
@@ -7,7 +7,7 @@ import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-
+import browserHistory from '../../browser-history';
 
 import { State } from '../../types/state';
 
@@ -22,7 +22,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App(props: PropsFromRedux): JSX.Element {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Root}>
           <Main />
@@ -39,6 +39,9 @@ function App(props: PropsFromRedux): JSX.Element {
           render={() => <Favorites />}
         >
         </PrivateRoute>
+        <Route exact path={AppRoute.NotFoundOffer}>
+          <NotFound />
+        </Route>
         <Route>
           <NotFound />
         </Route>

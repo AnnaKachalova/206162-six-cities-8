@@ -25,7 +25,6 @@ function useMap(mapRef: MutableRefObject<HTMLElement>, city: City): Map | null  
       ).addTo(instance);
 
       instance.addLayer(layer);
-
       setMap(instance);
     }else {
       const{zoom, latitude, longitude} = city.location;

@@ -14,20 +14,20 @@ import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 import { countRating } from '../../utils/common';
+
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort, nearbyOffers, isDataOfferByIdLoaded  }: State) => ({
-  city,
+const mapStateToProps = ({ offers, offerById, reviews,  nearbyOffers, isDataOfferByIdLoaded, authorizationStatus  }: State) => ({
   offers,
   offerById,
   reviews,
-  keyOfSort,
   nearbyOffers,
   isDataOfferByIdLoaded,
+  authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -42,7 +42,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { onLoadOffer, isDataOfferByIdLoaded, nearbyOffers } = props;
+  const { onLoadOffer, isDataOfferByIdLoaded, nearbyOffers, authorizationStatus } = props;
 
   const { id } = useParams<PostParams>();
   useEffect(() => {
@@ -182,11 +182,11 @@ function Room(props: PropsFromRedux): JSX.Element {
                       <Comment review={review} key={review.comment} />
                     ))}
                   </ul>
-                  <CommentSendForm reviews={reviews} />
+                  {authorizationStatus === 'AUTH' && <CommentSendForm id={id}/>}
                 </section>
               </div>
             </div>
-            {nearbyOffers.length > 0 &&
+            {nearbyOffers.length &&
               <Map
                 city={nearbyOffers[0].city}
                 offers={nearbyOffers}
@@ -198,7 +198,7 @@ function Room(props: PropsFromRedux): JSX.Element {
               <h2 className='near-places__title'>
                 Other places in the neighbourhood
               </h2>
-              {nearbyOffers.length > 0 &&
+              {nearbyOffers.length &&
                 <CardList offers={nearbyOffers} className={'near'} />}
             </section>
           </div>

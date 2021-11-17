@@ -33,6 +33,7 @@ function Map({ city, offers, selectedPoint, className }: MapProps): JSX.Element 
       offers.forEach((offer) => {
         const { latitude, longitude } = offer.location;
         const isActive = selectedPoint !== undefined && offer.id === selectedPoint.id;
+
         const marker = new Marker({
           lat: latitude,
           lng: longitude,

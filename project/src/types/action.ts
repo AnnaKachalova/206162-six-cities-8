@@ -11,7 +11,8 @@ import {
   fillCityList,
   requireAuthorization,
   requireLogout,
-  changeUser
+  changeUser,
+  redirectToRoute
 } from '../store/action';
 
 export enum ActionType {
@@ -25,6 +26,7 @@ export enum ActionType {
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   ChangeUser = 'data/changeUser',
+  RedirectToRoute = 'render/redirectToRoute'
 }
 
 export type Actions =
@@ -37,7 +39,8 @@ export type Actions =
   | ReturnType<typeof fillCityList>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof changeUser>
-  | ReturnType<typeof requireLogout>;
+  | ReturnType<typeof requireLogout>
+  | ReturnType<typeof redirectToRoute>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<
   R,
