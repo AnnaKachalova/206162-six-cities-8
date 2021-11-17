@@ -1,7 +1,7 @@
 import { FIRST_CITY, FIRST_SORT, OFFER, AuthorizationStatus } from '../const';
 import { State } from '../types/state';
 import { ActionType, Actions } from '../types/action';
-import { adaptOffers } from '../adapter';
+import { adaptOffers, adaptReviews } from '../adapter';
 
 const initialState = {
   city: FIRST_CITY,
@@ -12,6 +12,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   currentUserEmail: '',
+  nearbyOffers: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -31,8 +32,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, offerById };
     }
     case ActionType.LoadReviews: {
-      const { reviews } = action.payload;
+      const reviews  = adaptReviews(action.payload.reviews);
       return { ...state, reviews };
+    }
+    case ActionType.LoadNearbyOffers: {
+      const nearbyOffers = adaptOffers(action.payload.nearbyOffers).splice(0, 3);
+      return { ...state, nearbyOffers };
     }
     case ActionType.RequireAuthorization:
       return {

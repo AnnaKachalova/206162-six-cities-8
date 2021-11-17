@@ -5,6 +5,7 @@ import {
   loadOffers,
   loadOfferById,
   loadReviews,
+  loadNearbyOffers,
   changeCity,
   changeSort,
   fillCityList,
@@ -20,6 +21,7 @@ export enum ActionType {
   LoadOffers = 'data/loadOffers',
   LoadOfferById = 'data/loadOfferById',
   LoadReviews = 'data/loadReviews',
+  LoadNearbyOffers = 'data/loadNearbyOffers',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   ChangeUser = 'data/changeUser',
@@ -29,6 +31,7 @@ export type Actions =
   | ReturnType<typeof loadOffers>
   | ReturnType<typeof loadOfferById>
   | ReturnType<typeof loadReviews>
+  | ReturnType<typeof loadNearbyOffers>
   | ReturnType<typeof changeCity>
   | ReturnType<typeof changeSort>
   | ReturnType<typeof fillCityList>

@@ -10,5 +10,6 @@ export type State = {
   keyOfSort: string;
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean;
-  currentUserEmail:string;
+  currentUserEmail: string;
+  nearbyOffers: Offers;
 };

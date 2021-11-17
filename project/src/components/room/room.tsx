@@ -7,10 +7,10 @@ import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 
 import CommentSendForm from '../comment-send-form/comment-send-form';
-//import CardList from '../card-list/card-list';
+import CardList from '../card-list/card-list';
 import Comment from '../comment/comment';
 import Header from '../header/header';
-//import Map from '../map/map';
+import Map from '../map/map';
 
 import { countRating } from '../../utils/common';
 import { sortDate } from '../../utils/review';
@@ -21,18 +21,19 @@ import { sortDate } from '../../utils/review';
 
 //import { Offer } from '../../types/offer';
 import { Reviews } from '../../types/reviews';
-import { fetchOfferByIdAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort  }: State) => ({
+const mapStateToProps = ({ city, offers, offerById, reviews, keyOfSort, nearbyOffers  }: State) => ({
   city,
   offers,
   offerById,
   reviews,
   keyOfSort,
+  nearbyOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onLoadOffer(id: string){
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchReviewsAction(id));
+    dispatch(fetchNearbyOffersAction(id));
   },
 });
 
@@ -56,7 +58,7 @@ function Room(props: PropsFromRedux): JSX.Element {
     onLoadOffer(id);
   }, [ id ]);
 
-  const { offerById, reviews } = props;
+  const { offerById, reviews, nearbyOffers } = props;
 
   if (offerById !== undefined) {
     const {
@@ -192,12 +194,20 @@ function Room(props: PropsFromRedux): JSX.Element {
                 </section>
               </div>
             </div>
+            {nearbyOffers.length > 0 &&
+              <Map
+                city={nearbyOffers[0].city}
+                offers={nearbyOffers}
+                className={'property'}
+              />}
           </section>
           <div className='container'>
             <section className='near-places places'>
               <h2 className='near-places__title'>
                 Other places in the neighbourhood
               </h2>
+              {nearbyOffers.length > 0 &&
+                <CardList offers={nearbyOffers} className={'near'} />}
             </section>
           </div>
         </main>
@@ -210,9 +220,3 @@ function Room(props: PropsFromRedux): JSX.Element {
 
 export { Room };
 export default connector(Room);
-/* <Map
-              city={defaultCity}
-              offers={neighboringOffers}
-              className={'property'}
-            />
-          <CardList offers={neighboringOffers} className={'near'} />  */

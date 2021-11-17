@@ -45,6 +45,14 @@ export const loadOfferById = (offerById: Offer)  =>
     },
   } as const);
 
+export const loadNearbyOffers = (nearbyOffers: Offers) =>
+  ({
+    type: ActionType.LoadNearbyOffers,
+    payload: {
+      nearbyOffers,
+    },
+  } as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) =>
   ({
     type: ActionType.RequireAuthorization,

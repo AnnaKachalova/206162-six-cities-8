@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser, loadOfferById } from './action';
+import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser, loadOfferById, loadNearbyOffers } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { Offer } from '../types/offer';
@@ -8,6 +8,8 @@ import { AuthData } from '../types/auth-data';
 
 import {toast} from 'react-toastify';
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+//const SUPER = 'Отзывы грузятся';
+//const NOT_SUPER = 'Отзывы НЕ грузятся';
 
 export const fetchOffersAction =
   (): ThunkActionResult =>
@@ -29,6 +31,12 @@ export const fetchReviewsAction =
       const { data } = await api.get<Review[]>(`${ APIRoute.Reviews }/${ offerId }`);
       dispatch(loadReviews(data));
     };
+export const fetchNearbyOffersAction =
+    (offerId: string): ThunkActionResult =>
+      async (dispatch, _getState, api): Promise<void> => {
+        const { data } = await api.get<Offer[]>(`${ APIRoute.Offers }/${ offerId }${ APIRoute.Nearby }`);
+        dispatch(loadNearbyOffers(data));
+      };
 
 export const checkAuthAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {
