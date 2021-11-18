@@ -1,21 +1,25 @@
 import React, { useState, FormEvent } from 'react';
-import { Reviews } from '../../types/reviews';
+import { useDispatch } from 'react-redux';
+import { sendCommentAction } from '../../store/api-actions';
 
 type CommentSendFormProps = {
-  reviews: Reviews;
-};
+  id: string,
+}
+function CommentSendForm({ id }: CommentSendFormProps): JSX.Element {
 
-function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
   const [userReview, setUserReview] = useState('');
   const [rating, setRating] = useState(0);
+  const dispatch = useDispatch();
 
   const onSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(sendCommentAction({comment: userReview, rating: rating}, id));
     if (rating && userReview) {
       setRating(0);
       setUserReview('');
     }
   };
+
   return (
     <form
       onSubmit={onSubmitForm}
@@ -132,7 +136,9 @@ function CommentSendForm({ reviews }: CommentSendFormProps): JSX.Element {
           <span className='reviews__star'>rating</span> and describe your stay
           with at least <b className='reviews__text-amount'>50 characters</b>.
         </p>
-        <button className='reviews__submit form__submit button' type='submit'>
+        <button className='reviews__submit form__submit button' type='submit'
+          disabled={rating === 0 || userReview.length < 50}
+        >
           Submit
         </button>
       </div>

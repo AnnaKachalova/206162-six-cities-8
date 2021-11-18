@@ -25,11 +25,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement>, city: City): Map | null  
       ).addTo(instance);
 
       instance.addLayer(layer);
-
       setMap(instance);
     }else {
       const{zoom, latitude, longitude} = city.location;
-      map.flyTo([latitude, longitude], zoom);
+      map.setView([latitude, longitude], zoom);
     }
   }, [mapRef, map, city]);
 

@@ -9,10 +9,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducer } from './store/reducer';
 import { requireAuthorization } from './store/action';
-import { fetchOffersAction, fetchReviewsAction, checkAuthAction } from './store/api-actions';
+import { fetchOffersAction, checkAuthAction } from './store/api-actions';
 import { ThunkAppDispatch } from './types/action';
 import { AuthorizationStatus } from './const';
 
+import { redirect } from '../src/store/middlewares/redirect';
 
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,11 +24,13 @@ const api = createAPI(() =>
 
 const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+  composeWithDevTools(
+    applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect),
+  ),
 );
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchOffersAction());
-(store.dispatch as ThunkAppDispatch)(fetchReviewsAction());
 
 ReactDOM.render(
   <React.StrictMode>

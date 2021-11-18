@@ -3,13 +3,16 @@ import { AxiosInstance } from 'axios';
 import { State } from '../types/state';
 import {
   loadOffers,
+  loadOfferById,
   loadReviews,
+  loadNearbyOffers,
   changeCity,
   changeSort,
   fillCityList,
   requireAuthorization,
   requireLogout,
-  changeUser
+  changeUser,
+  redirectToRoute
 } from '../store/action';
 
 export enum ActionType {
@@ -17,21 +20,27 @@ export enum ActionType {
   FillCityList = 'render/fillCityList',
   ChangeSort = 'render/changeSort',
   LoadOffers = 'data/loadOffers',
+  LoadOfferById = 'data/loadOfferById',
   LoadReviews = 'data/loadReviews',
+  LoadNearbyOffers = 'data/loadNearbyOffers',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   ChangeUser = 'data/changeUser',
+  RedirectToRoute = 'render/redirectToRoute'
 }
 
 export type Actions =
   | ReturnType<typeof loadOffers>
+  | ReturnType<typeof loadOfferById>
   | ReturnType<typeof loadReviews>
+  | ReturnType<typeof loadNearbyOffers>
   | ReturnType<typeof changeCity>
   | ReturnType<typeof changeSort>
   | ReturnType<typeof fillCityList>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof changeUser>
-  | ReturnType<typeof requireLogout>;
+  | ReturnType<typeof requireLogout>
+  | ReturnType<typeof redirectToRoute>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<
   R,

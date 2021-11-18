@@ -1,12 +1,22 @@
 import { ThunkActionResult } from '../types/action';
-import { loadOffers, loadReviews, requireAuthorization, requireLogout, changeUser } from './action';
+import {
+  loadOffers,
+  loadReviews,
+  requireAuthorization,
+  requireLogout,
+  changeUser,
+  loadOfferById,
+  loadNearbyOffers,
+  redirectToRoute
+} from './action';
 import { saveToken, dropToken, Token } from '../services/token';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { Offer } from '../types/offer';
 import { Review } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
 
 import {toast} from 'react-toastify';
+import { Comment } from '../types/comment';
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
 export const fetchOffersAction =
@@ -16,12 +26,32 @@ export const fetchOffersAction =
       dispatch(loadOffers(data));
     };
 
-export const fetchReviewsAction =
-  (): ThunkActionResult =>
+export const fetchOfferByIdAction =
+  (offerId: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data } = await api.get<Review[]>(APIRoute.Reviews);
+      await api
+        .get<Offer>(`${ APIRoute.Offers }/${ offerId }`)
+        .then(({ data }) => {
+          dispatch(loadOfferById(data));
+        }).catch(({response})=> {
+          if(response && response.status === 404){
+            dispatch(redirectToRoute(AppRoute.NotFoundOffer));
+          }
+        });
+    };
+
+export const fetchReviewsAction =
+  (offerId: string): ThunkActionResult =>
+    async (dispatch, _getState, api): Promise<void> => {
+      const { data } = await api.get<Review[]>(`${ APIRoute.Reviews }/${ offerId }`);
       dispatch(loadReviews(data));
     };
+export const fetchNearbyOffersAction =
+    (offerId: string): ThunkActionResult =>
+      async (dispatch, _getState, api): Promise<void> => {
+        const { data } = await api.get<Offer[]>(`${ APIRoute.Offers }/${ offerId }${ APIRoute.Nearby }`);
+        dispatch(loadNearbyOffers(data));
+      };
 
 export const checkAuthAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {
@@ -51,3 +81,10 @@ export const logoutAction =
     dropToken();
     dispatch(requireLogout());
   };
+
+export const sendCommentAction =
+  (comment: Comment, offerId: string): ThunkActionResult =>
+    async (dispatch, _getState, api) => {
+      const {data} = await api.post<Review[]>(`${ APIRoute.Reviews }/${ offerId }`, comment);
+      dispatch(loadReviews(data));
+    };

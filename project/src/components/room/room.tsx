@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import React,{ useParams } from 'react-router-dom';
-import { Dispatch } from 'redux';
+
 import { connect, ConnectedProps } from 'react-redux';
+
+import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 
 import CommentSendForm from '../comment-send-form/comment-send-form';
@@ -8,45 +11,47 @@ import CardList from '../card-list/card-list';
 import Comment from '../comment/comment';
 import Header from '../header/header';
 import Map from '../map/map';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 import { countRating } from '../../utils/common';
-import { sortDate } from '../../utils/review';
-import { defaultCity } from '../../const';
 
-import { Actions } from '../../types/action';
-import { changeCity } from '../../store/action';
-
-import { Offer } from '../../types/offer';
-import { Reviews } from '../../types/reviews';
+import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ city, offers, reviews, keyOfSort  }: State) => ({
-  city,
+const mapStateToProps = ({ offers, offerById, reviews,  nearbyOffers, isDataOfferByIdLoaded, authorizationStatus  }: State) => ({
   offers,
+  offerById,
   reviews,
-  keyOfSort,
+  nearbyOffers,
+  isDataOfferByIdLoaded,
+  authorizationStatus,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCity(nameCity: string) {
-    dispatch(changeCity(nameCity));
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLoadOffer(id: string){
+    dispatch(fetchOfferByIdAction(id));
+    dispatch(fetchReviewsAction(id));
+    dispatch(fetchNearbyOffersAction(id));
   },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Room(props: PropsFromRedux): JSX.Element {
-  const { offers, reviews } = props;
+  const { onLoadOffer, isDataOfferByIdLoaded, nearbyOffers, authorizationStatus } = props;
+
   const { id } = useParams<PostParams>();
-  const currentId: number = +id;
-  const currentOffer: Offer | undefined = offers.find((offer) => offer.id === currentId);
-  const neighboringOffers = offers.slice(0, 3);
-  if (currentOffer !== undefined) {
+  useEffect(() => {
+    onLoadOffer(id);
+  }, [ id ]);
+
+  const { offerById, reviews } = props;
+
+  if (offerById !== undefined) {
     const {
       title,
       type,
@@ -60,11 +65,14 @@ function Room(props: PropsFromRedux): JSX.Element {
       isPremium,
       isFavorite,
       images,
-    } = currentOffer;
-    const percentageRating = countRating(rating);
+    } = offerById;
 
-    //const currentReviews = reviews.filter((review) => review.id === currentId);
-    const sortedReviews: Reviews = sortDate(reviews).splice(0, 9);
+    const percentageRating = countRating(rating);
+    const MAX_IMAGES = 6;
+
+    if (!isDataOfferByIdLoaded) {
+      return <LoadingScreen />;
+    }
 
     return (
       <div className='page'>
@@ -73,7 +81,7 @@ function Room(props: PropsFromRedux): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                {images.splice(0, 6).map((image) => (
+                {images.splice(0, MAX_IMAGES).map((image) => (
                   <div className='property__image-wrapper' key={image}>
                     <img
                       className='property__image'
@@ -166,30 +174,32 @@ function Room(props: PropsFromRedux): JSX.Element {
                   <h2 className='reviews__title'>
                     Reviews &middot;{' '}
                     <span className='reviews__amount'>
-                      {sortedReviews.length}
+                      {reviews.length}
                     </span>
                   </h2>
                   <ul className='reviews__list'>
-                    {sortedReviews.map((review) => (
+                    {reviews.map((review) => (
                       <Comment review={review} key={review.comment} />
                     ))}
                   </ul>
-                  <CommentSendForm reviews={reviews} />
+                  {authorizationStatus === 'AUTH' && <CommentSendForm id={id}/>}
                 </section>
               </div>
             </div>
-            <Map
-              city={defaultCity}
-              offers={neighboringOffers}
-              className={'property'}
-            />
+            {nearbyOffers.length &&
+              <Map
+                city={nearbyOffers[0].city}
+                offers={nearbyOffers}
+                className={'property'}
+              />}
           </section>
           <div className='container'>
             <section className='near-places places'>
               <h2 className='near-places__title'>
                 Other places in the neighbourhood
               </h2>
-              <CardList offers={neighboringOffers} className={'near'} />
+              {nearbyOffers.length &&
+                <CardList offers={nearbyOffers} className={'near'} />}
             </section>
           </div>
         </main>
