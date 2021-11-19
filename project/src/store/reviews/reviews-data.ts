@@ -1,27 +1,17 @@
 import { adaptReviews } from '../../adapter';
-import { ActionType, Actions } from '../../types/action';
+import { createReducer } from '@reduxjs/toolkit';
 import { ReviewsData } from '../../types/state';
+import { loadReviews } from '../action';
 
 const initialState: ReviewsData = {
   reviews: [],
 };
 
-const reviewsData = (
-  state = initialState,
-  action: Actions,
-): ReviewsData => {
-  switch (action.type) {
-    case ActionType.LoadReviews: {
-      const MAX_REVIEWS = 9;
-      const reviews = adaptReviews(action.payload.reviews).splice(
-        0,
-        MAX_REVIEWS,
-      );
-      return { ...state, reviews };
-    }
-    default:
-      return state;
-  }
-};
+const reviewsData = createReducer(initialState, (builder) => {
+  builder.addCase(loadReviews, (state, action) => {
+    const MAX_REVIEWS = 9;
+    state.reviews = adaptReviews(action.payload.reviews).splice(0, MAX_REVIEWS);
+  });
+});
 
 export { reviewsData };

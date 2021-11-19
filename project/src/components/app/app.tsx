@@ -1,4 +1,3 @@
-import { connect, ConnectedProps } from 'react-redux';
 import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Main from '../main/main';
@@ -9,20 +8,8 @@ import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
 
-import { State } from '../../types/state';
-import { getAuthorizationStatus } from '../../store/user/selectors';
-import { getIsDataOffersLoaded } from '../../store/offers/selectors';
+function App(): JSX.Element {
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  isDataOffersLoaded: getIsDataOffersLoaded(state),
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App(props: PropsFromRedux): JSX.Element {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -52,5 +39,4 @@ function App(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { App };
-export default connector(App);
+export default App;

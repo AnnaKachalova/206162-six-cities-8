@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
 
 import { changeCity, changeSort } from '../../store/action';
 
@@ -18,29 +15,24 @@ import { sortingOffers } from '../../utils/sort';
 import { defaultCity } from '../../const';
 import { getCity, getKeyOfSort, getOffers, getIsDataOffersLoaded } from '../../store/offers/selectors';
 
-const mapStateToProps = (state: State) => ({
-  city: getCity(state),
-  keyOfSort: getKeyOfSort(state),
-  offers: getOffers(state),
-  isDataOffersLoaded: getIsDataOffersLoaded(state),
-});
+import { useSelector, useDispatch } from 'react-redux';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeCity(nameCity: string) {
+
+function Main(): JSX.Element {
+  const city = useSelector(getCity);
+  const offers = useSelector(getOffers);
+  const isDataOffersLoaded = useSelector(getIsDataOffersLoaded);
+
+  const dispatch = useDispatch();
+
+  const onChangeCity = (nameCity: string) => {
     dispatch(changeCity(nameCity));
-  },
-  onChangeSort(keyOfSort: string) {
+  };
+  const onChangeSort = (keyOfSort: string) => {
     dispatch(changeSort(keyOfSort));
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Main(props: PropsFromRedux): JSX.Element {
-  const { offers, city, keyOfSort, onChangeCity, onChangeSort } = props;
-
+  const keyOfSort = useSelector(getKeyOfSort);
   const [activeCity, setActiveCity] = useState<City>(defaultCity);
   const [activeSort, setActiveSort] = useState<string>(FIRST_SORT);
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
@@ -66,7 +58,7 @@ function Main(props: PropsFromRedux): JSX.Element {
 
   sortedOffers = sortingOffers(filteredOffers, keyOfSort);
 
-  const { isDataOffersLoaded } = props;
+
   if (!isDataOffersLoaded) {
     return <LoadingScreen />;
   }
@@ -107,4 +99,4 @@ function Main(props: PropsFromRedux): JSX.Element {
 }
 
 export { Main };
-export default connector(Main);
+export default Main;

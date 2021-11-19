@@ -1,7 +1,14 @@
 import { adaptOffers } from '../../adapter';
 import { FIRST_CITY, FIRST_SORT, OFFER } from '../../const';
-import { ActionType, Actions } from '../../types/action';
+import { createReducer } from '@reduxjs/toolkit';
 import { OfferData } from '../../types/state';
+import {
+  changeCity,
+  changeSort,
+  loadNearbyOffers,
+  loadOfferById,
+  loadOffers
+} from '../action';
 
 const initialState: OfferData = {
   city: FIRST_CITY,
@@ -13,31 +20,30 @@ const initialState: OfferData = {
   nearbyOffers: [],
 };
 
-const offersData = (state = initialState, action: Actions): OfferData => {
-  switch (action.type) {
-    case ActionType.ChangeCity:
-      return { ...state, city: action.payload };
-    case ActionType.ChangeSort:
-      return { ...state, keyOfSort: action.payload };
-    case ActionType.LoadOffers: {
-      const offers = adaptOffers(action.payload.offers);
-      return { ...state, offers, isDataOffersLoaded: true };
-    }
-    case ActionType.LoadOfferById: {
-      const offerById = adaptOffers([action.payload.offerById])[0];
-      return { ...state, offerById, isDataOfferByIdLoaded: true };
-    }
-    case ActionType.LoadNearbyOffers: {
+const offersData = createReducer(initialState, (builder) => {
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
+    })
+    .addCase(changeSort, (state, action) => {
+      state.keyOfSort = action.payload;
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = adaptOffers(action.payload.offers);
+      state.isDataOffersLoaded = true;
+    })
+    .addCase(loadOfferById, (state, action) => {
+      state.offerById = adaptOffers([action.payload.offerById])[0];
+      state.isDataOfferByIdLoaded = true;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
       const MAX_NEARBY_OFFERS = 3;
-      const nearbyOffers = adaptOffers(action.payload.nearbyOffers).splice(
+      state.nearbyOffers = adaptOffers(action.payload.nearbyOffers).splice(
         0,
         MAX_NEARBY_OFFERS,
       );
-      return { ...state, nearbyOffers };
-    }
-    default:
-      return state;
-  }
-};
+      state.isDataOfferByIdLoaded = true;
+    });
+});
 
 export { offersData };
