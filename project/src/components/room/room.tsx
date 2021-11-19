@@ -57,11 +57,11 @@ function Room(): JSX.Element {
       host,
       isPremium,
       isFavorite,
-      images,
     } = offerById;
 
     const percentageRating = countRating(rating);
     const MAX_IMAGES = 6;
+    const images = offerById.images.slice(0, MAX_IMAGES);
 
     if (!isDataOfferByIdLoaded) {
       return <LoadingScreen />;
@@ -74,7 +74,7 @@ function Room(): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                {images.splice(0, MAX_IMAGES).map((image) => (
+                {images.map((image) => (
                   <div className='property__image-wrapper' key={image}>
                     <img
                       className='property__image'
