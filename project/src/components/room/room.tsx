@@ -21,13 +21,13 @@ type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ offers, offerById, reviews,  nearbyOffers, isDataOfferByIdLoaded, authorizationStatus  }: State) => ({
-  offers,
-  offerById,
-  reviews,
-  nearbyOffers,
-  isDataOfferByIdLoaded,
-  authorizationStatus,
+const mapStateToProps = ({ OFFERS, REVIEWS, USER }: State) => ({
+  offers: OFFERS.offers,
+  offerById: OFFERS.offerById,
+  reviews: REVIEWS.reviews,
+  nearbyOffers: OFFERS.nearbyOffers,
+  isDataOfferByIdLoaded: OFFERS.isDataOfferByIdLoaded,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

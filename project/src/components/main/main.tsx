@@ -18,11 +18,11 @@ import { FIRST_SORT } from '../../const';
 import { sortingOffers } from '../../utils/sort';
 import { defaultCity } from '../../const';
 
-const mapStateToProps = ({ city, offers, keyOfSort, isDataOffersLoaded }: State) => ({
-  city,
-  keyOfSort,
-  offers,
-  isDataOffersLoaded,
+const mapStateToProps = ({ OFFERS }: State) => ({
+  city: OFFERS.city,
+  keyOfSort: OFFERS.keyOfSort,
+  offers: OFFERS.offers,
+  isDataOffersLoaded: OFFERS.isDataOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

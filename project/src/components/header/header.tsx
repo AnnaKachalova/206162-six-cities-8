@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 
-const mapStateToProps = ({ authorizationStatus, currentUserEmail }: State) => ({
-  authorizationStatus,
-  currentUserEmail,
+const mapStateToProps = ({ USER }: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  currentUserEmail: USER.currentUserEmail,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

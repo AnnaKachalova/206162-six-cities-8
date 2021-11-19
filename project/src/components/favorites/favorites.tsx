@@ -5,8 +5,8 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import FavoritesGroup from '../favorites-group/favorites-group';
 
-const mapStateToProps = ({ offers }: State) => ({
-  offers,
+const mapStateToProps = ({ OFFERS }: State) => ({
+  offers: OFFERS.offers,
 });
 
 const connector = connect(mapStateToProps);

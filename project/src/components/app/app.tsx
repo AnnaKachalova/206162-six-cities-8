@@ -11,9 +11,9 @@ import browserHistory from '../../browser-history';
 
 import { State } from '../../types/state';
 
-const mapStateToProps = ({ authorizationStatus, isDataOffersLoaded }: State) => ({
-  authorizationStatus,
-  isDataOffersLoaded,
+const mapStateToProps = ({ USER, OFFERS }: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  isDataOffersLoaded: OFFERS.isDataOffersLoaded,
 });
 
 const connector = connect(mapStateToProps);
