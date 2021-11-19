@@ -17,12 +17,13 @@ import { Offer, City } from '../../types/offer';
 import { FIRST_SORT } from '../../const';
 import { sortingOffers } from '../../utils/sort';
 import { defaultCity } from '../../const';
+import { getCity, getKeyOfSort, getOffers, getIsDataOffersLoaded } from '../../store/offers/selectors';
 
-const mapStateToProps = ({ OFFERS }: State) => ({
-  city: OFFERS.city,
-  keyOfSort: OFFERS.keyOfSort,
-  offers: OFFERS.offers,
-  isDataOffersLoaded: OFFERS.isDataOffersLoaded,
+const mapStateToProps = (state: State) => ({
+  city: getCity(state),
+  keyOfSort: getKeyOfSort(state),
+  offers: getOffers(state),
+  isDataOffersLoaded: getIsDataOffersLoaded(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

@@ -4,14 +4,15 @@ import { RouteProps } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { State } from '../../types/state';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 type PrivateRouteProps = RouteProps & {
   render: () => JSX.Element;
   authorizationStatus: AuthorizationStatus;
 };
 
-const mapStateToProps = ({ USER }: State) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const connector = connect(mapStateToProps);

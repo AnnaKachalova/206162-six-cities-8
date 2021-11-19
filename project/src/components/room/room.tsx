@@ -17,18 +17,23 @@ import { countRating } from '../../utils/common';
 
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
+import { getReviews } from '../../store/reviews/selectors';
+import { getOffers, getOfferById, getNearbyOffers, getIsDataOfferByIdLoaded } from '../../store/offers/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ OFFERS, REVIEWS, USER }: State) => ({
-  offers: OFFERS.offers,
-  offerById: OFFERS.offerById,
-  reviews: REVIEWS.reviews,
-  nearbyOffers: OFFERS.nearbyOffers,
-  isDataOfferByIdLoaded: OFFERS.isDataOfferByIdLoaded,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  offers:getOffers(state),
+  offerById: getOfferById(state),
+  reviews: getReviews(state),
+  nearbyOffers: getNearbyOffers(state),
+  isDataOfferByIdLoaded: getIsDataOfferByIdLoaded(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
+
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onLoadOffer(id: string){
