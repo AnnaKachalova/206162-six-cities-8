@@ -3,7 +3,6 @@ import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 
-import { Actions } from '../../types/action';
 import { changeCity, changeSort } from '../../store/action';
 
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -26,7 +25,7 @@ const mapStateToProps = (state: State) => ({
   isDataOffersLoaded: getIsDataOffersLoaded(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeCity(nameCity: string) {
     dispatch(changeCity(nameCity));
   },

@@ -8,7 +8,6 @@ import {
   loadNearbyOffers,
   changeCity,
   changeSort,
-  fillCityList,
   requireAuthorization,
   requireLogout,
   changeUser,
@@ -17,7 +16,6 @@ import {
 
 export enum ActionType {
   ChangeCity = 'render/changeCity',
-  FillCityList = 'render/fillCityList',
   ChangeSort = 'render/changeSort',
   LoadOffers = 'data/loadOffers',
   LoadOfferById = 'data/loadOfferById',
@@ -36,7 +34,6 @@ export type Actions =
   | ReturnType<typeof loadNearbyOffers>
   | ReturnType<typeof changeCity>
   | ReturnType<typeof changeSort>
-  | ReturnType<typeof fillCityList>
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof changeUser>
   | ReturnType<typeof requireLogout>

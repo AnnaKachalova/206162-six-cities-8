@@ -19,8 +19,6 @@ const offersData = (state = initialState, action: Actions): OfferData => {
       return { ...state, city: action.payload };
     case ActionType.ChangeSort:
       return { ...state, keyOfSort: action.payload };
-    case ActionType.FillCityList:
-      return { ...state, offers: action.payload };
     case ActionType.LoadOffers: {
       const offers = adaptOffers(action.payload.offers);
       return { ...state, offers, isDataOffersLoaded: true };

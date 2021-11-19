@@ -1,77 +1,78 @@
+import { createAction } from '@reduxjs/toolkit';
 import { ActionType } from '../types/action';
 import { Offers, Offer } from '../types/offer';
 import { Reviews } from '../types/reviews';
 import { AuthorizationStatus, AppRoute } from '../const';
 
-export const changeCity = (city: string) =>
-  ({
-    type: ActionType.ChangeCity,
+export const changeCity = createAction(
+  ActionType.ChangeCity,
+  (city: string) => ({
     payload: city,
-  } as const);
+  }),
+);
 
-export const changeSort = (keyOfSort: string) =>
-  ({
-    type: ActionType.ChangeSort,
+export const changeSort = createAction(
+  ActionType.ChangeSort,
+  (keyOfSort: string) => ({
     payload: keyOfSort,
-  } as const);
+  }),
+);
 
-export const fillCityList = (offers: Offers) =>
-  ({
-    type: ActionType.FillCityList,
-    payload: offers,
-  } as const);
-
-export const loadOffers = (offers: Offers) =>
-  ({
-    type: ActionType.LoadOffers,
+export const loadOffers = createAction(
+  ActionType.LoadOffers,
+  (offers: Offers) => ({
     payload: {
       offers,
     },
-  } as const);
+  }),
+);
 
-export const loadReviews = (reviews: Reviews) =>
-  ({
-    type: ActionType.LoadReviews,
+export const loadReviews = createAction(
+  ActionType.LoadReviews,
+  (reviews: Reviews) => ({
     payload: {
       reviews,
     },
-  } as const);
+  }),
+);
 
-export const loadOfferById = (offerById: Offer)  =>
-  ({
-    type: ActionType.LoadOfferById,
+export const loadOfferById = createAction(
+  ActionType.LoadOfferById,
+  (offerById: Offer) => ({
     payload: {
       offerById,
     },
-  } as const);
+  }),
+);
 
-export const loadNearbyOffers = (nearbyOffers: Offers) =>
-  ({
-    type: ActionType.LoadNearbyOffers,
+export const loadNearbyOffers = createAction(
+  ActionType.LoadNearbyOffers,
+  (nearbyOffers: Offers) => ({
     payload: {
       nearbyOffers,
     },
-  } as const);
+  }),
+);
 
-export const requireAuthorization = (authStatus: AuthorizationStatus) =>
-  ({
-    type: ActionType.RequireAuthorization,
+export const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({
     payload: authStatus,
-  } as const);
+  }),
+);
 
-export const requireLogout = () =>
-  ({
-    type: ActionType.RequireLogout,
-  } as const);
+export const requireLogout = createAction(ActionType.RequireLogout);
 
-export const changeUser = (currentUserEmail: string)  =>
-  ({
-    type: ActionType.ChangeUser,
+export const changeUser = createAction(
+  ActionType.ChangeUser,
+  (currentUserEmail: string) => ({
     payload: currentUserEmail,
-  } as const);
+  }),
+);
 
-export const redirectToRoute = (url: AppRoute) =>
-  ({
-    type: ActionType.RedirectToRoute,
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (url: AppRoute) => ({
     payload: url,
-  } as const);
+  }),
+);
