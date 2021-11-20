@@ -5,27 +5,20 @@ import Logo from '../logo/logo';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../const';
 
-import { connect, ConnectedProps } from 'react-redux';
 import { loginAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
-const mapStateToProps = ({ authorizationStatus }: State) => ({
-  authorizationStatus,
-});
+import { useSelector, useDispatch } from 'react-redux';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
+
+function Login(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Login(props: PropsFromRedux): JSX.Element {
-  const { onSubmit, authorizationStatus } = props;
+  };
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -112,5 +105,5 @@ function Login(props: PropsFromRedux): JSX.Element {
     </div>
   );
 }
-export { Login };
-export default connector(Login);
+
+export default Login;

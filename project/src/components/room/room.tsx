@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
 import React,{ useParams } from 'react-router-dom';
 
-import { connect, ConnectedProps } from 'react-redux';
-
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
-
 import CommentSendForm from '../comment-send-form/comment-send-form';
 import CardList from '../card-list/card-list';
 import Comment from '../comment/comment';
@@ -17,39 +12,37 @@ import { countRating } from '../../utils/common';
 
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
+import { getReviews } from '../../store/reviews/selectors';
+import { getOfferById, getNearbyOffers, getIsDataOfferByIdLoaded } from '../../store/offers/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+
+import { useSelector, useDispatch } from 'react-redux';
+
 type PostParams = {
   id: string;
 };
 
-const mapStateToProps = ({ offers, offerById, reviews,  nearbyOffers, isDataOfferByIdLoaded, authorizationStatus  }: State) => ({
-  offers,
-  offerById,
-  reviews,
-  nearbyOffers,
-  isDataOfferByIdLoaded,
-  authorizationStatus,
-});
+function Room(): JSX.Element {
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataOfferByIdLoaded = useSelector(getIsDataOfferByIdLoaded);
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLoadOffer(id: string){
+  const dispatch = useDispatch();
+
+  const onLoadOffer = (id: string) => {
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchReviewsAction(id));
     dispatch(fetchNearbyOffersAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Room(props: PropsFromRedux): JSX.Element {
-  const { onLoadOffer, isDataOfferByIdLoaded, nearbyOffers, authorizationStatus } = props;
+  };
 
   const { id } = useParams<PostParams>();
   useEffect(() => {
     onLoadOffer(id);
   }, [ id ]);
 
-  const { offerById, reviews } = props;
+
+  const offerById = useSelector(getOfferById);
+  const reviews = useSelector(getReviews);
 
   if (offerById !== undefined) {
     const {
@@ -64,11 +57,11 @@ function Room(props: PropsFromRedux): JSX.Element {
       host,
       isPremium,
       isFavorite,
-      images,
     } = offerById;
 
     const percentageRating = countRating(rating);
     const MAX_IMAGES = 6;
+    const images = offerById.images.slice(0, MAX_IMAGES);
 
     if (!isDataOfferByIdLoaded) {
       return <LoadingScreen />;
@@ -81,7 +74,7 @@ function Room(props: PropsFromRedux): JSX.Element {
           <section className='property'>
             <div className='property__gallery-container container'>
               <div className='property__gallery'>
-                {images.splice(0, MAX_IMAGES).map((image) => (
+                {images.map((image) => (
                   <div className='property__image-wrapper' key={image}>
                     <img
                       className='property__image'
@@ -210,5 +203,4 @@ function Room(props: PropsFromRedux): JSX.Element {
   }
 }
 
-export { Room };
-export default connector(Room);
+export default Room;
