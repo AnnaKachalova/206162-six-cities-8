@@ -13,6 +13,7 @@ import {
   resetDataOfferLoaded,
   resetDataFavoriteLoaded
 } from './action';
+import { adaptOffers, adaptOffer } from '../../src/adapter';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { Offer } from '../types/offer';
@@ -27,7 +28,8 @@ export const fetchOffersAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
       const { data } = await api.get<Offer[]>(APIRoute.Offers);
-      dispatch(loadOffers(data));
+      const adaptData = adaptOffers(data)
+      dispatch(loadOffers(adaptData));
     };
 
 export const fetchOfferByIdAction =

@@ -37,7 +37,7 @@ const offersData = createReducer(initialState, (builder) => {
       state.keyOfSort = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
-      state.offers = adaptOffers(action.payload.offers);
+      state.offers = action.payload.offers;
       state.isDataOffersLoaded = true;
     })
     .addCase(loadOfferById, (state, action) => {
