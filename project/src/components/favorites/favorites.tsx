@@ -1,14 +1,28 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import FavoritesGroup from '../favorites-group/favorites-group';
-import { getOffers } from '../../store/offers/selectors';
+import FavoritesGroup from '../favorite-group/favorite-group';
+import { getFavoriteOffers } from '../../store/offers/selectors';
+import { fetchFavoriteOffersAction } from '../../store/api-actions';
 
-import { useSelector } from 'react-redux';
 
 function Favorites(): JSX.Element {
-  const offers = useSelector(getOffers);
+  const favoriteOffers = useSelector(getFavoriteOffers);
 
-  const cityNames = [...new Set(offers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
+
+  const dispatch = useDispatch();
+
+  const onLoadFavorites = () => {
+    dispatch(fetchFavoriteOffersAction());
+  };
+
+  useEffect(() => {
+    onLoadFavorites();
+  }, []);
+
+  const cityNames = [...new Set(favoriteOffers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
+
   return (
     <div className="page">
       <Header />
@@ -20,7 +34,7 @@ function Favorites(): JSX.Element {
               {cityNames.map((cityName) => (
                 <FavoritesGroup
                   key={`${cityName}123`}
-                  offers={offers}
+                  offers={favoriteOffers}
                   cityName={cityName}
                 />
               ))}

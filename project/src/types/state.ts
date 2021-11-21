@@ -13,8 +13,10 @@ export type OfferData = {
   offerById: Offer;
   keyOfSort: string;
   isDataOffersLoaded: boolean;
-  isDataOfferByIdLoaded: boolean;
+  isDataOfferLoaded: boolean;
   nearbyOffers: Offers;
+  favoriteOffers: Offers;
+  favoriteOffer: Offer;
 };
 
 export type UserProcess = {

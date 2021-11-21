@@ -7,7 +7,9 @@ import {
   changeUser,
   loadOfferById,
   loadNearbyOffers,
-  redirectToRoute
+  redirectToRoute,
+  loadFavoriteOffers,
+  loadFavoriteOffer
 } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
@@ -46,11 +48,19 @@ export const fetchReviewsAction =
       const { data } = await api.get<Review[]>(`${ APIRoute.Reviews }/${ offerId }`);
       dispatch(loadReviews(data));
     };
+
 export const fetchNearbyOffersAction =
     (offerId: string): ThunkActionResult =>
       async (dispatch, _getState, api): Promise<void> => {
         const { data } = await api.get<Offer[]>(`${ APIRoute.Offers }/${ offerId }${ APIRoute.Nearby }`);
         dispatch(loadNearbyOffers(data));
+      };
+
+export const fetchFavoriteOffersAction =
+    (): ThunkActionResult =>
+      async (dispatch, _getState, api): Promise<void> => {
+        const { data } = await api.get<Offer[]>(`${ APIRoute.Favorites }`);
+        dispatch(loadFavoriteOffers(data));
       };
 
 export const checkAuthAction =
@@ -87,4 +97,11 @@ export const sendCommentAction =
     async (dispatch, _getState, api) => {
       const {data} = await api.post<Review[]>(`${ APIRoute.Reviews }/${ offerId }`, comment);
       dispatch(loadReviews(data));
+    };
+
+export const changeFavoriteAction =
+  (id: number, status: number): ThunkActionResult =>
+    async (dispatch, _getState, api) => {
+      const {data} = await api.post(`${ APIRoute.Favorites }/${ id }/${ status }`);
+      dispatch(loadFavoriteOffer(data));
     };

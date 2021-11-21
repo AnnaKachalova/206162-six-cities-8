@@ -1,22 +1,23 @@
 import { useEffect } from 'react';
 import React,{ useParams } from 'react-router-dom';
 
+import { useSelector, useDispatch } from 'react-redux';
 import CommentSendForm from '../comment-send-form/comment-send-form';
 import CardList from '../card-list/card-list';
 import Comment from '../comment/comment';
 import Header from '../header/header';
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 import { countRating } from '../../utils/common';
 
 import { fetchOfferByIdAction, fetchReviewsAction, fetchNearbyOffersAction } from '../../store/api-actions';
 
 import { getReviews } from '../../store/reviews/selectors';
-import { getOfferById, getNearbyOffers, getIsDataOfferByIdLoaded } from '../../store/offers/selectors';
+import { getOfferById, getNearbyOffers, getIsDataOfferLoaded } from '../../store/offers/selectors';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 
-import { useSelector, useDispatch } from 'react-redux';
 
 type PostParams = {
   id: string;
@@ -25,7 +26,7 @@ type PostParams = {
 function Room(): JSX.Element {
   const nearbyOffers = useSelector(getNearbyOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const isDataOfferByIdLoaded = useSelector(getIsDataOfferByIdLoaded);
+  const isDataOfferLoaded = useSelector(getIsDataOfferLoaded);
 
   const dispatch = useDispatch();
 
@@ -56,14 +57,13 @@ function Room(): JSX.Element {
       goods,
       host,
       isPremium,
-      isFavorite,
     } = offerById;
 
     const percentageRating = countRating(rating);
     const MAX_IMAGES = 6;
     const images = offerById.images.slice(0, MAX_IMAGES);
 
-    if (!isDataOfferByIdLoaded) {
+    if (!isDataOfferLoaded) {
       return <LoadingScreen />;
     }
 
@@ -94,19 +94,7 @@ function Room(): JSX.Element {
                 )}
                 <div className='property__name-wrapper'>
                   <h1 className='property__name'>{title}</h1>
-                  <button
-                    className={`${isFavorite && 'property__bookmark-button--active'} property__bookmark-button button`}
-                    type='button'
-                  >
-                    <svg
-                      className='property__bookmark-icon'
-                      width='31'
-                      height='33'
-                    >
-                      <use xlinkHref='#icon-bookmark'></use>
-                    </svg>
-                    <span className='visually-hidden'>To bookmarks</span>
-                  </button>
+                  <FavoriteButton offer={offerById} className={'property'}/>
                 </div>
                 <div className='property__rating rating'>
                   <div className='property__stars rating__stars'>

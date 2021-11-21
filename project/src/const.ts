@@ -49,6 +49,7 @@ export enum APIRoute {
   Reviews = '/comments',
   Nearby = '/nearby',
   Login = '/login',
+  Favorites = '/favorite',
   Logout = '/logout',
 }
 

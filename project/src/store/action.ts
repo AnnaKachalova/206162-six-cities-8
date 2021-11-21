@@ -54,6 +54,24 @@ export const loadNearbyOffers = createAction(
   }),
 );
 
+export const loadFavoriteOffers = createAction(
+  ActionType.LoadFavoriteOffers,
+  (favoriteOffers: Offers) => ({
+    payload: {
+      favoriteOffers,
+    },
+  }),
+);
+
+export const loadFavoriteOffer = createAction(
+  ActionType.LoadFavoriteOffer,
+  (favoriteOffer: Offer) => ({
+    payload: {
+      favoriteOffer,
+    },
+  }),
+);
+
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
   (authStatus: AuthorizationStatus) => ({
