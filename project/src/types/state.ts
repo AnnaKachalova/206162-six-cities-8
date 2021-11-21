@@ -12,7 +12,7 @@ export type OfferData = {
   offers: Offers;
   offerById: Offer;
   keyOfSort: string;
-  isDataOffersLoaded: boolean;
+  offersStatus: string;
   isDataOfferLoaded: boolean;
   nearbyOffers: Offers;
   favoriteOffers: Offers;

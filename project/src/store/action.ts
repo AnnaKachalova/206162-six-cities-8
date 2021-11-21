@@ -94,3 +94,10 @@ export const redirectToRoute = createAction(
     payload: url,
   }),
 );
+
+export const getOffersStatusAction = createAction(
+  ActionType.GetOffersStatusAction,
+  (payload: string) => ({
+    payload,
+  }),
+);
