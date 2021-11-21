@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect/*, useCallback*/ } from 'react';
+import { useEffect } from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import FavoritesGroup from '../favorite-group/favorite-group';

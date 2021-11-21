@@ -17,7 +17,7 @@ import { adaptOffers, adaptOffer, adaptReviews } from '../../src/adapter';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { adaptOfferType } from '../types/offer';
-import { adaptReviewsType, Review } from '../types/reviews';
+import { adaptReviewsType } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
 import {toast} from 'react-toastify';
 import { Comment } from '../types/comment';
@@ -104,8 +104,9 @@ export const logoutAction =
 export const sendCommentAction =
   (comment: Comment, offerId: string): ThunkActionResult =>
     async (dispatch, _getState, api) => {
-      const {data} = await api.post<Review[]>(`${ APIRoute.Reviews }/${ offerId }`, comment);
-      dispatch(loadReviews(data));
+      const {data} = await api.post<adaptReviewsType[]>(`${ APIRoute.Reviews }/${ offerId }`, comment);
+      const adaptData = adaptReviews(data);
+      dispatch(loadReviews(adaptData));
     };
 
 export const changeFavoriteAction =
