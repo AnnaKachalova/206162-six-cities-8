@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect/*, useCallback*/ } from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import FavoritesGroup from '../favorite-group/favorite-group';
@@ -14,13 +14,9 @@ function Favorites(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const onLoadFavorites = () => {
-    dispatch(fetchFavoriteOffersAction());
-  };
-
   useEffect(() => {
-    onLoadFavorites();
-  }, []);
+    dispatch(fetchFavoriteOffersAction());
+  }, [dispatch]);
 
   if (!isDataFavoriteLoaded) {
     return <LoadingScreen />;

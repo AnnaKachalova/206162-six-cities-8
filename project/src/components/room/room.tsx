@@ -32,17 +32,13 @@ function Room(): JSX.Element {
   const isDataOfferLoaded = useSelector(getIsDataOfferLoaded);
 
   const dispatch = useDispatch();
+  const { id } = useParams<PostParams>();
 
-  const onLoadOffer = (id: string) => {
+  useEffect(() => {
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchReviewsAction(id));
     dispatch(fetchNearbyOffersAction(id));
-  };
-
-  const { id } = useParams<PostParams>();
-  useEffect(() => {
-    onLoadOffer(id);
-  }, [id]);
+  }, [dispatch, id]);
 
   const offerById = useSelector(getOfferById);
   const reviews = useSelector(getReviews);
