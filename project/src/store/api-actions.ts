@@ -10,10 +10,10 @@ import {
   redirectToRoute,
   loadFavoriteOffers,
   loadFavoriteOffer,
-  getOffersStatusAction
+  resetDataOffersLoaded
 } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
-import { APIRoute, AuthorizationStatus, AppRoute, DataStatus } from '../const';
+import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
 import { Offer } from '../types/offer';
 import { Review } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
@@ -25,17 +25,9 @@ const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 export const fetchOffersAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      dispatch(getOffersStatusAction(DataStatus.IsLoading));
-      await api.get<Offer[]>(APIRoute.Offers)
-        .then(({ data }) => {
-          dispatch(getOffersStatusAction(DataStatus.IsLoaded));
-          dispatch(loadOffers(data));
-          if (data.length === 0) {
-            dispatch(getOffersStatusAction(DataStatus.IsEmpty));
-          }
-        }).catch(({response})=> {
-          dispatch(getOffersStatusAction(DataStatus.NotLoaded));
-        });
+      dispatch(resetDataOffersLoaded());
+      const { data } = await api.get<Offer[]>(APIRoute.Offers);
+      dispatch(loadOffers(data));
     };
 
 export const fetchOfferByIdAction =

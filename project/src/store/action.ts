@@ -95,9 +95,5 @@ export const redirectToRoute = createAction(
   }),
 );
 
-export const getOffersStatusAction = createAction(
-  ActionType.GetOffersStatusAction,
-  (payload: string) => ({
-    payload,
-  }),
-);
+export const resetDataOffersLoaded = createAction(ActionType.ResetDataOffersLoaded);
+export const resetDataOfferLoaded = createAction(ActionType.ResetDataOfferLoaded);

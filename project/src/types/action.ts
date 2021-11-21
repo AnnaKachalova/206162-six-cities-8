@@ -16,7 +16,8 @@ export enum ActionType {
   RequireLogout = 'user/requireLogout',
   ChangeUser = 'data/changeUser',
   RedirectToRoute = 'render/redirectToRoute',
-  GetOffersStatusAction = 'dataload/getOffersStatusAction'
+  ResetDataOffersLoaded = 'resetData/resetDataOffersLoaded',
+  ResetDataOfferLoaded = 'resetData/resetDataOfferLoaded',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

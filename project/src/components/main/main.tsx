@@ -11,20 +11,21 @@ import Map from '../map/map';
 import { Offer, City } from '../../types/offer';
 import { FIRST_SORT } from '../../const';
 import { sortingOffers } from '../../utils/sort';
-import { defaultCity, DataStatus } from '../../const';
+import { defaultCity } from '../../const';
 import { fetchOffersAction } from '../../store/api-actions';
 
 import {
   getCity,
   getKeyOfSort,
   getOffers,
-  getOffersStatus
+  getIsDataOffersLoaded
 } from '../../store/offers/selectors';
 
 function Main(): JSX.Element {
   const city = useSelector(getCity);
   const offers = useSelector(getOffers);
-  const offersStatus = useSelector(getOffersStatus);
+  const isDataOffersLoaded = useSelector(getIsDataOffersLoaded);
+  const emptyOffers = !offers.length;
 
   const dispatch = useDispatch();
 
@@ -65,10 +66,9 @@ function Main(): JSX.Element {
 
   sortedOffers = sortingOffers(filteredOffers, keyOfSort);
 
-  if (offersStatus === DataStatus.IsLoading) {
+  if (!isDataOffersLoaded) {
     return <LoadingScreen />;
   }
-  const emptyOffers = offersStatus === DataStatus.IsEmpty;
 
   return (
     <div className="page page--gray page--main">
