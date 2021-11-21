@@ -10,7 +10,8 @@ import {
   redirectToRoute,
   loadFavoriteOffers,
   loadFavoriteOffer,
-  resetDataOffersLoaded
+  resetDataOfferLoaded,
+  resetDataFavoriteLoaded
 } from './action';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
@@ -25,7 +26,6 @@ const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 export const fetchOffersAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      dispatch(resetDataOffersLoaded());
       const { data } = await api.get<Offer[]>(APIRoute.Offers);
       dispatch(loadOffers(data));
     };
@@ -33,6 +33,7 @@ export const fetchOffersAction =
 export const fetchOfferByIdAction =
   (offerId: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
+      dispatch(resetDataOfferLoaded());
       await api
         .get<Offer>(`${ APIRoute.Offers }/${ offerId }`)
         .then(({ data }) => {
@@ -61,6 +62,7 @@ export const fetchNearbyOffersAction =
 export const fetchFavoriteOffersAction =
     (): ThunkActionResult =>
       async (dispatch, _getState, api): Promise<void> => {
+        dispatch(resetDataFavoriteLoaded());
         const { data } = await api.get<Offer[]>(`${ APIRoute.Favorites }`);
         dispatch(loadFavoriteOffers(data));
       };
@@ -106,4 +108,6 @@ export const changeFavoriteAction =
     async (dispatch, _getState, api) => {
       const {data} = await api.post(`${ APIRoute.Favorites }/${ id }/${ +status }`);
       dispatch(loadFavoriteOffer(data));
+      dispatch(fetchOffersAction());
+      dispatch(fetchFavoriteOffersAction());
     };

@@ -97,3 +97,4 @@ export const redirectToRoute = createAction(
 
 export const resetDataOffersLoaded = createAction(ActionType.ResetDataOffersLoaded);
 export const resetDataOfferLoaded = createAction(ActionType.ResetDataOfferLoaded);
+export const resetDataFavoriteLoaded = createAction(ActionType.ResetDataFavoriteLoaded);

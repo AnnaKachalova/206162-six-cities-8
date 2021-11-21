@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { changeFavoriteAction } from '../../store/api-actions';
 import { Offer } from '../../types/offer';
@@ -10,10 +11,11 @@ type FavoriteButtonProps = {
 function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   const { className, offer } = props;
   const { id, isFavorite } = offer;
-
+  const [isFavoriteClick, setFavoriteClick] = useState<boolean>(isFavorite);
   const dispatch = useDispatch();
 
   const onClickFavorite = () => {
+    setFavoriteClick(!isFavoriteClick);
     dispatch(changeFavoriteAction(id, !isFavorite));
   };
 
@@ -24,7 +26,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   return (
     <button
       onClick={onClickFavorite}
-      className={`${isFavorite && `${className}__bookmark-button--active`} ${className}__bookmark-button button`}
+      className={`${isFavoriteClick && `${className}__bookmark-button--active`} ${className}__bookmark-button button`}
       type="button"
     >
       <svg className={`${className}__bookmark-icon`} width={widthBookmark} height={heightBookmark}>

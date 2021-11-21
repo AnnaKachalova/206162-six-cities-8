@@ -4,17 +4,17 @@ import { Review, Reviews } from '../src/types/reviews';
 export const adaptOffer = (offer: any): Offer => {
   const obj = {
     id: offer.id,
-    title: offer.title || '',
-    previewImage: offer.preview_image || '',
-    images: offer.images || [],
+    title: offer.title,
+    previewImage: offer.preview_image,
+    images: offer.images,
     price: offer.price,
-    type: offer.type || '',
+    type: offer.type,
     rating: offer.rating,
-    description: offer.description || '',
+    description: offer.description,
     bedrooms: offer.bedrooms,
     maxAdults: offer.max_adults,
     city: {
-      name: offer.city.name || '',
+      name: offer.city.name,
       location: {
         latitude: offer.city.location.latitude,
         longitude: offer.city.location.longitude,
@@ -23,13 +23,13 @@ export const adaptOffer = (offer: any): Offer => {
     },
     goods: offer.goods,
     host: {
-      avatarUrl: offer.host.avatar_url || '',
+      avatarUrl: offer.host.avatar_url,
       id: offer.host.id,
-      isPro: offer.host.is_pro || false,
-      name: offer.host.name || '',
+      isPro: offer.host.is_pro,
+      name: offer.host.name,
     },
-    isFavorite: offer.is_favorite || false,
-    isPremium: offer.is_premium || false,
+    isFavorite: offer.is_favorite,
+    isPremium: offer.is_premium,
 
     location: {
       latitude: offer.location.latitude,

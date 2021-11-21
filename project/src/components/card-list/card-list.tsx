@@ -12,7 +12,7 @@ function CardList({offers, onListItemHover, className}: CardListProps): JSX.Elem
   return (
     <div className={`${className}__places-list places__list ${isMainCard ? 'tabs__content':''}`}>
       {offers.map((element) => (
-        <Card key={`${element.title}${element.type}${element.previewImage}`} offer={element} onListItemHover={onListItemHover} className={className}/>
+        <Card key={`${element.id}-card`} offer={element} onListItemHover={onListItemHover} className={className}/>
       ))}
     </div>
   );

@@ -13,7 +13,7 @@ function CityList({ onChangeCity, activeCity }: CityListProps): JSX.Element {
       <section className='locations container'>
         <ul className='locations__list tabs__list'>
           {CITIES.map((cityName) => (
-            <li className='locations__item' key={cityName}>
+            <li className='locations__item' key={`${cityName}-city`}>
               <Link
                 className={`${activeCity.name === cityName && 'tabs__item--active'} locations__item-link tabs__item`}
                 to='#'

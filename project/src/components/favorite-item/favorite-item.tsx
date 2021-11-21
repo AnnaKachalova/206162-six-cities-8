@@ -13,7 +13,7 @@ function Favorite(props: FavoriteProps): JSX.Element {
   const history = useHistory();
 
   return (
-    <article className="favorites__card place-card" key={`${id}456`}>
+    <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to="#">
           <img

@@ -11,7 +11,8 @@ import {
   loadFavoriteOffers,
   loadFavoriteOffer,
   resetDataOffersLoaded,
-  resetDataOfferLoaded
+  resetDataOfferLoaded,
+  resetDataFavoriteLoaded
 } from '../action';
 
 const initialState: OfferData = {
@@ -24,6 +25,7 @@ const initialState: OfferData = {
   nearbyOffers: [],
   favoriteOffers: [],
   favoriteOffer: OFFER,
+  isDataFavoriteLoaded: false,
 };
 
 const offersData = createReducer(initialState, (builder) => {
@@ -51,6 +53,7 @@ const offersData = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavoriteOffers, (state, action) => {
       state.favoriteOffers = adaptOffers(action.payload.favoriteOffers);
+      state.isDataFavoriteLoaded = true;
     })
     .addCase(loadFavoriteOffer, (state, action) => {
       state.favoriteOffer = adaptOffer(action.payload.favoriteOffer);
@@ -60,6 +63,9 @@ const offersData = createReducer(initialState, (builder) => {
     })
     .addCase(resetDataOfferLoaded, (state) => {
       state.isDataOfferLoaded = false;
+    })
+    .addCase(resetDataFavoriteLoaded, (state) => {
+      state.isDataFavoriteLoaded = false;
     });
 });
 

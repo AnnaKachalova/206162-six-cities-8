@@ -24,7 +24,7 @@ function FavoritesGroup({
         {offers
           .filter((offer) => offer.city.name === cityName)
           .map((offer) => (
-            <Favorite offer={offer} key={`${offer.title}${offer.type}${offer.previewImage}`} />
+            <Favorite offer={offer} key={`${offer.id}-favorites-card`} />
           ))}
       </div>
     </li>

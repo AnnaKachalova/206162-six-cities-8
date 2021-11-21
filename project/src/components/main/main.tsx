@@ -12,7 +12,7 @@ import { Offer, City } from '../../types/offer';
 import { FIRST_SORT } from '../../const';
 import { sortingOffers } from '../../utils/sort';
 import { defaultCity } from '../../const';
-import { fetchOffersAction } from '../../store/api-actions';
+//import { fetchOffersAction } from '../../store/api-actions';
 
 import {
   getCity,
@@ -60,9 +60,9 @@ function Main(): JSX.Element {
     setActiveSort(keyOfSort);
   }, [keyOfSort]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(fetchOffersAction());
-  }, [ offers ]);
+  }, []);*/
 
   sortedOffers = sortingOffers(filteredOffers, keyOfSort);
 

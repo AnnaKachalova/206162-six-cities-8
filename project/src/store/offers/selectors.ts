@@ -10,3 +10,4 @@ export const getIsDataOffersLoaded = (state: State): boolean => state[NameSpace.
 export const getIsDataOfferLoaded = (state: State): boolean => state[NameSpace.offers].isDataOfferLoaded;
 export const getNearbyOffers = (state: State): Offers => state[NameSpace.offers].nearbyOffers;
 export const getFavoriteOffers = (state: State): Offers => state[NameSpace.offers].favoriteOffers;
+export const getIsDataFavoriteLoaded = (state: State): boolean => state[NameSpace.offers].isDataFavoriteLoaded;

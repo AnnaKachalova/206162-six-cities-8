@@ -17,6 +17,7 @@ export type OfferData = {
   nearbyOffers: Offers;
   favoriteOffers: Offers;
   favoriteOffer: Offer;
+  isDataFavoriteLoaded: boolean;
 };
 
 export type UserProcess = {

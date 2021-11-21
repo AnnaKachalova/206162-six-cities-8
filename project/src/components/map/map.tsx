@@ -43,7 +43,7 @@ function Map({ city, offers, selectedPoint, className }: MapProps): JSX.Element 
           .addTo(map);
       });
     }
-  }, [map, selectedPoint, city]);
+  }, [map, selectedPoint, city ]);
 
   return (
     <section className={`${className}__map map`} ref={mapRef}>

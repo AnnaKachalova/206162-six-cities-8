@@ -18,6 +18,7 @@ export enum ActionType {
   RedirectToRoute = 'render/redirectToRoute',
   ResetDataOffersLoaded = 'resetData/resetDataOffersLoaded',
   ResetDataOfferLoaded = 'resetData/resetDataOfferLoaded',
+  ResetDataFavoriteLoaded = 'resetData/resetDataFavoriteLoaded',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<
