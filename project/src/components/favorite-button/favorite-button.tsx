@@ -17,7 +17,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
 
   const onClickFavorite = () => {
     setIsFavorite(!offerIsFavorite);
-    const status = offerIsFavorite ? 1 : 0;
+    const status = offerIsFavorite ? 0 : 1;
     dispatch(changeFavoriteAction(id, status));
   };
 
