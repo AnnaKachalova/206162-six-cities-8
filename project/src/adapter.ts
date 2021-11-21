@@ -1,18 +1,18 @@
 import { Offer, Offers, adaptOfferType } from '../src/types/offer';
-import { Review, Reviews } from '../src/types/reviews';
+import { Review, Reviews, adaptReviewsType } from '../src/types/reviews';
 
 export const adaptOffer = (offer: adaptOfferType): Offer => {
-  return {
+  const obj =  {
     id: offer.id,
     title: offer.title,
-    previewImage: offer['preview_image'],
+    previewImage: offer.preview_image,
     images: offer.images,
     price: offer.price,
     type: offer.type,
     rating: offer.rating,
     description: offer.description,
     bedrooms: offer.bedrooms,
-    maxAdults: offer['max_adults'],
+    maxAdults: offer.max_adults,
     city: {
       name: offer.city.name,
       location: {
@@ -23,38 +23,39 @@ export const adaptOffer = (offer: adaptOfferType): Offer => {
     },
     goods: offer.goods,
     host: {
-      avatarUrl: offer.host['avatar_url'],
+      avatarUrl: offer.host.avatar_url,
       id: offer.host.id,
       isPro: offer.host.is_pro,
       name: offer.host.name,
     },
     isFavorite: offer.is_favorite,
-    isPremium: offer['is_premium'],
+    isPremium: offer.is_premium,
     location: {
       latitude: offer.location.latitude,
       longitude: offer.location.longitude,
       zoom: offer.location.zoom,
     },
   };
+  return obj;
 };
 
 export const adaptOffers = (offers: adaptOfferType[]): Offers => offers.map((offer) => adaptOffer(offer));
 
-export const adaptReview = (review: any): Review => {
+export const adaptReview = (review: adaptReviewsType): Review => {
   const obj = {
-    comment: review.comment || '',
-    date: review.date || '',
+    comment: review.comment,
+    date: review.date,
     id: review.id,
     rating: review.rating,
     user: {
-      avatarUrl: review.user.avatar_url || '',
+      avatarUrl: review.user.avatar_url,
       id: review.user.id,
-      isPro: review.user.is_pro || false,
-      name: review.user.name || '',
+      isPro: review.user.is_pro,
+      name: review.user.name,
     },
   };
 
   return obj;
 };
 
-export const adaptReviews = (reviews: any[]): Reviews => reviews.map((review) => adaptReview(review));
+export const adaptReviews = (reviews: adaptReviewsType[]): Reviews => reviews.map((review) => adaptReview(review));

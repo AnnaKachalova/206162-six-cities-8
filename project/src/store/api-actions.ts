@@ -13,13 +13,12 @@ import {
   resetDataOfferLoaded,
   resetDataFavoriteLoaded
 } from './action';
-import { adaptOffers, adaptOffer } from '../../src/adapter';
+import { adaptOffers, adaptOffer, adaptReviews } from '../../src/adapter';
 import { saveToken, dropToken, Token } from '../services/token';
 import { APIRoute, AuthorizationStatus, AppRoute } from '../const';
-import { Offer } from '../types/offer';
-import { Review } from '../types/reviews';
+import { adaptOfferType } from '../types/offer';
+import { adaptReviewsType, Review } from '../types/reviews';
 import { AuthData } from '../types/auth-data';
-
 import {toast} from 'react-toastify';
 import { Comment } from '../types/comment';
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
@@ -27,8 +26,8 @@ const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 export const fetchOffersAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data } = await api.get<Offer[]>(APIRoute.Offers);
-      const adaptData = adaptOffers(data)
+      const { data } = await api.get<adaptOfferType[]>(APIRoute.Offers);
+      const adaptData = adaptOffers(data);
       dispatch(loadOffers(adaptData));
     };
 
@@ -37,9 +36,10 @@ export const fetchOfferByIdAction =
     async (dispatch, _getState, api): Promise<void> => {
       dispatch(resetDataOfferLoaded());
       await api
-        .get<Offer>(`${ APIRoute.Offers }/${ offerId }`)
+        .get<adaptOfferType>(`${ APIRoute.Offers }/${ offerId }`)
         .then(({ data }) => {
-          dispatch(loadOfferById(data));
+          const adaptData = adaptOffer(data);
+          dispatch(loadOfferById(adaptData));
         }).catch(({response})=> {
           if(response && response.status === 404){
             dispatch(redirectToRoute(AppRoute.NotFoundOffer));
@@ -50,23 +50,26 @@ export const fetchOfferByIdAction =
 export const fetchReviewsAction =
   (offerId: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data } = await api.get<Review[]>(`${ APIRoute.Reviews }/${ offerId }`);
-      dispatch(loadReviews(data));
+      const { data } = await api.get<adaptReviewsType[]>(`${ APIRoute.Reviews }/${ offerId }`);
+      const adaptData = adaptReviews(data);
+      dispatch(loadReviews(adaptData));
     };
 
 export const fetchNearbyOffersAction =
     (offerId: string): ThunkActionResult =>
       async (dispatch, _getState, api): Promise<void> => {
-        const { data } = await api.get<Offer[]>(`${ APIRoute.Offers }/${ offerId }${ APIRoute.Nearby }`);
-        dispatch(loadNearbyOffers(data));
+        const { data } = await api.get<adaptOfferType[]>(`${ APIRoute.Offers }/${ offerId }${ APIRoute.Nearby }`);
+        const adaptData = adaptOffers(data);
+        dispatch(loadNearbyOffers(adaptData));
       };
 
 export const fetchFavoriteOffersAction =
     (): ThunkActionResult =>
       async (dispatch, _getState, api): Promise<void> => {
         dispatch(resetDataFavoriteLoaded());
-        const { data } = await api.get<Offer[]>(`${ APIRoute.Favorites }`);
-        dispatch(loadFavoriteOffers(data));
+        const { data } = await api.get<adaptOfferType[]>(`${ APIRoute.Favorites }`);
+        const adaptData = adaptOffers(data);
+        dispatch(loadFavoriteOffers(adaptData));
       };
 
 export const checkAuthAction =

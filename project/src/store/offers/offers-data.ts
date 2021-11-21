@@ -1,4 +1,3 @@
-import { adaptOffers, adaptOffer } from '../../adapter';
 import { FIRST_CITY, FIRST_SORT, OFFER } from '../../const';
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferData } from '../../types/state';
@@ -41,22 +40,22 @@ const offersData = createReducer(initialState, (builder) => {
       state.isDataOffersLoaded = true;
     })
     .addCase(loadOfferById, (state, action) => {
-      state.offerById = adaptOffer(action.payload.offerById);
+      state.offerById = action.payload.offerById;
       state.isDataOfferLoaded = true;
     })
     .addCase(loadNearbyOffers, (state, action) => {
       const MAX_NEARBY_OFFERS = 3;
-      state.nearbyOffers = adaptOffers(action.payload.nearbyOffers).splice(
+      state.nearbyOffers = action.payload.nearbyOffers.splice(
         0,
         MAX_NEARBY_OFFERS,
       );
     })
     .addCase(loadFavoriteOffers, (state, action) => {
-      state.favoriteOffers = adaptOffers(action.payload.favoriteOffers);
+      state.favoriteOffers = action.payload.favoriteOffers;
       state.isDataFavoriteLoaded = true;
     })
     .addCase(loadFavoriteOffer, (state, action) => {
-      state.favoriteOffer = adaptOffer(action.payload.favoriteOffer);
+      state.favoriteOffer = action.payload.favoriteOffer;
     })
     .addCase(resetDataOffersLoaded, (state) => {
       state.isDataOffersLoaded = false;
