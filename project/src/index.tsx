@@ -1,20 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
 import { configureStore } from '@reduxjs/toolkit';
-
 import { createAPI } from './services/api';
 import { Provider } from 'react-redux';
-
 import { rootReducer } from './store/root-reducer';
 import { requireAuthorization } from './store/action';
 import { fetchOffersAction, checkAuthAction } from './store/api-actions';
-
 import { AuthorizationStatus } from './const';
-
 import { redirect } from '../src/store/middlewares/redirect';
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
