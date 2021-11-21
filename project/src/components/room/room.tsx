@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import React, { useParams } from 'react-router-dom';
-
 import { useSelector, useDispatch } from 'react-redux';
 import CommentSendForm from '../comment-send-form/comment-send-form';
 import CardList from '../card-list/card-list';
@@ -9,15 +8,12 @@ import Header from '../header/header';
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FavoriteButton from '../favorite-button/favorite-button';
-
 import { countRating } from '../../utils/common';
-
 import {
   fetchOfferByIdAction,
   fetchReviewsAction,
   fetchNearbyOffersAction
 } from '../../store/api-actions';
-
 import { getReviews } from '../../store/reviews/selectors';
 import {
   getOfferById,

@@ -36,4 +36,5 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
     </button>
   );
 }
+
 export default FavoriteButton;

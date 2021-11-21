@@ -1,15 +1,11 @@
 import { useRef, FormEvent } from 'react';
 import { useHistory, Redirect, Link } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
 import Logo from '../logo/logo';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../const';
-
 import { loginAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user/selectors';
-
-import { useSelector, useDispatch } from 'react-redux';
-
 
 function Login(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);

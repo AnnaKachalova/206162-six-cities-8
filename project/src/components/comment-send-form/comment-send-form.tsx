@@ -145,4 +145,5 @@ function CommentSendForm({ id }: CommentSendFormProps): JSX.Element {
     </form>
   );
 }
+
 export default CommentSendForm;

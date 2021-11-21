@@ -1,6 +1,5 @@
 import React, { MouseEvent }  from 'react';
 import { useHistory } from 'react-router-dom';
-
 import{ Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { countRating } from '../../utils/common';
@@ -66,4 +65,5 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
     </article>
   );
 }
+
 export default Card;

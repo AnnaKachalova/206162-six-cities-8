@@ -1,11 +1,11 @@
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import FavoritesGroup from '../favorite-group/favorite-group';
+import LoadingScreen from '../loading-screen/loading-screen';
 import { getFavoriteOffers } from '../../store/offers/selectors';
 import { fetchFavoriteOffersAction } from '../../store/api-actions';
-import LoadingScreen from '../loading-screen/loading-screen';
 import { getIsDataFavoriteLoaded } from '../../store/offers/selectors';
 
 function Favorites(): JSX.Element {

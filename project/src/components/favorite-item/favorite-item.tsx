@@ -1,5 +1,4 @@
 import { useHistory } from 'react-router-dom';
-
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import FavoriteButton from '../favorite-button/favorite-button';
@@ -52,4 +51,5 @@ function Favorite(props: FavoriteProps): JSX.Element {
     </article>
   );
 }
+
 export default Favorite;

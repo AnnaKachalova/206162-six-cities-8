@@ -28,4 +28,5 @@ function CityList({ onChangeCity, activeCity }: CityListProps): JSX.Element {
     </div>
   );
 }
+
 export default CityList;

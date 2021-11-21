@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { SORT_TYPES } from '../../const';
 
 type SortListProps = {

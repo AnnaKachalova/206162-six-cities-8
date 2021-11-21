@@ -1,6 +1,6 @@
-import { Offers } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import Favorite from '../favorite-item/favorite-item';
+import { Offers } from '../../types/offer';
 
 type FavoritesGroupProps = {
   offers: Offers;
@@ -30,4 +30,5 @@ function FavoritesGroup({
     </li>
   );
 }
+
 export default FavoritesGroup;

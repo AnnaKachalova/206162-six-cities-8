@@ -9,7 +9,6 @@ import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
