@@ -10,7 +10,6 @@ import { fetchFavoriteOffersAction } from '../../store/api-actions';
 function Favorites(): JSX.Element {
   const favoriteOffers = useSelector(getFavoriteOffers);
 
-
   const dispatch = useDispatch();
 
   const onLoadFavorites = () => {
@@ -19,7 +18,7 @@ function Favorites(): JSX.Element {
 
   useEffect(() => {
     onLoadFavorites();
-  }, []);
+  }, [ favoriteOffers ]);
 
   const cityNames = [...new Set(favoriteOffers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
 

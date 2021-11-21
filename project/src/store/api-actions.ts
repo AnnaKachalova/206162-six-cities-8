@@ -100,8 +100,8 @@ export const sendCommentAction =
     };
 
 export const changeFavoriteAction =
-  (id: number, status: number): ThunkActionResult =>
+  (id: number, status: boolean): ThunkActionResult =>
     async (dispatch, _getState, api) => {
-      const {data} = await api.post(`${ APIRoute.Favorites }/${ id }/${ status }`);
+      const {data} = await api.post(`${ APIRoute.Favorites }/${ id }/${ +status }`);
       dispatch(loadFavoriteOffer(data));
     };

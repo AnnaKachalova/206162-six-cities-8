@@ -160,7 +160,7 @@ function Room(): JSX.Element {
                   </h2>
                   <ul className='reviews__list'>
                     {reviews.map((review) => (
-                      <Comment review={review} key={review.comment} />
+                      <Comment review={review} key={`${review.comment}${review.rating}`} />
                     ))}
                   </ul>
                   {authorizationStatus === 'AUTH' && <CommentSendForm id={id}/>}
