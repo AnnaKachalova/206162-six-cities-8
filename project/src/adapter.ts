@@ -1,7 +1,7 @@
-import { Offer, Offers, adaptOfferType } from '../src/types/offer';
-import { Review, Reviews, adaptReviewsType } from '../src/types/reviews';
+import { Offer, Offers, AdaptOfferType } from '../src/types/offer';
+import { Review, Reviews, AdaptReviewsType } from '../src/types/reviews';
 
-export const adaptOffer = (offer: adaptOfferType): Offer => {
+export const adaptOffer = (offer: AdaptOfferType): Offer => {
   const obj =  {
     id: offer.id,
     title: offer.title,
@@ -39,9 +39,9 @@ export const adaptOffer = (offer: adaptOfferType): Offer => {
   return obj;
 };
 
-export const adaptOffers = (offers: adaptOfferType[]): Offers => offers.map((offer) => adaptOffer(offer));
+export const adaptOffers = (offers: AdaptOfferType[]): Offers => offers.map((offer) => adaptOffer(offer));
 
-export const adaptReview = (review: adaptReviewsType): Review => {
+export const adaptReview = (review: AdaptReviewsType): Review => {
   const obj = {
     comment: review.comment,
     date: review.date,
@@ -58,4 +58,4 @@ export const adaptReview = (review: adaptReviewsType): Review => {
   return obj;
 };
 
-export const adaptReviews = (reviews: adaptReviewsType[]): Reviews => reviews.map((review) => adaptReview(review));
+export const adaptReviews = (reviews: AdaptReviewsType[]): Reviews => reviews.map((review) => adaptReview(review));

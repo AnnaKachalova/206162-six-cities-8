@@ -46,7 +46,7 @@ export type LooseObject = {
   [key: string]: string;
 };
 
-export type adaptOfferType = {
+export type AdaptOfferType = {
   'id': number;
   'title': string;
   'preview_image': string;

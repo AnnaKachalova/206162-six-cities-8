@@ -13,7 +13,7 @@ export type Review = {
 
 export type Reviews = Review[];
 
-export type adaptReviewsType = {
+export type AdaptReviewsType = {
   'comment': string;
   'date': string;
   'id': number;
