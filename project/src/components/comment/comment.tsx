@@ -38,4 +38,5 @@ function Comment({ review }: CommentProps): JSX.Element {
     </li>
   );
 }
+
 export default Comment;

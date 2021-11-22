@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import{ Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { countRating } from '../../utils/common';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type CardProps = {
     offer: Offer;
@@ -11,7 +12,8 @@ type CardProps = {
 };
 
 function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
-  const{ id, title, price, type, isPremium, previewImage, isFavorite, rating } = offer;
+  const{ id, title, price, type, isPremium, previewImage, rating } = offer;
+
   const percentageRating = countRating(rating);
   const history = useHistory();
   const listItemHoverHandler = (evt:MouseEvent<HTMLLIElement>)=>{
@@ -19,6 +21,7 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
       onListItemHover(id);
     }
   };
+
   const isMainCard = className  === 'cities';
 
   return (
@@ -44,12 +47,7 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`${isFavorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoriteButton offer={offer} className={'place-card'}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -67,4 +65,5 @@ function Card({offer, onListItemHover, className}:CardProps): JSX.Element {
     </article>
   );
 }
+
 export default Card;

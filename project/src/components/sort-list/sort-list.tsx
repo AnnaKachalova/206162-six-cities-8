@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { SORT_TYPES } from '../../const';
 
 type SortListProps = {
@@ -31,7 +30,7 @@ function SortList({ onChangeSort, activeSort }: SortListProps): JSX.Element {
 
       <ul className={`${openedSort && 'places__options--opened'} places__options places__options--custom`}>
         {Object.values(SORT_TYPES).map((keyOfSort) => (
-          <li onClick={() => onChangeSort(keyOfSort)} key={keyOfSort}
+          <li onClick={() => onChangeSort(keyOfSort)} key={`${keyOfSort}-sort`}
             className={`${
               activeSort === keyOfSort && 'places__option--active'
             } places__option`}

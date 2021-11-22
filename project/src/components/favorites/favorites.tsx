@@ -1,14 +1,28 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import FavoritesGroup from '../favorites-group/favorites-group';
-import { getOffers } from '../../store/offers/selectors';
-
-import { useSelector } from 'react-redux';
+import FavoritesGroup from '../favorite-group/favorite-group';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { getFavoriteOffers } from '../../store/offers/selectors';
+import { fetchFavoriteOffersAction } from '../../store/api-actions';
+import { getIsDataFavoriteLoaded } from '../../store/offers/selectors';
 
 function Favorites(): JSX.Element {
-  const offers = useSelector(getOffers);
+  const favoriteOffers = useSelector(getFavoriteOffers);
+  const isDataFavoriteLoaded = useSelector(getIsDataFavoriteLoaded);
 
-  const cityNames = [...new Set(offers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  }, [dispatch]);
+
+  if (!isDataFavoriteLoaded) {
+    return <LoadingScreen />;
+  }
+  const cityNames = [...new Set(favoriteOffers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
+
   return (
     <div className="page">
       <Header />
@@ -19,8 +33,8 @@ function Favorites(): JSX.Element {
             <ul className="favorites__list">
               {cityNames.map((cityName) => (
                 <FavoritesGroup
-                  key={`${cityName}123`}
-                  offers={offers}
+                  key={`${cityName}-favorite-group`}
+                  offers={favoriteOffers}
                   cityName={cityName}
                 />
               ))}

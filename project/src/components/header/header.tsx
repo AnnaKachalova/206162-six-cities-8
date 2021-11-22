@@ -1,11 +1,10 @@
-import Logo from '../logo/logo';
-import { AppRoute } from '../../const';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus, getCurrentUserEmail } from '../../store/user/selectors';
+import Logo from '../logo/logo';
+import { AppRoute } from '../../const';
 
-import { useSelector, useDispatch } from 'react-redux';
 
 function Header(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);

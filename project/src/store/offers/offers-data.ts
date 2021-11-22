@@ -1,4 +1,3 @@
-import { adaptOffers } from '../../adapter';
 import { FIRST_CITY, FIRST_SORT, OFFER } from '../../const';
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferData } from '../../types/state';
@@ -7,17 +6,25 @@ import {
   changeSort,
   loadNearbyOffers,
   loadOfferById,
-  loadOffers
+  loadOffers,
+  loadFavoriteOffers,
+  loadFavoriteOffer,
+  resetDataOffersLoaded,
+  resetDataOfferLoaded,
+  resetDataFavoriteLoaded
 } from '../action';
 
 const initialState: OfferData = {
   city: FIRST_CITY,
   offers: [],
-  offerById: OFFER,
-  keyOfSort: FIRST_SORT,
   isDataOffersLoaded: false,
-  isDataOfferByIdLoaded: false,
+  offerById: OFFER,
+  isDataOfferLoaded: false,
+  keyOfSort: FIRST_SORT,
   nearbyOffers: [],
+  favoriteOffers: [],
+  favoriteOffer: OFFER,
+  isDataFavoriteLoaded: false,
 };
 
 const offersData = createReducer(initialState, (builder) => {
@@ -29,20 +36,35 @@ const offersData = createReducer(initialState, (builder) => {
       state.keyOfSort = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
-      state.offers = adaptOffers(action.payload.offers);
+      state.offers = action.payload.offers;
       state.isDataOffersLoaded = true;
     })
     .addCase(loadOfferById, (state, action) => {
-      state.offerById = adaptOffers([action.payload.offerById])[0];
-      state.isDataOfferByIdLoaded = true;
+      state.offerById = action.payload.offerById;
+      state.isDataOfferLoaded = true;
     })
     .addCase(loadNearbyOffers, (state, action) => {
       const MAX_NEARBY_OFFERS = 3;
-      state.nearbyOffers = adaptOffers(action.payload.nearbyOffers).splice(
+      state.nearbyOffers = action.payload.nearbyOffers.splice(
         0,
         MAX_NEARBY_OFFERS,
       );
-      state.isDataOfferByIdLoaded = true;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload.favoriteOffers;
+      state.isDataFavoriteLoaded = true;
+    })
+    .addCase(loadFavoriteOffer, (state, action) => {
+      state.favoriteOffer = action.payload.favoriteOffer;
+    })
+    .addCase(resetDataOffersLoaded, (state) => {
+      state.isDataOffersLoaded = false;
+    })
+    .addCase(resetDataOfferLoaded, (state) => {
+      state.isDataOfferLoaded = false;
+    })
+    .addCase(resetDataFavoriteLoaded, (state) => {
+      state.isDataFavoriteLoaded = false;
     });
 });
 

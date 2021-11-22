@@ -14,6 +14,11 @@ type Host = {
   name: string;
 };
 
+type Location = {
+  latitude: number,
+  longitude: number,
+  zoom: number
+};
 
 export type Offer = {
   id: number;
@@ -31,11 +36,7 @@ export type Offer = {
   host: Host;
   isPremium: boolean;
   isFavorite: boolean;
-  location: {
-    latitude: number,
-    longitude: number,
-    zoom: number
-  },
+  location: Location,
 };
 
 export type Offers = Offer[];
@@ -43,4 +44,28 @@ export type Cities = City[];
 
 export type LooseObject = {
   [key: string]: string;
+};
+
+export type AdaptOfferType = {
+  'id': number;
+  'title': string;
+  'preview_image': string;
+  'images': string[];
+  'price': number;
+  'type': string;
+  'rating': number;
+  'description': string;
+  'bedrooms': number;
+  'max_adults': number;
+  'city': City;
+  'goods': string[];
+  'host': {
+    'avatar_url': string;
+    'id': number;
+    'is_pro': boolean;
+    'name': string;
+  };
+  'is_premium': boolean;
+  'is_favorite': boolean;
+  'location': Location;
 };

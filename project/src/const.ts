@@ -49,6 +49,7 @@ export enum APIRoute {
   Reviews = '/comments',
   Nearby = '/nearby',
   Login = '/login',
+  Favorites = '/favorite',
   Logout = '/logout',
 }
 
@@ -86,3 +87,5 @@ export const OFFER = {
     zoom: 0,
   },
 };
+
+export const RATING_NAMES = ['terribly', 'badly', 'not bad', 'good', 'perfect'];

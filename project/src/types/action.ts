@@ -10,10 +10,15 @@ export enum ActionType {
   LoadOfferById = 'data/loadOfferById',
   LoadReviews = 'data/loadReviews',
   LoadNearbyOffers = 'data/loadNearbyOffers',
+  LoadFavoriteOffers = 'data/loadFavoriteOffers',
+  LoadFavoriteOffer = 'data/loadFavoriteOffer',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   ChangeUser = 'data/changeUser',
   RedirectToRoute = 'render/redirectToRoute',
+  ResetDataOffersLoaded = 'resetData/resetDataOffersLoaded',
+  ResetDataOfferLoaded = 'resetData/resetDataOfferLoaded',
+  ResetDataFavoriteLoaded = 'resetData/resetDataFavoriteLoaded',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<
