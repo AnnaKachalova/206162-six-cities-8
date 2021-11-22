@@ -87,3 +87,5 @@ export const OFFER = {
     zoom: 0,
   },
 };
+
+export const RATING_NAMES = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
