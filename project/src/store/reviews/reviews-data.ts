@@ -8,8 +8,8 @@ const initialState: ReviewsData = {
 
 const reviewsData = createReducer(initialState, (builder) => {
   builder.addCase(loadReviews, (state, action) => {
-    const MAX_REVIEWS = 9;
-    state.reviews = action.payload.reviews.splice(0, MAX_REVIEWS);
+    const MAX_REVIEWS = 10;
+    state.reviews = action.payload.reviews.reverse().splice(0, MAX_REVIEWS);
   });
 });
 

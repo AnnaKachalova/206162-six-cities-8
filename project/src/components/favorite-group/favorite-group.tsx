@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Favorite from '../favorite-item/favorite-item';
+import FavoriteItem from '../favorite-item/favorite-item';
 import { Offers } from '../../types/offer';
 
 type FavoritesGroupProps = {
@@ -24,7 +24,7 @@ function FavoritesGroup({
         {offers
           .filter((offer) => offer.city.name === cityName)
           .map((offer) => (
-            <Favorite offer={offer} key={`${offer.id}-favorites-card`} />
+            <FavoriteItem offer={offer} key={`${offer.id}-favorites-card`} />
           ))}
       </div>
     </li>

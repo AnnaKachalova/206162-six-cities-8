@@ -1,4 +1,4 @@
-function EmptyMain(): JSX.Element {
+function MainEmpty(): JSX.Element {
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -14,4 +14,4 @@ function EmptyMain(): JSX.Element {
   );
 }
 
-export default EmptyMain;
+export default MainEmpty;

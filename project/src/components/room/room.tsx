@@ -59,6 +59,8 @@ function Room(): JSX.Element {
     host,
     isPremium,
   } = offerById;
+  const nearbyOffersForMap = [...nearbyOffers, offerById];
+  const selectedPoint = nearbyOffersForMap[nearbyOffersForMap.length - 1];
 
   const percentageRating = countRating(rating);
   const MAX_IMAGES = 6;
@@ -171,11 +173,12 @@ function Room(): JSX.Element {
               </section>
             </div>
           </div>
-          {nearbyOffers.length && (
+          {nearbyOffersForMap.length && (
             <Map
-              city={nearbyOffers[0].city}
-              offers={nearbyOffers}
+              city={nearbyOffersForMap[0].city}
+              offers={nearbyOffersForMap}
               className={'property'}
+              selectedPoint={selectedPoint}
             />
           )}
         </section>

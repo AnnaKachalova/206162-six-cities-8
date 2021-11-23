@@ -8,14 +8,14 @@ type CommentSendFormProps = {
 };
 function CommentSendForm({ id }: CommentSendFormProps): JSX.Element {
   const [userReview, setUserReview] = useState('');
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState<null | number>(0);
   const dispatch = useDispatch();
 
   const onSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(sendCommentAction({ comment: userReview, rating: rating }, id));
     if (rating && userReview) {
-      setRating(0);
+      setRating(null);
       setUserReview('');
     }
   };

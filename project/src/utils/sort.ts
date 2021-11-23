@@ -7,20 +7,20 @@ export const getTopRatedFirst = (offers: Offers):Offers => offers.sort((a, b) =>
 
 
 export const sortingOffers = (offers: Offers, sortingType: string): Offers => {
-  let sorted: Offers = [];
+  let sortOffers: Offers = [];
   switch (sortingType) {
     case SORT_TYPES.POPULAR:
-      sorted = offers;
+      sortOffers = offers;
       break;
     case SORT_TYPES.PRICE_LOW_TO_HIGHT:
-      sorted = getPriceLowToHigh(offers);
+      sortOffers = getPriceLowToHigh(offers);
       break;
     case SORT_TYPES.PRICE_HIGHT_TO_LOW:
-      sorted = getPriceHighToLow(offers);
+      sortOffers = getPriceHighToLow(offers);
       break;
     case SORT_TYPES.TOP_RATED_FIRST:
-      sorted = getTopRatedFirst(offers);
+      sortOffers = getTopRatedFirst(offers);
       break;
   }
-  return sorted;
+  return sortOffers;
 };

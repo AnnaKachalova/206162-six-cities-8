@@ -6,7 +6,7 @@ import CardList from '../card-list/card-list';
 import CityList from '../city-list/city-list';
 import SortList from '../sort-list/sort-list';
 import Header from '../header/header';
-import EmptyMain from '../main-empty/main-empty';
+import MainEmpty from '../main-empty/main-empty';
 import Map from '../map/map';
 import { Offer, City } from '../../types/offer';
 import { FIRST_SORT } from '../../const';
@@ -74,7 +74,7 @@ function Main(): JSX.Element {
         <div className="cities">
           <div className={`${emptyOffers && 'cities__places-container--empty'} cities__places-container container`}>
             {emptyOffers ? (
-              <EmptyMain />
+              <MainEmpty />
             ) : (
               <>
                 <section className="cities__places places">

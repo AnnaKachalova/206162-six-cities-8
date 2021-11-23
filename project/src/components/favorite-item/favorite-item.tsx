@@ -7,7 +7,7 @@ type FavoriteProps = {
   offer: Offer;
 };
 
-function Favorite(props: FavoriteProps): JSX.Element {
+function FavoriteItem(props: FavoriteProps): JSX.Element {
   const { id, previewImage, title, type, price } = props.offer;
   const history = useHistory();
 
@@ -52,4 +52,4 @@ function Favorite(props: FavoriteProps): JSX.Element {
   );
 }
 
-export default Favorite;
+export default FavoriteItem;

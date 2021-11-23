@@ -112,8 +112,14 @@ export const sendCommentAction =
 export const changeFavoriteAction =
   (id: number, status: boolean): ThunkActionResult =>
     async (dispatch, _getState, api) => {
-      const {data} = await api.post(`${ APIRoute.Favorites }/${ id }/${ +status }`);
-      dispatch(loadFavoriteOffer(data));
-      dispatch(fetchOffersAction());
-      dispatch(fetchFavoriteOffersAction());
+      await api.post(`${ APIRoute.Favorites }/${ id }/${ +status }`)
+        .then(({ data }) => {
+          dispatch(loadFavoriteOffer(data));
+          dispatch(fetchOffersAction());
+          dispatch(fetchFavoriteOffersAction());
+        }).catch(({response})=> {
+          if(response && response.status === 401){
+            dispatch(redirectToRoute(AppRoute.SignIn));
+          }
+        });
     };

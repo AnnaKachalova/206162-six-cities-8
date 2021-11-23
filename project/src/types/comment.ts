@@ -1,4 +1,4 @@
 export type Comment = {
     comment: string,
-    rating: number
+    rating: number | null
 };
