@@ -8,14 +8,14 @@ type CommentSendFormProps = {
 };
 function CommentSendForm({ id }: CommentSendFormProps): JSX.Element {
   const [userReview, setUserReview] = useState('');
-  const [rating, setRating] = useState<null | number>(0);
+  const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
 
   const onSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(sendCommentAction({ comment: userReview, rating: rating }, id));
     if (rating && userReview) {
-      setRating(null);
+      setRating(0);
       setUserReview('');
     }
   };
@@ -33,7 +33,7 @@ function CommentSendForm({ id }: CommentSendFormProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <CommentStar onChangeRating={onChangeRatingHandler} />
+      <CommentStar onChangeRating={onChangeRatingHandler} currentValue={rating}/>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"

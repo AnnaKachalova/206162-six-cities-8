@@ -3,16 +3,18 @@ import { RATING_NAMES } from '../../const';
 
 type CommentStarProps = {
   onChangeRating: (rating: number) => void;
+  currentValue: number;
 };
 
 function CommentStar(props: CommentStarProps): JSX.Element {
-  const { onChangeRating } = props;
+  const { onChangeRating, currentValue } = props;
   return (
     <div className="reviews__rating-form form__rating">
       {RATING_NAMES.map((name, index) => (
         <React.Fragment key={name}>
           <input
             className="form__rating-input visually-hidden"
+            checked={index + 1 === currentValue}
             name="rating"
             value={index + 1}
             id={`${index + 1}-stars`}
